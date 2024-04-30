@@ -1,0 +1,1661 @@
+----------------------Show Zone Information
+Mapping Table:
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+-1 -1 -1 -1 -1 -1 -1 -1 
+
+Reset Hint Table:
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+
+Block Erase Count Record:
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 
+
+Zone Garbage\Valid Data\Capacity:
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+0\0\4096
+-----------------------End Zone Information
+-----Time:1.66624, Command:WS, Address:12288, Size:1024-----
+-----Time:1.66655, Command:WS, Address:14336, Size:1024-----
+-----Time:1.66686, Command:WS, Address:16384, Size:1024-----
+-----Time:1.66718, Command:WS, Address:18432, Size:1024-----
+-----Time:1.6675, Command:WS, Address:0, Size:1024-----
+-----Time:1.66781, Command:WS, Address:2048, Size:1024-----
+-----Time:1.66985, Command:WS, Address:4096, Size:1024-----
+-----Time:1.67272, Command:WS, Address:6144, Size:1024-----
+-----Time:1.67517, Command:WS, Address:8192, Size:1024-----
+-----Time:1.6785, Command:WS, Address:10240, Size:1024-----
+-----Time:1.68155, Command:WS, Address:12288, Size:1024-----
+-----Time:1.68495, Command:WS, Address:14336, Size:1024-----
+-----Time:1.68847, Command:WS, Address:16384, Size:1024-----
+-----Time:1.69121, Command:WS, Address:18432, Size:1024-----
+Reset Zone[0]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.69393, Command:WS, Address:0, Size:1024-----
+-----Time:1.69768, Command:WS, Address:2048, Size:1024-----
+-----Time:1.70023, Command:WS, Address:4096, Size:1024-----
+-----Time:1.7028, Command:WS, Address:6144, Size:1024-----
+Reset Zone[1]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.70659, Command:WS, Address:8192, Size:1024-----
+-----Time:1.70917, Command:WS, Address:10240, Size:1024-----
+-----Time:1.71233, Command:WS, Address:12288, Size:1024-----
+-----Time:1.71545, Command:WS, Address:14336, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.71854, Command:WS, Address:16384, Size:1024-----
+-----Time:1.72234, Command:WS, Address:18432, Size:1024-----
+-----Time:1.7246, Command:WS, Address:16384, Size:1024-----
+-----Time:1.72741, Command:WS, Address:18432, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.7308, Command:WS, Address:0, Size:1024-----
+-----Time:1.73352, Command:WS, Address:2048, Size:1024-----
+-----Time:1.73596, Command:WS, Address:4096, Size:1024-----
+-----Time:1.73965, Command:WS, Address:6144, Size:1024-----
+Reset Zone[0]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.74145, Command:WS, Address:8192, Size:1024-----
+-----Time:1.74464, Command:WS, Address:10240, Size:1024-----
+-----Time:1.74838, Command:WS, Address:12288, Size:1024-----
+-----Time:1.75096, Command:WS, Address:14336, Size:1024-----
+Reset Zone[1]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.75329, Command:WS, Address:16384, Size:1024-----
+-----Time:1.75655, Command:WS, Address:18432, Size:1024-----
+-----Time:1.75928, Command:WS, Address:0, Size:1024-----
+-----Time:1.76209, Command:WS, Address:2048, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.76567, Command:WS, Address:4096, Size:1024-----
+-----Time:1.76789, Command:WS, Address:6144, Size:1024-----
+-----Time:1.77172, Command:WS, Address:8192, Size:1024-----
+-----Time:1.77444, Command:WS, Address:10240, Size:1024-----
+-----Time:1.7768, Command:WS, Address:12288, Size:1024-----
+-----Time:1.78072, Command:WS, Address:14336, Size:1024-----
+Reset Zone[0]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.78343, Command:WS, Address:16384, Size:1024-----
+-----Time:1.78601, Command:WS, Address:18432, Size:1024-----
+-----Time:1.78946, Command:WS, Address:0, Size:1024-----
+-----Time:1.79205, Command:WS, Address:2048, Size:1024-----
+Reset Zone[1]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.79506, Command:WS, Address:4096, Size:1024-----
+-----Time:1.79801, Command:WS, Address:6144, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.80057, Command:WS, Address:8192, Size:1024-----
+-----Time:1.80454, Command:WS, Address:10240, Size:1024-----
+-----Time:1.80695, Command:WS, Address:12288, Size:1024-----
+-----Time:1.81027, Command:WS, Address:14336, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.81334, Command:WS, Address:16384, Size:1024-----
+-----Time:1.8159, Command:WS, Address:18432, Size:1024-----
+-----Time:1.81969, Command:WS, Address:0, Size:1024-----
+-----Time:1.82185, Command:WS, Address:2048, Size:1024-----
+Reset Zone[0]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.8248, Command:WS, Address:4096, Size:1024-----
+-----Time:1.82821, Command:WS, Address:6144, Size:1024-----
+-----Time:1.83052, Command:WS, Address:8192, Size:1024-----
+-----Time:1.83345, Command:WS, Address:10240, Size:1024-----
+Reset Zone[1]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.83727, Command:WS, Address:12288, Size:1024-----
+-----Time:1.83955, Command:WS, Address:14336, Size:1024-----
+-----Time:1.84344, Command:WS, Address:16384, Size:1024-----
+-----Time:1.84625, Command:WS, Address:18432, Size:1024-----
+-----Time:1.84983, Command:WS, Address:0, Size:1024-----
+-----Time:1.85276, Command:WS, Address:2048, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.85628, Command:WS, Address:4096, Size:1024-----
+-----Time:1.85983, Command:WS, Address:6144, Size:1024-----
+-----Time:1.8625, Command:WS, Address:8192, Size:1024-----
+-----Time:1.86644, Command:WS, Address:10240, Size:1024-----
+Reset Zone[0]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.86909, Command:WS, Address:16384, Size:1024-----
+-----Time:1.87277, Command:WS, Address:18432, Size:1024-----
+-----Time:1.87619, Command:WS, Address:0, Size:1024-----
+-----Time:1.87903, Command:WS, Address:2048, Size:1024-----
+Reset Zone[1]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.88299, Command:WS, Address:4096, Size:1024-----
+-----Time:1.88586, Command:WS, Address:6144, Size:1024-----
+-----Time:1.88966, Command:WS, Address:8192, Size:1024-----
+-----Time:1.8937, Command:WS, Address:10240, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.89599, Command:WS, Address:12288, Size:1024-----
+-----Time:1.89994, Command:WS, Address:14336, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.9011, Command:WS, Address:16384, Size:1024-----
+-----Time:1.90569, Command:WS, Address:18432, Size:1024-----
+-----Time:1.90841, Command:WS, Address:0, Size:1024-----
+-----Time:1.9125, Command:WS, Address:2048, Size:1024-----
+Reset Zone[0]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.91675, Command:WS, Address:4096, Size:1024-----
+-----Time:1.91841, Command:WS, Address:6144, Size:1024-----
+-----Time:1.92233, Command:WS, Address:8192, Size:1024-----
+-----Time:1.92476, Command:WS, Address:10240, Size:1024-----
+Reset Zone[1]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.92905, Command:WS, Address:12288, Size:1024-----
+-----Time:1.93102, Command:WS, Address:14336, Size:1024-----
+-----Time:1.93547, Command:WS, Address:16384, Size:1024-----
+-----Time:1.9368, Command:WS, Address:18432, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.94202, Command:WS, Address:0, Size:1024-----
+-----Time:1.94608, Command:WS, Address:2048, Size:1024-----
+-----Time:1.94754, Command:WS, Address:4096, Size:1024-----
+-----Time:1.952, Command:WS, Address:6144, Size:1024-----
+-----Time:1.95368, Command:WS, Address:8192, Size:1024-----
+-----Time:1.95832, Command:WS, Address:10240, Size:1024-----
+Reset Zone[0]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.9609, Command:WS, Address:12288, Size:1024-----
+-----Time:1.96718, Command:WS, Address:14336, Size:1024-----
+-----Time:1.97201, Command:WS, Address:16384, Size:1024-----
+-----Time:1.97387, Command:WS, Address:18432, Size:1024-----
+Reset Zone[1]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.97851, Command:WS, Address:0, Size:1024-----
+-----Time:1.98011, Command:WS, Address:2048, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.98486, Command:WS, Address:4096, Size:1024-----
+-----Time:1.98597, Command:WS, Address:6144, Size:1024-----
+-----Time:1.99066, Command:WS, Address:8192, Size:1024-----
+-----Time:1.99339, Command:WS, Address:10240, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:1.99709, Command:WS, Address:12288, Size:1024-----
+-----Time:2.00095, Command:WS, Address:14336, Size:1024-----
+-----Time:2.00353, Command:WS, Address:16384, Size:1024-----
+-----Time:2.00692, Command:WS, Address:18432, Size:1024-----
+Reset Zone[0]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.00999, Command:WS, Address:0, Size:1024-----
+-----Time:2.01382, Command:WS, Address:2048, Size:1024-----
+-----Time:2.01768, Command:WS, Address:4096, Size:1024-----
+-----Time:2.02011, Command:WS, Address:6144, Size:1024-----
+Reset Zone[1]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.02419, Command:WS, Address:8192, Size:1024-----
+-----Time:2.02673, Command:WS, Address:10240, Size:1024-----
+-----Time:2.03054, Command:WS, Address:12288, Size:1024-----
+-----Time:2.03477, Command:WS, Address:14336, Size:1024-----
+-----Time:2.03701, Command:WS, Address:16384, Size:1024-----
+-----Time:2.03706, Command:WS, Address:18432, Size:80-----
+-----Time:2.03751, Command:WS, Address:19584, Size:4-----
+-----Time:2.03751, Command:WS, Address:19592, Size:4-----
+-----Time:2.03751, Command:WS, Address:19600, Size:4-----
+-----Time:2.03751, Command:WS, Address:19608, Size:4-----
+-----Time:2.03751, Command:WS, Address:19616, Size:4-----
+-----Time:2.03752, Command:WS, Address:19624, Size:4-----
+-----Time:2.03755, Command:WS, Address:19632, Size:4-----
+-----Time:2.03755, Command:WS, Address:19640, Size:4-----
+-----Time:2.03756, Command:WS, Address:19648, Size:4-----
+-----Time:2.03756, Command:WS, Address:19656, Size:4-----
+-----Time:2.03756, Command:WS, Address:19664, Size:4-----
+-----Time:2.03758, Command:WS, Address:19672, Size:4-----
+-----Time:2.03759, Command:WS, Address:19680, Size:4-----
+-----Time:2.03762, Command:WS, Address:19688, Size:4-----
+-----Time:2.03763, Command:WS, Address:19696, Size:4-----
+-----Time:2.03763, Command:WS, Address:19704, Size:4-----
+-----Time:2.03764, Command:WS, Address:19712, Size:4-----
+-----Time:2.03777, Command:WS, Address:19720, Size:4-----
+-----Time:2.03779, Command:WS, Address:19728, Size:4-----
+-----Time:2.03781, Command:WS, Address:19736, Size:4-----
+-----Time:2.03897, Command:WS, Address:19744, Size:4-----
+-----Time:2.03897, Command:WS, Address:19752, Size:4-----
+-----Time:2.03898, Command:WS, Address:19760, Size:4-----
+-----Time:2.03898, Command:WS, Address:19768, Size:4-----
+-----Time:2.03898, Command:WS, Address:19776, Size:4-----
+-----Time:2.03899, Command:WS, Address:19784, Size:4-----
+-----Time:2.03899, Command:WS, Address:19792, Size:4-----
+-----Time:2.03899, Command:WS, Address:19800, Size:4-----
+-----Time:2.03899, Command:WS, Address:19808, Size:4-----
+-----Time:2.039, Command:WS, Address:19816, Size:4-----
+-----Time:2.039, Command:WS, Address:19824, Size:4-----
+-----Time:2.039, Command:WS, Address:19832, Size:4-----
+-----Time:2.039, Command:WS, Address:19840, Size:4-----
+-----Time:2.03901, Command:WS, Address:19848, Size:4-----
+-----Time:2.03901, Command:WS, Address:19856, Size:4-----
+-----Time:2.03901, Command:WS, Address:19864, Size:4-----
+-----Time:2.03901, Command:WS, Address:19872, Size:4-----
+-----Time:2.03902, Command:WS, Address:19880, Size:4-----
+-----Time:2.03902, Command:WS, Address:19888, Size:4-----
+-----Time:2.03902, Command:WS, Address:19896, Size:4-----
+-----Time:2.03903, Command:WS, Address:19904, Size:4-----
+-----Time:2.03903, Command:WS, Address:19912, Size:4-----
+-----Time:2.03903, Command:WS, Address:19920, Size:4-----
+-----Time:2.03903, Command:WS, Address:19928, Size:4-----
+-----Time:2.03903, Command:WS, Address:19936, Size:4-----
+-----Time:2.03903, Command:WS, Address:19944, Size:4-----
+-----Time:2.03903, Command:WS, Address:19952, Size:4-----
+-----Time:2.03904, Command:WS, Address:19960, Size:4-----
+-----Time:2.03904, Command:WS, Address:19968, Size:4-----
+-----Time:2.03904, Command:WS, Address:19976, Size:4-----
+-----Time:2.03904, Command:WS, Address:19984, Size:4-----
+-----Time:2.03904, Command:WS, Address:19992, Size:4-----
+-----Time:2.03905, Command:WS, Address:20000, Size:4-----
+-----Time:2.03905, Command:WS, Address:20008, Size:4-----
+-----Time:2.03905, Command:WS, Address:20016, Size:4-----
+-----Time:2.03905, Command:WS, Address:20024, Size:4-----
+-----Time:2.03905, Command:WS, Address:20032, Size:4-----
+-----Time:2.03905, Command:WS, Address:20040, Size:4-----
+-----Time:2.03905, Command:WS, Address:20048, Size:4-----
+-----Time:2.03906, Command:WS, Address:20056, Size:4-----
+-----Time:2.03906, Command:WS, Address:20064, Size:4-----
+-----Time:2.03906, Command:WS, Address:20072, Size:4-----
+-----Time:2.03906, Command:WS, Address:20080, Size:4-----
+-----Time:2.03906, Command:WS, Address:20088, Size:4-----
+-----Time:2.03906, Command:WS, Address:20096, Size:4-----
+-----Time:2.03907, Command:WS, Address:20104, Size:4-----
+-----Time:2.03907, Command:WS, Address:20112, Size:4-----
+-----Time:2.03907, Command:WS, Address:20120, Size:4-----
+-----Time:2.03907, Command:WS, Address:20128, Size:4-----
+-----Time:2.03907, Command:WS, Address:20136, Size:4-----
+-----Time:2.03907, Command:WS, Address:20144, Size:4-----
+-----Time:2.03908, Command:WS, Address:20152, Size:4-----
+-----Time:2.03908, Command:WS, Address:20160, Size:4-----
+-----Time:2.03908, Command:WS, Address:20168, Size:4-----
+-----Time:2.03908, Command:WS, Address:20176, Size:4-----
+-----Time:2.03908, Command:WS, Address:20184, Size:4-----
+-----Time:2.03908, Command:WS, Address:20192, Size:4-----
+-----Time:2.03908, Command:WS, Address:20200, Size:4-----
+-----Time:2.03909, Command:WS, Address:20208, Size:4-----
+-----Time:2.03909, Command:WS, Address:20216, Size:4-----
+-----Time:2.0391, Command:WS, Address:20224, Size:4-----
+-----Time:2.0391, Command:WS, Address:20232, Size:4-----
+-----Time:2.0391, Command:WS, Address:20240, Size:4-----
+-----Time:2.03912, Command:WS, Address:20248, Size:4-----
+-----Time:2.03919, Command:WS, Address:20256, Size:4-----
+-----Time:2.03919, Command:WS, Address:20264, Size:4-----
+-----Time:2.0392, Command:WS, Address:20272, Size:4-----
+-----Time:2.0392, Command:WS, Address:20280, Size:4-----
+-----Time:2.0392, Command:WS, Address:20288, Size:4-----
+-----Time:2.0392, Command:WS, Address:20296, Size:4-----
+-----Time:2.03921, Command:WS, Address:20304, Size:4-----
+-----Time:2.03921, Command:WS, Address:20312, Size:4-----
+-----Time:2.03921, Command:WS, Address:20320, Size:4-----
+-----Time:2.03921, Command:WS, Address:20328, Size:4-----
+-----Time:2.03922, Command:WS, Address:20336, Size:4-----
+-----Time:2.03922, Command:WS, Address:20344, Size:4-----
+-----Time:2.03922, Command:WS, Address:20352, Size:4-----
+-----Time:2.03922, Command:WS, Address:20360, Size:4-----
+-----Time:2.03922, Command:WS, Address:20368, Size:4-----
+-----Time:2.03923, Command:WS, Address:20376, Size:4-----
+-----Time:2.03923, Command:WS, Address:20384, Size:4-----
+-----Time:2.03923, Command:WS, Address:20392, Size:4-----
+-----Time:2.03923, Command:WS, Address:20400, Size:4-----
+-----Time:2.03923, Command:WS, Address:20408, Size:4-----
+-----Time:2.03923, Command:WS, Address:20416, Size:4-----
+-----Time:2.03924, Command:WS, Address:20424, Size:4-----
+-----Time:2.03924, Command:WS, Address:20432, Size:4-----
+-----Time:2.03924, Command:WS, Address:20440, Size:4-----
+-----Time:2.03924, Command:WS, Address:20448, Size:4-----
+-----Time:2.03924, Command:WS, Address:20456, Size:4-----
+-----Time:2.03924, Command:WS, Address:20464, Size:4-----
+-----Time:2.03924, Command:WS, Address:20472, Size:4-----
+-----Time:2.03925, Command:WS, Address:0, Size:4-----
+-----Time:2.03925, Command:WS, Address:8, Size:4-----
+-----Time:2.03925, Command:WS, Address:16, Size:4-----
+-----Time:2.03925, Command:WS, Address:24, Size:4-----
+-----Time:2.03925, Command:WS, Address:32, Size:4-----
+-----Time:2.03926, Command:WS, Address:40, Size:4-----
+-----Time:2.03926, Command:WS, Address:48, Size:4-----
+-----Time:2.03926, Command:WS, Address:56, Size:4-----
+-----Time:2.03926, Command:WS, Address:64, Size:4-----
+-----Time:2.03926, Command:WS, Address:72, Size:4-----
+-----Time:2.03926, Command:WS, Address:80, Size:4-----
+-----Time:2.03926, Command:WS, Address:88, Size:4-----
+-----Time:2.03927, Command:WS, Address:96, Size:4-----
+-----Time:2.03927, Command:WS, Address:104, Size:4-----
+-----Time:2.03927, Command:WS, Address:112, Size:4-----
+-----Time:2.03927, Command:WS, Address:120, Size:4-----
+-----Time:2.03927, Command:WS, Address:128, Size:4-----
+-----Time:2.03927, Command:WS, Address:136, Size:4-----
+-----Time:2.03928, Command:WS, Address:144, Size:4-----
+-----Time:2.03928, Command:WS, Address:152, Size:4-----
+-----Time:2.03928, Command:WS, Address:160, Size:4-----
+-----Time:2.03928, Command:WS, Address:168, Size:4-----
+-----Time:2.03928, Command:WS, Address:176, Size:4-----
+-----Time:2.03928, Command:WS, Address:184, Size:4-----
+-----Time:2.03928, Command:WS, Address:192, Size:4-----
+-----Time:2.03929, Command:WS, Address:200, Size:4-----
+-----Time:2.03929, Command:WS, Address:208, Size:4-----
+-----Time:2.03929, Command:WS, Address:216, Size:4-----
+-----Time:2.03932, Command:WS, Address:224, Size:4-----
+-----Time:2.03942, Command:WS, Address:232, Size:4-----
+-----Time:2.03942, Command:WS, Address:240, Size:4-----
+-----Time:2.03942, Command:WS, Address:248, Size:4-----
+-----Time:2.03943, Command:WS, Address:256, Size:4-----
+-----Time:2.03943, Command:WS, Address:264, Size:4-----
+-----Time:2.03943, Command:WS, Address:272, Size:4-----
+-----Time:2.03945, Command:WS, Address:280, Size:4-----
+-----Time:2.03945, Command:WS, Address:288, Size:4-----
+-----Time:2.03946, Command:WS, Address:296, Size:4-----
+-----Time:2.03946, Command:WS, Address:304, Size:4-----
+-----Time:2.03946, Command:WS, Address:312, Size:4-----
+-----Time:2.03946, Command:WS, Address:320, Size:4-----
+-----Time:2.0395, Command:WS, Address:328, Size:4-----
+-----Time:2.0395, Command:WS, Address:336, Size:4-----
+-----Time:2.03953, Command:WS, Address:344, Size:4-----
+-----Time:2.03953, Command:WS, Address:352, Size:4-----
+-----Time:2.03953, Command:WS, Address:360, Size:4-----
+-----Time:2.03954, Command:WS, Address:368, Size:4-----
+-----Time:2.03954, Command:WS, Address:376, Size:4-----
+-----Time:2.03954, Command:WS, Address:384, Size:4-----
+-----Time:2.03955, Command:WS, Address:392, Size:4-----
+-----Time:2.03955, Command:WS, Address:400, Size:4-----
+-----Time:2.03956, Command:WS, Address:408, Size:4-----
+-----Time:2.03956, Command:WS, Address:416, Size:4-----
+-----Time:2.03957, Command:WS, Address:424, Size:4-----
+-----Time:2.03958, Command:WS, Address:432, Size:4-----
+-----Time:2.03959, Command:WS, Address:440, Size:4-----
+-----Time:2.03959, Command:WS, Address:448, Size:4-----
+-----Time:2.0396, Command:WS, Address:456, Size:4-----
+-----Time:2.03963, Command:WS, Address:464, Size:4-----
+-----Time:2.03964, Command:WS, Address:472, Size:4-----
+-----Time:2.03966, Command:WS, Address:480, Size:4-----
+-----Time:2.03971, Command:WS, Address:488, Size:4-----
+-----Time:2.03972, Command:WS, Address:496, Size:4-----
+-----Time:2.03975, Command:WS, Address:504, Size:4-----
+-----Time:2.04086, Command:WS, Address:512, Size:4-----
+-----Time:2.04086, Command:WS, Address:520, Size:4-----
+-----Time:2.04087, Command:WS, Address:528, Size:4-----
+-----Time:2.04087, Command:WS, Address:536, Size:4-----
+-----Time:2.04087, Command:WS, Address:544, Size:4-----
+-----Time:2.04087, Command:WS, Address:552, Size:4-----
+-----Time:2.04088, Command:WS, Address:560, Size:4-----
+-----Time:2.04088, Command:WS, Address:568, Size:4-----
+-----Time:2.04088, Command:WS, Address:576, Size:4-----
+-----Time:2.04088, Command:WS, Address:584, Size:4-----
+-----Time:2.04088, Command:WS, Address:592, Size:4-----
+-----Time:2.04089, Command:WS, Address:600, Size:4-----
+-----Time:2.04089, Command:WS, Address:608, Size:4-----
+-----Time:2.04089, Command:WS, Address:616, Size:4-----
+-----Time:2.04089, Command:WS, Address:624, Size:4-----
+-----Time:2.04089, Command:WS, Address:632, Size:4-----
+-----Time:2.0409, Command:WS, Address:640, Size:4-----
+-----Time:2.0409, Command:WS, Address:648, Size:4-----
+-----Time:2.0409, Command:WS, Address:656, Size:4-----
+-----Time:2.0409, Command:WS, Address:664, Size:4-----
+-----Time:2.0409, Command:WS, Address:672, Size:4-----
+-----Time:2.04091, Command:WS, Address:680, Size:4-----
+-----Time:2.04091, Command:WS, Address:688, Size:4-----
+-----Time:2.04091, Command:WS, Address:696, Size:4-----
+-----Time:2.04091, Command:WS, Address:704, Size:4-----
+-----Time:2.04091, Command:WS, Address:712, Size:4-----
+-----Time:2.04091, Command:WS, Address:720, Size:4-----
+-----Time:2.04092, Command:WS, Address:728, Size:4-----
+-----Time:2.04092, Command:WS, Address:736, Size:4-----
+-----Time:2.04092, Command:WS, Address:744, Size:4-----
+-----Time:2.04092, Command:WS, Address:752, Size:4-----
+-----Time:2.04093, Command:WS, Address:760, Size:4-----
+-----Time:2.04093, Command:WS, Address:768, Size:4-----
+-----Time:2.04093, Command:WS, Address:776, Size:4-----
+-----Time:2.04093, Command:WS, Address:784, Size:4-----
+-----Time:2.04093, Command:WS, Address:792, Size:4-----
+-----Time:2.04094, Command:WS, Address:800, Size:4-----
+-----Time:2.04094, Command:WS, Address:808, Size:4-----
+-----Time:2.04094, Command:WS, Address:816, Size:4-----
+-----Time:2.04094, Command:WS, Address:824, Size:4-----
+-----Time:2.04094, Command:WS, Address:832, Size:4-----
+-----Time:2.04094, Command:WS, Address:840, Size:4-----
+-----Time:2.04095, Command:WS, Address:848, Size:4-----
+-----Time:2.04095, Command:WS, Address:856, Size:4-----
+-----Time:2.04095, Command:WS, Address:864, Size:4-----
+-----Time:2.04096, Command:WS, Address:872, Size:4-----
+-----Time:2.04096, Command:WS, Address:880, Size:4-----
+-----Time:2.04096, Command:WS, Address:888, Size:4-----
+-----Time:2.04096, Command:WS, Address:896, Size:4-----
+-----Time:2.04096, Command:WS, Address:904, Size:4-----
+-----Time:2.04096, Command:WS, Address:912, Size:4-----
+-----Time:2.04097, Command:WS, Address:920, Size:4-----
+-----Time:2.04097, Command:WS, Address:928, Size:4-----
+-----Time:2.04097, Command:WS, Address:936, Size:4-----
+-----Time:2.04097, Command:WS, Address:944, Size:4-----
+-----Time:2.04097, Command:WS, Address:952, Size:4-----
+-----Time:2.04097, Command:WS, Address:960, Size:4-----
+-----Time:2.04098, Command:WS, Address:968, Size:4-----
+-----Time:2.04098, Command:WS, Address:976, Size:4-----
+-----Time:2.04098, Command:WS, Address:984, Size:4-----
+-----Time:2.04098, Command:WS, Address:992, Size:4-----
+-----Time:2.04098, Command:WS, Address:1000, Size:4-----
+-----Time:2.04098, Command:WS, Address:1008, Size:4-----
+-----Time:2.04098, Command:WS, Address:1016, Size:4-----
+-----Time:2.04099, Command:WS, Address:1024, Size:4-----
+-----Time:2.04099, Command:WS, Address:1032, Size:4-----
+-----Time:2.04099, Command:WS, Address:1040, Size:4-----
+-----Time:2.04099, Command:WS, Address:1048, Size:4-----
+-----Time:2.04099, Command:WS, Address:1056, Size:4-----
+-----Time:2.04099, Command:WS, Address:1064, Size:4-----
+-----Time:2.041, Command:WS, Address:1072, Size:4-----
+-----Time:2.041, Command:WS, Address:1080, Size:4-----
+-----Time:2.041, Command:WS, Address:1088, Size:4-----
+-----Time:2.041, Command:WS, Address:1096, Size:4-----
+-----Time:2.041, Command:WS, Address:1104, Size:4-----
+-----Time:2.041, Command:WS, Address:1112, Size:4-----
+-----Time:2.041, Command:WS, Address:1120, Size:4-----
+-----Time:2.04101, Command:WS, Address:1128, Size:4-----
+-----Time:2.04101, Command:WS, Address:1136, Size:4-----
+-----Time:2.04101, Command:WS, Address:1144, Size:4-----
+-----Time:2.04101, Command:WS, Address:1152, Size:4-----
+-----Time:2.04101, Command:WS, Address:1160, Size:4-----
+-----Time:2.04101, Command:WS, Address:1168, Size:4-----
+-----Time:2.04101, Command:WS, Address:1176, Size:4-----
+-----Time:2.04102, Command:WS, Address:1184, Size:4-----
+-----Time:2.04102, Command:WS, Address:1192, Size:4-----
+-----Time:2.04102, Command:WS, Address:1200, Size:4-----
+-----Time:2.04102, Command:WS, Address:1208, Size:4-----
+-----Time:2.04102, Command:WS, Address:1216, Size:4-----
+-----Time:2.04102, Command:WS, Address:1224, Size:4-----
+-----Time:2.04102, Command:WS, Address:1232, Size:4-----
+-----Time:2.04103, Command:WS, Address:1240, Size:4-----
+-----Time:2.04103, Command:WS, Address:1248, Size:4-----
+-----Time:2.04103, Command:WS, Address:1256, Size:4-----
+-----Time:2.04103, Command:WS, Address:1264, Size:4-----
+-----Time:2.04103, Command:WS, Address:1272, Size:4-----
+-----Time:2.04103, Command:WS, Address:1280, Size:4-----
+-----Time:2.04103, Command:WS, Address:1288, Size:4-----
+-----Time:2.04105, Command:WS, Address:1296, Size:4-----
+-----Time:2.04105, Command:WS, Address:1304, Size:4-----
+-----Time:2.04105, Command:WS, Address:1312, Size:4-----
+-----Time:2.04105, Command:WS, Address:1320, Size:4-----
+-----Time:2.04107, Command:WS, Address:1328, Size:4-----
+-----Time:2.0411, Command:WS, Address:1336, Size:4-----
+-----Time:2.0411, Command:WS, Address:1344, Size:4-----
+-----Time:2.04111, Command:WS, Address:1352, Size:4-----
+-----Time:2.04111, Command:WS, Address:1360, Size:4-----
+-----Time:2.04111, Command:WS, Address:1368, Size:4-----
+-----Time:2.04111, Command:WS, Address:1376, Size:4-----
+-----Time:2.04112, Command:WS, Address:1384, Size:4-----
+-----Time:2.04112, Command:WS, Address:1392, Size:4-----
+-----Time:2.04112, Command:WS, Address:1400, Size:4-----
+-----Time:2.04113, Command:WS, Address:1408, Size:4-----
+-----Time:2.04113, Command:WS, Address:1416, Size:4-----
+-----Time:2.04113, Command:WS, Address:1424, Size:4-----
+-----Time:2.04116, Command:WS, Address:1432, Size:4-----
+-----Time:2.04116, Command:WS, Address:1440, Size:4-----
+-----Time:2.04117, Command:WS, Address:1448, Size:4-----
+-----Time:2.04119, Command:WS, Address:1456, Size:4-----
+-----Time:2.04122, Command:WS, Address:1464, Size:4-----
+-----Time:2.04122, Command:WS, Address:1472, Size:4-----
+-----Time:2.04122, Command:WS, Address:1480, Size:4-----
+-----Time:2.04122, Command:WS, Address:1488, Size:4-----
+-----Time:2.04123, Command:WS, Address:1496, Size:4-----
+-----Time:2.04123, Command:WS, Address:1504, Size:4-----
+-----Time:2.04123, Command:WS, Address:1512, Size:4-----
+-----Time:2.04123, Command:WS, Address:1520, Size:4-----
+-----Time:2.04124, Command:WS, Address:1528, Size:4-----
+-----Time:2.04124, Command:WS, Address:1536, Size:4-----
+-----Time:2.04124, Command:WS, Address:1544, Size:4-----
+-----Time:2.04124, Command:WS, Address:1552, Size:4-----
+-----Time:2.04124, Command:WS, Address:1560, Size:4-----
+-----Time:2.04125, Command:WS, Address:1568, Size:4-----
+-----Time:2.04126, Command:WS, Address:1576, Size:4-----
+-----Time:2.04128, Command:WS, Address:1584, Size:4-----
+-----Time:2.04128, Command:WS, Address:1592, Size:4-----
+-----Time:2.04129, Command:WS, Address:1600, Size:4-----
+-----Time:2.04129, Command:WS, Address:1608, Size:4-----
+-----Time:2.04129, Command:WS, Address:1616, Size:4-----
+-----Time:2.0413, Command:WS, Address:1624, Size:4-----
+-----Time:2.04132, Command:WS, Address:1632, Size:4-----
+-----Time:2.04136, Command:WS, Address:1640, Size:4-----
+-----Time:2.04136, Command:WS, Address:1648, Size:4-----
+-----Time:2.04136, Command:WS, Address:1656, Size:4-----
+-----Time:2.04137, Command:WS, Address:1664, Size:4-----
+-----Time:2.04138, Command:WS, Address:1672, Size:4-----
+-----Time:2.04139, Command:WS, Address:1680, Size:4-----
+-----Time:2.04141, Command:WS, Address:1688, Size:4-----
+-----Time:2.04143, Command:WS, Address:1696, Size:4-----
+-----Time:2.04144, Command:WS, Address:1704, Size:4-----
+-----Time:2.04146, Command:WS, Address:1712, Size:4-----
+-----Time:2.04146, Command:WS, Address:1720, Size:4-----
+-----Time:2.04146, Command:WS, Address:1728, Size:4-----
+-----Time:2.04152, Command:WS, Address:1736, Size:4-----
+-----Time:2.04156, Command:WS, Address:1744, Size:4-----
+-----Time:2.04165, Command:WS, Address:1752, Size:4-----
+-----Time:2.043, Command:WS, Address:1760, Size:4-----
+-----Time:2.043, Command:WS, Address:1768, Size:4-----
+-----Time:2.043, Command:WS, Address:1776, Size:4-----
+-----Time:2.04301, Command:WS, Address:1784, Size:4-----
+-----Time:2.04301, Command:WS, Address:1792, Size:4-----
+-----Time:2.04301, Command:WS, Address:1800, Size:4-----
+-----Time:2.04301, Command:WS, Address:1808, Size:4-----
+-----Time:2.04302, Command:WS, Address:1816, Size:4-----
+-----Time:2.04302, Command:WS, Address:1824, Size:4-----
+-----Time:2.04302, Command:WS, Address:1832, Size:4-----
+-----Time:2.04302, Command:WS, Address:1840, Size:4-----
+-----Time:2.04302, Command:WS, Address:1848, Size:4-----
+-----Time:2.04303, Command:WS, Address:1856, Size:4-----
+-----Time:2.04303, Command:WS, Address:1864, Size:4-----
+-----Time:2.04303, Command:WS, Address:1872, Size:4-----
+-----Time:2.04303, Command:WS, Address:1880, Size:4-----
+-----Time:2.72475, Command:WS, Address:8192, Size:1024-----
+-----Time:2.72506, Command:WS, Address:10240, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.72537, Command:WS, Address:12288, Size:1024-----
+-----Time:2.72569, Command:WS, Address:14336, Size:1024-----
+-----Time:2.72601, Command:WS, Address:16384, Size:1024-----
+-----Time:2.72632, Command:WS, Address:18432, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.72702, Command:WS, Address:0, Size:1024-----
+-----Time:2.73025, Command:WS, Address:2048, Size:1024-----
+-----Time:2.73308, Command:WS, Address:4096, Size:1024-----
+-----Time:2.7371, Command:WS, Address:6144, Size:1024-----
+Reset Zone[0]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.73944, Command:WS, Address:8192, Size:1024-----
+-----Time:2.74239, Command:WS, Address:10240, Size:1024-----
+-----Time:2.74554, Command:WS, Address:12288, Size:1024-----
+-----Time:2.74813, Command:WS, Address:14336, Size:1024-----
+-----Time:2.75142, Command:WS, Address:16384, Size:1024-----
+-----Time:2.75463, Command:WS, Address:18432, Size:1024-----
+-----Time:2.75712, Command:WS, Address:0, Size:1024-----
+-----Time:2.76029, Command:WS, Address:2048, Size:1024-----
+-----Time:2.76337, Command:WS, Address:4096, Size:1024-----
+-----Time:2.76674, Command:WS, Address:6144, Size:1024-----
+-----Time:2.76986, Command:WS, Address:8192, Size:1024-----
+-----Time:2.77312, Command:WS, Address:10240, Size:1024-----
+-----Time:2.77815, Command:WS, Address:12288, Size:1024-----
+-----Time:2.78083, Command:WS, Address:14336, Size:1024-----
+-----Time:2.78466, Command:WS, Address:0, Size:1024-----
+-----Time:2.78829, Command:WS, Address:2048, Size:1024-----
+-----Time:2.79097, Command:WS, Address:4096, Size:1024-----
+-----Time:2.79474, Command:WS, Address:6144, Size:1024-----
+-----Time:2.79757, Command:WS, Address:8192, Size:1024-----
+-----Time:2.80122, Command:WS, Address:10240, Size:1024-----
+-----Time:2.80509, Command:WS, Address:12288, Size:1024-----
+-----Time:2.80902, Command:WS, Address:14336, Size:1024-----
+-----Time:2.81246, Command:WS, Address:16384, Size:1024-----
+-----Time:2.81605, Command:WS, Address:18432, Size:1024-----
+Reset Zone[3]
+Reset Zone[5]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.81871, Command:WS, Address:0, Size:1024-----
+-----Time:2.82232, Command:WS, Address:2048, Size:1024-----
+-----Time:2.82549, Command:WS, Address:4096, Size:1024-----
+-----Time:2.8297, Command:WS, Address:6144, Size:1024-----
+Reset Zone[2]
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.83219, Command:WS, Address:8192, Size:1024-----
+-----Time:2.83601, Command:WS, Address:10240, Size:1024-----
+-----Time:2.83837, Command:WS, Address:12288, Size:1024-----
+-----Time:2.8425, Command:WS, Address:14336, Size:1024-----
+Reset Zone[0]
+Reset Zone[7]
+Reset Zone[8]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.84526, Command:WS, Address:16384, Size:1024-----
+-----Time:2.84878, Command:WS, Address:18432, Size:1024-----
+-----Time:2.85205, Command:WS, Address:0, Size:1024-----
+-----Time:2.85802, Command:WS, Address:2048, Size:1024-----
+-----Time:2.86071, Command:WS, Address:4096, Size:1024-----
+-----Time:2.86492, Command:WS, Address:6144, Size:1024-----
+-----Time:2.86774, Command:WS, Address:8192, Size:1024-----
+-----Time:2.87215, Command:WS, Address:10240, Size:1024-----
+-----Time:2.8758, Command:WS, Address:12288, Size:1024-----
+-----Time:2.87933, Command:WS, Address:14336, Size:1024-----
+-----Time:2.8834, Command:WS, Address:16384, Size:1024-----
+-----Time:2.88659, Command:WS, Address:18432, Size:1024-----
+-----Time:2.89028, Command:WS, Address:0, Size:1024-----
+-----Time:2.89364, Command:WS, Address:2048, Size:1024-----
+-----Time:2.89749, Command:WS, Address:4096, Size:1024-----
+-----Time:2.90039, Command:WS, Address:6144, Size:1024-----
+Reset Zone[2]
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.9043, Command:WS, Address:8192, Size:1024-----
+-----Time:2.90813, Command:WS, Address:10240, Size:1024-----
+-----Time:2.91177, Command:WS, Address:12288, Size:1024-----
+-----Time:2.91541, Command:WS, Address:14336, Size:1024-----
+Reset Zone[5]
+Reset Zone[9]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.91805, Command:WS, Address:16384, Size:1024-----
+-----Time:2.92241, Command:WS, Address:18432, Size:1024-----
+-----Time:2.92624, Command:WS, Address:0, Size:1024-----
+-----Time:2.9288, Command:WS, Address:2048, Size:1024-----
+Reset Zone[0]
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:2.93252, Command:WS, Address:4096, Size:1024-----
+-----Time:2.93683, Command:WS, Address:6144, Size:1024-----
+-----Time:2.93904, Command:WS, Address:8192, Size:1024-----
+-----Time:2.94344, Command:WS, Address:10240, Size:1024-----
+-----Time:2.94705, Command:WS, Address:12288, Size:1024-----
+-----Time:2.95108, Command:WS, Address:14336, Size:1024-----
+-----Time:2.953, Command:WS, Address:16384, Size:1024-----
+-----Time:2.95764, Command:WS, Address:18432, Size:1024-----
+-----Time:2.96158, Command:WS, Address:0, Size:1024-----
+-----Time:2.96417, Command:WS, Address:2048, Size:1024-----
+-----Time:2.9679, Command:WS, Address:4096, Size:1024-----
+-----Time:2.97144, Command:WS, Address:6144, Size:1024-----
+-----Time:2.97445, Command:WS, Address:8192, Size:1024-----
+-----Time:2.97812, Command:WS, Address:10240, Size:1024-----
+-----Time:2.9819, Command:WS, Address:16384, Size:1024-----
+-----Time:2.98512, Command:WS, Address:18432, Size:1024-----
+-----Time:2.98837, Command:WS, Address:0, Size:1024-----
+-----Time:2.99187, Command:WS, Address:2048, Size:1024-----
+-----Time:2.9955, Command:WS, Address:4096, Size:1024-----
+-----Time:2.99926, Command:WS, Address:6144, Size:1024-----
+-----Time:3.00182, Command:WS, Address:8192, Size:1024-----
+-----Time:3.00587, Command:WS, Address:10240, Size:1024-----
+-----Time:3.00912, Command:WS, Address:12288, Size:1024-----
+-----Time:3.01243, Command:WS, Address:14336, Size:1024-----
+Reset Zone[2]
+Reset Zone[3]
+Reset Zone[5]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.01762, Command:WS, Address:16384, Size:1024-----
+-----Time:3.01992, Command:WS, Address:18432, Size:1024-----
+-----Time:3.02331, Command:WS, Address:0, Size:1024-----
+-----Time:3.02804, Command:WS, Address:2048, Size:1024-----
+Reset Zone[6]
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.03032, Command:WS, Address:4096, Size:1024-----
+-----Time:3.03405, Command:WS, Address:6144, Size:1024-----
+-----Time:3.03699, Command:WS, Address:8192, Size:1024-----
+-----Time:3.03957, Command:WS, Address:10240, Size:1024-----
+Reset Zone[0]
+Reset Zone[8]
+Reset Zone[9]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.044, Command:WS, Address:12288, Size:1024-----
+-----Time:3.04538, Command:WS, Address:14336, Size:1024-----
+-----Time:3.05094, Command:WS, Address:16384, Size:1024-----
+-----Time:3.05374, Command:WS, Address:18432, Size:1024-----
+-----Time:3.05649, Command:WS, Address:0, Size:1024-----
+-----Time:3.05952, Command:WS, Address:2048, Size:1024-----
+-----Time:3.06385, Command:WS, Address:4096, Size:1024-----
+-----Time:3.0659, Command:WS, Address:6144, Size:1024-----
+-----Time:3.06868, Command:WS, Address:8192, Size:1024-----
+-----Time:3.07111, Command:WS, Address:10240, Size:1024-----
+-----Time:3.07331, Command:WS, Address:12288, Size:1024-----
+-----Time:3.07677, Command:WS, Address:14336, Size:1024-----
+-----Time:3.07824, Command:WS, Address:16384, Size:1024-----
+-----Time:3.08115, Command:WS, Address:18432, Size:1024-----
+-----Time:3.08435, Command:WS, Address:0, Size:1024-----
+-----Time:3.08707, Command:WS, Address:2048, Size:1024-----
+Reset Zone[2]
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.08899, Command:WS, Address:4096, Size:1024-----
+-----Time:3.09296, Command:WS, Address:6144, Size:1024-----
+-----Time:3.09713, Command:WS, Address:8192, Size:1024-----
+-----Time:3.10047, Command:WS, Address:10240, Size:1024-----
+Reset Zone[5]
+Reset Zone[10]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.10416, Command:WS, Address:12288, Size:1024-----
+-----Time:3.10917, Command:WS, Address:14336, Size:1024-----
+-----Time:3.11217, Command:WS, Address:16384, Size:1024-----
+-----Time:3.11549, Command:WS, Address:18432, Size:1024-----
+Reset Zone[0]
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.11891, Command:WS, Address:0, Size:1024-----
+-----Time:3.11903, Command:WS, Address:2048, Size:84-----
+-----Time:3.11908, Command:WS, Address:1896, Size:4-----
+-----Time:3.11908, Command:WS, Address:1904, Size:4-----
+-----Time:3.11908, Command:WS, Address:1912, Size:4-----
+-----Time:3.11908, Command:WS, Address:1920, Size:4-----
+-----Time:3.11908, Command:WS, Address:1928, Size:4-----
+-----Time:3.11908, Command:WS, Address:1936, Size:4-----
+-----Time:3.11909, Command:WS, Address:1944, Size:4-----
+-----Time:3.1191, Command:WS, Address:1952, Size:4-----
+-----Time:3.1191, Command:WS, Address:1960, Size:4-----
+-----Time:3.11911, Command:WS, Address:1968, Size:4-----
+-----Time:3.11912, Command:WS, Address:1976, Size:4-----
+-----Time:3.1196, Command:WS, Address:1984, Size:4-----
+-----Time:3.74526, Command:WS, Address:12288, Size:1024-----
+-----Time:3.74557, Command:WS, Address:14336, Size:1024-----
+-----Time:3.74589, Command:WS, Address:16384, Size:1024-----
+-----Time:3.7462, Command:WS, Address:18432, Size:1024-----
+-----Time:3.74652, Command:WS, Address:0, Size:1024-----
+-----Time:3.74683, Command:WS, Address:2048, Size:1024-----
+-----Time:3.74737, Command:WS, Address:4096, Size:1024-----
+-----Time:3.74986, Command:WS, Address:6144, Size:1024-----
+-----Time:3.7536, Command:WS, Address:8192, Size:1024-----
+-----Time:3.75607, Command:WS, Address:10240, Size:1024-----
+-----Time:3.75896, Command:WS, Address:12288, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.76202, Command:WS, Address:14336, Size:1024-----
+-----Time:3.76523, Command:WS, Address:16384, Size:1024-----
+-----Time:3.76834, Command:WS, Address:18432, Size:1024-----
+-----Time:3.77138, Command:WS, Address:0, Size:1024-----
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.77349, Command:WS, Address:2048, Size:1024-----
+-----Time:3.77653, Command:WS, Address:8192, Size:1024-----
+-----Time:3.77953, Command:WS, Address:10240, Size:1024-----
+-----Time:3.78257, Command:WS, Address:12288, Size:1024-----
+-----Time:3.7864, Command:WS, Address:14336, Size:1024-----
+-----Time:3.78877, Command:WS, Address:16384, Size:1024-----
+-----Time:3.79168, Command:WS, Address:18432, Size:1024-----
+-----Time:3.79464, Command:WS, Address:0, Size:1024-----
+-----Time:3.79785, Command:WS, Address:2048, Size:1024-----
+-----Time:3.79985, Command:WS, Address:4096, Size:1024-----
+-----Time:3.80264, Command:WS, Address:6144, Size:1024-----
+-----Time:3.80585, Command:WS, Address:8192, Size:1024-----
+Reset Zone[2]
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.8087, Command:WS, Address:10240, Size:1024-----
+-----Time:3.81152, Command:WS, Address:12288, Size:1024-----
+-----Time:3.81377, Command:WS, Address:14336, Size:1024-----
+-----Time:3.81736, Command:WS, Address:16384, Size:1024-----
+Reset Zone[3]
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.81967, Command:WS, Address:18432, Size:1024-----
+-----Time:3.82244, Command:WS, Address:4096, Size:1024-----
+Reset Zone[5]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.82407, Command:WS, Address:6144, Size:1024-----
+-----Time:3.82662, Command:WS, Address:8192, Size:1024-----
+-----Time:3.83068, Command:WS, Address:10240, Size:1024-----
+-----Time:3.83296, Command:WS, Address:12288, Size:1024-----
+-----Time:3.83534, Command:WS, Address:14336, Size:1024-----
+-----Time:3.83779, Command:WS, Address:16384, Size:1024-----
+-----Time:3.84031, Command:WS, Address:18432, Size:1024-----
+-----Time:3.84407, Command:WS, Address:0, Size:1024-----
+-----Time:3.84569, Command:WS, Address:2048, Size:1024-----
+-----Time:3.84858, Command:WS, Address:4096, Size:1024-----
+-----Time:3.85095, Command:WS, Address:6144, Size:1024-----
+Reset Zone[9]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.85515, Command:WS, Address:8192, Size:1024-----
+-----Time:3.85647, Command:WS, Address:10240, Size:1024-----
+-----Time:3.85942, Command:WS, Address:12288, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.86189, Command:WS, Address:14336, Size:1024-----
+-----Time:3.86406, Command:WS, Address:16384, Size:1024-----
+-----Time:3.86735, Command:WS, Address:18432, Size:1024-----
+-----Time:3.87017, Command:WS, Address:0, Size:1024-----
+Reset Zone[5]
+Reset Zone[8]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.8725, Command:WS, Address:2048, Size:1024-----
+-----Time:3.87593, Command:WS, Address:4096, Size:1024-----
+-----Time:3.87894, Command:WS, Address:6144, Size:1024-----
+-----Time:3.88153, Command:WS, Address:8192, Size:1024-----
+Reset Zone[3]
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.88473, Command:WS, Address:10240, Size:1024-----
+-----Time:3.88753, Command:WS, Address:12288, Size:1024-----
+-----Time:3.89121, Command:WS, Address:14336, Size:1024-----
+-----Time:3.89486, Command:WS, Address:16384, Size:1024-----
+-----Time:3.89793, Command:WS, Address:18432, Size:1024-----
+-----Time:3.90049, Command:WS, Address:0, Size:1024-----
+-----Time:3.90422, Command:WS, Address:2048, Size:1024-----
+-----Time:3.90605, Command:WS, Address:4096, Size:1024-----
+-----Time:3.91017, Command:WS, Address:6144, Size:1024-----
+-----Time:3.9124, Command:WS, Address:8192, Size:1024-----
+-----Time:3.91546, Command:WS, Address:10240, Size:1024-----
+-----Time:3.91723, Command:WS, Address:12288, Size:1024-----
+-----Time:3.92145, Command:WS, Address:14336, Size:1024-----
+-----Time:3.92418, Command:WS, Address:16384, Size:1024-----
+-----Time:3.92654, Command:WS, Address:18432, Size:1024-----
+-----Time:3.92935, Command:WS, Address:0, Size:1024-----
+Reset Zone[2]
+Reset Zone[5]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.93254, Command:WS, Address:2048, Size:1024-----
+-----Time:3.93507, Command:WS, Address:4096, Size:1024-----
+-----Time:3.9388, Command:WS, Address:6144, Size:1024-----
+-----Time:3.94123, Command:WS, Address:8192, Size:1024-----
+Reset Zone[6]
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.94379, Command:WS, Address:10240, Size:1024-----
+-----Time:3.94756, Command:WS, Address:12288, Size:1024-----
+-----Time:3.94889, Command:WS, Address:14336, Size:1024-----
+-----Time:3.95191, Command:WS, Address:16384, Size:1024-----
+Reset Zone[3]
+Reset Zone[8]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.95426, Command:WS, Address:18432, Size:1024-----
+-----Time:3.95806, Command:WS, Address:0, Size:1024-----
+-----Time:3.95933, Command:WS, Address:2048, Size:1024-----
+-----Time:3.96228, Command:WS, Address:4096, Size:1024-----
+-----Time:3.96569, Command:WS, Address:6144, Size:1024-----
+-----Time:3.96781, Command:WS, Address:8192, Size:1024-----
+-----Time:3.97069, Command:WS, Address:10240, Size:1024-----
+-----Time:3.97318, Command:WS, Address:12288, Size:1024-----
+-----Time:3.97631, Command:WS, Address:14336, Size:1024-----
+-----Time:3.97939, Command:WS, Address:16384, Size:1024-----
+-----Time:3.98159, Command:WS, Address:18432, Size:1024-----
+-----Time:3.98569, Command:WS, Address:0, Size:1024-----
+-----Time:3.98701, Command:WS, Address:2048, Size:1024-----
+-----Time:3.99027, Command:WS, Address:4096, Size:1024-----
+-----Time:3.99292, Command:WS, Address:6144, Size:1024-----
+-----Time:3.99578, Command:WS, Address:8192, Size:1024-----
+Reset Zone[2]
+Reset Zone[5]
+-----------------------------------------------------ResetBeforeWP
+-----Time:3.99852, Command:WS, Address:10240, Size:1024-----
+-----Time:4.00102, Command:WS, Address:12288, Size:1024-----
+-----Time:4.00278, Command:WS, Address:14336, Size:1024-----
+-----Time:4.00676, Command:WS, Address:16384, Size:1024-----
+Reset Zone[6]
+Reset Zone[9]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.00927, Command:WS, Address:18432, Size:1024-----
+-----Time:4.01183, Command:WS, Address:0, Size:1024-----
+-----Time:4.01375, Command:WS, Address:2048, Size:1024-----
+-----Time:4.01721, Command:WS, Address:4096, Size:1024-----
+Reset Zone[3]
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.01988, Command:WS, Address:6144, Size:1024-----
+-----Time:4.02261, Command:WS, Address:8192, Size:1024-----
+-----Time:4.02446, Command:WS, Address:10240, Size:1024-----
+-----Time:4.02781, Command:WS, Address:12288, Size:1024-----
+-----Time:4.03049, Command:WS, Address:14336, Size:1024-----
+-----Time:4.03293, Command:WS, Address:16384, Size:1024-----
+-----Time:4.03666, Command:WS, Address:18432, Size:1024-----
+-----Time:4.0382, Command:WS, Address:0, Size:1024-----
+-----Time:4.04112, Command:WS, Address:2048, Size:1024-----
+-----Time:4.04269, Command:WS, Address:4096, Size:1024-----
+-----Time:4.04695, Command:WS, Address:6144, Size:1024-----
+-----Time:4.04943, Command:WS, Address:8192, Size:1024-----
+-----Time:4.05121, Command:WS, Address:10240, Size:1024-----
+-----Time:4.05364, Command:WS, Address:12288, Size:1024-----
+-----Time:4.05789, Command:WS, Address:14336, Size:1024-----
+-----Time:4.05905, Command:WS, Address:16384, Size:1024-----
+Reset Zone[2]
+Reset Zone[5]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.06204, Command:WS, Address:18432, Size:1024-----
+-----Time:4.06443, Command:WS, Address:0, Size:1024-----
+-----Time:4.06753, Command:WS, Address:2048, Size:1024-----
+-----Time:4.07048, Command:WS, Address:4096, Size:1024-----
+Reset Zone[6]
+Reset Zone[8]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.07052, Command:WS, Address:6144, Size:80-----
+-----Time:4.07056, Command:WS, Address:2000, Size:4-----
+-----Time:4.07056, Command:WS, Address:2008, Size:4-----
+-----Time:4.07056, Command:WS, Address:2016, Size:4-----
+-----Time:4.07056, Command:WS, Address:2024, Size:4-----
+-----Time:4.07057, Command:WS, Address:2032, Size:4-----
+-----Time:4.07057, Command:WS, Address:2040, Size:4-----
+-----Time:4.07057, Command:WS, Address:2048, Size:4-----
+-----Time:4.07057, Command:WS, Address:2056, Size:4-----
+-----Time:4.07057, Command:WS, Address:2064, Size:4-----
+-----Time:4.07057, Command:WS, Address:2072, Size:4-----
+-----Time:4.07058, Command:WS, Address:2080, Size:4-----
+-----Time:4.68588, Command:WS, Address:16384, Size:1024-----
+-----Time:4.68619, Command:WS, Address:18432, Size:1024-----
+-----Time:4.68651, Command:WS, Address:0, Size:1024-----
+-----Time:4.68682, Command:WS, Address:2048, Size:1024-----
+-----Time:4.68714, Command:WS, Address:4096, Size:1024-----
+-----Time:4.68746, Command:WS, Address:6144, Size:1024-----
+-----Time:4.68777, Command:WS, Address:8192, Size:1024-----
+-----Time:4.68809, Command:WS, Address:10240, Size:1024-----
+-----Time:4.69097, Command:WS, Address:12288, Size:1024-----
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.69289, Command:WS, Address:14336, Size:1024-----
+-----Time:4.69533, Command:WS, Address:16384, Size:1024-----
+-----Time:4.69681, Command:WS, Address:18432, Size:1024-----
+-----Time:4.69938, Command:WS, Address:0, Size:1024-----
+-----Time:4.70067, Command:WS, Address:2048, Size:1024-----
+-----Time:4.70294, Command:WS, Address:4096, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.70571, Command:WS, Address:6144, Size:1024-----
+-----Time:4.70743, Command:WS, Address:12288, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.70991, Command:WS, Address:14336, Size:1024-----
+Reset Zone[9]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.71323, Command:WS, Address:16384, Size:1024-----
+-----Time:4.71567, Command:WS, Address:18432, Size:1024-----
+-----Time:4.71797, Command:WS, Address:0, Size:1024-----
+-----Time:4.72055, Command:WS, Address:2048, Size:1024-----
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.72211, Command:WS, Address:4096, Size:1024-----
+-----Time:4.72486, Command:WS, Address:6144, Size:1024-----
+-----Time:4.72689, Command:WS, Address:8192, Size:1024-----
+-----Time:4.7293, Command:WS, Address:10240, Size:1024-----
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.73145, Command:WS, Address:12288, Size:1024-----
+-----Time:4.73384, Command:WS, Address:14336, Size:1024-----
+-----Time:4.73603, Command:WS, Address:16384, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.73845, Command:WS, Address:18432, Size:1024-----
+-----Time:4.7424, Command:WS, Address:0, Size:1024-----
+-----Time:4.74464, Command:WS, Address:2048, Size:1024-----
+-----Time:4.74691, Command:WS, Address:4096, Size:1024-----
+-----Time:4.74906, Command:WS, Address:6144, Size:1024-----
+-----Time:4.75159, Command:WS, Address:8192, Size:1024-----
+-----Time:4.75538, Command:WS, Address:10240, Size:1024-----
+-----Time:4.75804, Command:WS, Address:12288, Size:1024-----
+-----Time:4.7595, Command:WS, Address:14336, Size:1024-----
+-----Time:4.76273, Command:WS, Address:16384, Size:1024-----
+-----Time:4.76481, Command:WS, Address:18432, Size:1024-----
+-----Time:4.76723, Command:WS, Address:0, Size:1024-----
+-----Time:4.77228, Command:WS, Address:2048, Size:1024-----
+-----Time:4.77524, Command:WS, Address:4096, Size:1024-----
+-----Time:4.77739, Command:WS, Address:6144, Size:1024-----
+-----Time:4.77998, Command:WS, Address:8192, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.78373, Command:WS, Address:10240, Size:1024-----
+-----Time:4.78621, Command:WS, Address:12288, Size:1024-----
+-----Time:4.78868, Command:WS, Address:14336, Size:1024-----
+Reset Zone[6]
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.79074, Command:WS, Address:16384, Size:1024-----
+-----Time:4.79473, Command:WS, Address:18432, Size:1024-----
+-----Time:4.79715, Command:WS, Address:0, Size:1024-----
+-----Time:4.79924, Command:WS, Address:2048, Size:1024-----
+Reset Zone[9]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.80259, Command:WS, Address:4096, Size:1024-----
+-----Time:4.80564, Command:WS, Address:6144, Size:1024-----
+-----Time:4.80817, Command:WS, Address:8192, Size:1024-----
+-----Time:4.81002, Command:WS, Address:10240, Size:1024-----
+-----Time:4.81404, Command:WS, Address:12288, Size:1024-----
+-----Time:4.81608, Command:WS, Address:14336, Size:1024-----
+-----Time:4.81946, Command:WS, Address:16384, Size:1024-----
+-----Time:4.82255, Command:WS, Address:18432, Size:1024-----
+-----Time:4.82458, Command:WS, Address:0, Size:1024-----
+-----Time:4.82787, Command:WS, Address:2048, Size:1024-----
+-----Time:4.83093, Command:WS, Address:4096, Size:1024-----
+-----Time:4.83408, Command:WS, Address:6144, Size:1024-----
+-----Time:4.83697, Command:WS, Address:8192, Size:1024-----
+-----Time:4.83945, Command:WS, Address:10240, Size:1024-----
+-----Time:4.84337, Command:WS, Address:12288, Size:1024-----
+-----Time:4.84579, Command:WS, Address:14336, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.84969, Command:WS, Address:16384, Size:1024-----
+-----Time:4.85199, Command:WS, Address:18432, Size:1024-----
+-----Time:4.85408, Command:WS, Address:0, Size:1024-----
+-----Time:4.85831, Command:WS, Address:2048, Size:1024-----
+Reset Zone[2]
+Reset Zone[6]
+Reset Zone[8]
+Reset Zone[9]
+Reset Zone[10]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.86023, Command:WS, Address:8192, Size:1024-----
+-----Time:4.86445, Command:WS, Address:10240, Size:1024-----
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.86649, Command:WS, Address:12288, Size:1024-----
+-----Time:4.87065, Command:WS, Address:14336, Size:1024-----
+-----Time:4.87247, Command:WS, Address:16384, Size:1024-----
+-----Time:4.87522, Command:WS, Address:18432, Size:1024-----
+-----Time:4.8791, Command:WS, Address:0, Size:1024-----
+-----Time:4.88154, Command:WS, Address:2048, Size:1024-----
+-----Time:4.88512, Command:WS, Address:4096, Size:1024-----
+-----Time:4.88756, Command:WS, Address:6144, Size:1024-----
+-----Time:4.88957, Command:WS, Address:8192, Size:1024-----
+-----Time:4.89366, Command:WS, Address:10240, Size:1024-----
+-----Time:4.89582, Command:WS, Address:12288, Size:1024-----
+Reset Zone[12]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.8989, Command:WS, Address:14336, Size:1024-----
+-----Time:4.90202, Command:WS, Address:16384, Size:1024-----
+-----Time:4.90424, Command:WS, Address:18432, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.9085, Command:WS, Address:0, Size:1024-----
+-----Time:4.91038, Command:WS, Address:2048, Size:1024-----
+-----Time:4.91453, Command:WS, Address:4096, Size:1024-----
+-----Time:4.91696, Command:WS, Address:6144, Size:1024-----
+Reset Zone[6]
+Reset Zone[11]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.92003, Command:WS, Address:8192, Size:1024-----
+-----Time:4.92299, Command:WS, Address:10240, Size:1024-----
+-----Time:4.92568, Command:WS, Address:12288, Size:1024-----
+-----Time:4.92928, Command:WS, Address:14336, Size:1024-----
+Reset Zone[2]
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.93245, Command:WS, Address:16384, Size:1024-----
+-----Time:4.93537, Command:WS, Address:18432, Size:1024-----
+-----Time:4.93975, Command:WS, Address:0, Size:1024-----
+-----Time:4.94179, Command:WS, Address:2048, Size:1024-----
+-----Time:4.94399, Command:WS, Address:4096, Size:1024-----
+-----Time:4.948, Command:WS, Address:6144, Size:1024-----
+-----Time:4.95049, Command:WS, Address:8192, Size:1024-----
+-----Time:4.9543, Command:WS, Address:10240, Size:1024-----
+-----Time:4.95674, Command:WS, Address:12288, Size:1024-----
+-----Time:4.96049, Command:WS, Address:14336, Size:1024-----
+-----Time:4.96302, Command:WS, Address:16384, Size:1024-----
+-----Time:4.96677, Command:WS, Address:18432, Size:1024-----
+-----Time:4.96918, Command:WS, Address:0, Size:1024-----
+-----Time:4.97207, Command:WS, Address:2048, Size:1024-----
+-----Time:4.97538, Command:WS, Address:4096, Size:1024-----
+-----Time:4.97778, Command:WS, Address:6144, Size:1024-----
+Reset Zone[3]
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.98159, Command:WS, Address:8192, Size:1024-----
+-----Time:4.98437, Command:WS, Address:10240, Size:1024-----
+-----Time:4.98718, Command:WS, Address:12288, Size:1024-----
+-----Time:4.99077, Command:WS, Address:14336, Size:1024-----
+Reset Zone[7]
+Reset Zone[8]
+-----------------------------------------------------ResetBeforeWP
+-----Time:4.99518, Command:WS, Address:16384, Size:1024-----
+-----Time:4.99906, Command:WS, Address:18432, Size:1024-----
+-----Time:5.001, Command:WS, Address:0, Size:1024-----
+-----Time:5.00522, Command:WS, Address:2048, Size:1024-----
+Reset Zone[2]
+Reset Zone[9]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.00739, Command:WS, Address:4096, Size:1024-----
+-----Time:5.00988, Command:WS, Address:6144, Size:1024-----
+-----Time:5.01387, Command:WS, Address:8192, Size:1024-----
+-----Time:5.01391, Command:WS, Address:10240, Size:88-----
+-----Time:5.01396, Command:WS, Address:2096, Size:4-----
+-----Time:5.01396, Command:WS, Address:2104, Size:4-----
+-----Time:5.01396, Command:WS, Address:2112, Size:4-----
+-----Time:5.01396, Command:WS, Address:2120, Size:4-----
+-----Time:5.01396, Command:WS, Address:2128, Size:4-----
+-----Time:5.01396, Command:WS, Address:2136, Size:4-----
+-----Time:5.01396, Command:WS, Address:2144, Size:4-----
+-----Time:5.01397, Command:WS, Address:2152, Size:4-----
+-----Time:5.01397, Command:WS, Address:2160, Size:4-----
+-----Time:5.01397, Command:WS, Address:2168, Size:4-----
+-----Time:5.01397, Command:WS, Address:2176, Size:4-----
+-----Time:5.01399, Command:WS, Address:2184, Size:4-----
+-----Time:5.63964, Command:WS, Address:4096, Size:1024-----
+-----Time:5.63996, Command:WS, Address:6144, Size:1024-----
+-----Time:5.64027, Command:WS, Address:8192, Size:1024-----
+-----Time:5.64059, Command:WS, Address:10240, Size:1024-----
+-----Time:5.6409, Command:WS, Address:12288, Size:1024-----
+-----Time:5.64122, Command:WS, Address:14336, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.64153, Command:WS, Address:16384, Size:1024-----
+-----Time:5.64418, Command:WS, Address:18432, Size:1024-----
+-----Time:5.64669, Command:WS, Address:0, Size:1024-----
+-----Time:5.64762, Command:WS, Address:2048, Size:1024-----
+Reset Zone[10]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.65183, Command:WS, Address:4096, Size:1024-----
+-----Time:5.65493, Command:WS, Address:6144, Size:1024-----
+-----Time:5.65725, Command:WS, Address:8192, Size:1024-----
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.66014, Command:WS, Address:10240, Size:1024-----
+-----Time:5.66256, Command:WS, Address:12288, Size:1024-----
+-----Time:5.66511, Command:WS, Address:14336, Size:1024-----
+-----Time:5.6674, Command:WS, Address:16384, Size:1024-----
+-----Time:5.66986, Command:WS, Address:18432, Size:1024-----
+-----Time:5.672, Command:WS, Address:0, Size:1024-----
+-----Time:5.6756, Command:WS, Address:2048, Size:1024-----
+-----Time:5.67808, Command:WS, Address:4096, Size:1024-----
+Reset Zone[2]
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.68057, Command:WS, Address:6144, Size:1024-----
+-----Time:5.68238, Command:WS, Address:8192, Size:1024-----
+-----Time:5.68538, Command:WS, Address:10240, Size:1024-----
+-----Time:5.68815, Command:WS, Address:12288, Size:1024-----
+-----Time:5.68943, Command:WS, Address:14336, Size:1024-----
+-----Time:5.69312, Command:WS, Address:16384, Size:1024-----
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.69549, Command:WS, Address:18432, Size:1024-----
+-----Time:5.6975, Command:WS, Address:0, Size:1024-----
+Reset Zone[3]
+Reset Zone[8]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.70016, Command:WS, Address:2048, Size:1024-----
+-----Time:5.70418, Command:WS, Address:4096, Size:1024-----
+-----Time:5.70832, Command:WS, Address:6144, Size:1024-----
+-----Time:5.70987, Command:WS, Address:8192, Size:1024-----
+-----Time:5.71286, Command:WS, Address:10240, Size:1024-----
+-----Time:5.71545, Command:WS, Address:12288, Size:1024-----
+-----Time:5.71879, Command:WS, Address:14336, Size:1024-----
+-----Time:5.72101, Command:WS, Address:16384, Size:1024-----
+-----Time:5.72378, Command:WS, Address:18432, Size:1024-----
+-----Time:5.72627, Command:WS, Address:0, Size:1024-----
+-----Time:5.7295, Command:WS, Address:2048, Size:1024-----
+-----Time:5.73201, Command:WS, Address:4096, Size:1024-----
+-----Time:5.73496, Command:WS, Address:6144, Size:1024-----
+-----Time:5.73626, Command:WS, Address:8192, Size:1024-----
+-----Time:5.73921, Command:WS, Address:10240, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.74245, Command:WS, Address:12288, Size:1024-----
+-----Time:5.74455, Command:WS, Address:14336, Size:1024-----
+-----Time:5.74795, Command:WS, Address:16384, Size:1024-----
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.7495, Command:WS, Address:18432, Size:1024-----
+-----Time:5.75332, Command:WS, Address:0, Size:1024-----
+Reset Zone[6]
+Reset Zone[9]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.75555, Command:WS, Address:2048, Size:1024-----
+-----Time:5.75916, Command:WS, Address:4096, Size:1024-----
+-----Time:5.76192, Command:WS, Address:6144, Size:1024-----
+-----Time:5.76374, Command:WS, Address:8192, Size:1024-----
+Reset Zone[3]
+Reset Zone[8]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.76657, Command:WS, Address:10240, Size:1024-----
+-----Time:5.76828, Command:WS, Address:12288, Size:1024-----
+-----Time:5.77111, Command:WS, Address:14336, Size:1024-----
+-----Time:5.77379, Command:WS, Address:0, Size:1024-----
+-----Time:5.77678, Command:WS, Address:2048, Size:1024-----
+-----Time:5.77906, Command:WS, Address:4096, Size:1024-----
+-----Time:5.78156, Command:WS, Address:6144, Size:1024-----
+-----Time:5.78357, Command:WS, Address:8192, Size:1024-----
+-----Time:5.78635, Command:WS, Address:10240, Size:1024-----
+-----Time:5.78902, Command:WS, Address:12288, Size:1024-----
+-----Time:5.79098, Command:WS, Address:14336, Size:1024-----
+-----Time:5.79438, Command:WS, Address:16384, Size:1024-----
+-----Time:5.79671, Command:WS, Address:18432, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.79883, Command:WS, Address:0, Size:1024-----
+-----Time:5.80135, Command:WS, Address:2048, Size:1024-----
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.80402, Command:WS, Address:4096, Size:1024-----
+-----Time:5.80651, Command:WS, Address:6144, Size:1024-----
+-----Time:5.80805, Command:WS, Address:8192, Size:1024-----
+Reset Zone[10]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.81189, Command:WS, Address:10240, Size:1024-----
+-----Time:5.81401, Command:WS, Address:12288, Size:1024-----
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.81652, Command:WS, Address:14336, Size:1024-----
+-----Time:5.81893, Command:WS, Address:16384, Size:1024-----
+-----Time:5.8211, Command:WS, Address:18432, Size:1024-----
+-----Time:5.82384, Command:WS, Address:0, Size:1024-----
+-----Time:5.82622, Command:WS, Address:2048, Size:1024-----
+-----Time:5.82777, Command:WS, Address:4096, Size:1024-----
+-----Time:5.8307, Command:WS, Address:6144, Size:1024-----
+-----Time:5.834, Command:WS, Address:8192, Size:1024-----
+-----Time:5.83665, Command:WS, Address:10240, Size:1024-----
+-----Time:5.83868, Command:WS, Address:12288, Size:1024-----
+-----Time:5.84081, Command:WS, Address:14336, Size:1024-----
+-----Time:5.84352, Command:WS, Address:16384, Size:1024-----
+-----Time:5.84641, Command:WS, Address:18432, Size:1024-----
+-----Time:5.84872, Command:WS, Address:0, Size:1024-----
+-----Time:5.85123, Command:WS, Address:2048, Size:1024-----
+-----Time:5.85317, Command:WS, Address:4096, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.85611, Command:WS, Address:6144, Size:1024-----
+-----Time:5.85738, Command:WS, Address:8192, Size:1024-----
+-----Time:5.86064, Command:WS, Address:10240, Size:1024-----
+-----Time:5.86351, Command:WS, Address:12288, Size:1024-----
+Reset Zone[3]
+Reset Zone[6]
+Reset Zone[8]
+Reset Zone[9]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.86563, Command:WS, Address:14336, Size:1024-----
+-----Time:5.86811, Command:WS, Address:16384, Size:1024-----
+-----Time:5.8704, Command:WS, Address:18432, Size:1024-----
+-----Time:5.87266, Command:WS, Address:0, Size:1024-----
+Reset Zone[7]
+Reset Zone[10]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.87498, Command:WS, Address:2048, Size:1024-----
+-----Time:5.87721, Command:WS, Address:4096, Size:1024-----
+-----Time:5.87939, Command:WS, Address:6144, Size:1024-----
+-----Time:5.88244, Command:WS, Address:8192, Size:1024-----
+-----Time:5.88592, Command:WS, Address:10240, Size:1024-----
+-----Time:5.89091, Command:WS, Address:12288, Size:1024-----
+-----Time:5.89404, Command:WS, Address:14336, Size:1024-----
+-----Time:5.89662, Command:WS, Address:16384, Size:1024-----
+-----Time:5.8983, Command:WS, Address:18432, Size:1024-----
+-----Time:5.90117, Command:WS, Address:0, Size:1024-----
+-----Time:5.90325, Command:WS, Address:2048, Size:1024-----
+-----Time:5.90584, Command:WS, Address:4096, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.90782, Command:WS, Address:6144, Size:1024-----
+-----Time:5.91036, Command:WS, Address:8192, Size:1024-----
+-----Time:5.91201, Command:WS, Address:10240, Size:1024-----
+-----Time:5.91476, Command:WS, Address:16384, Size:1024-----
+-----Time:5.91698, Command:WS, Address:18432, Size:1024-----
+-----Time:5.91922, Command:WS, Address:0, Size:1024-----
+-----Time:5.9217, Command:WS, Address:2048, Size:1024-----
+-----Time:5.92388, Command:WS, Address:4096, Size:1024-----
+-----Time:5.92622, Command:WS, Address:6144, Size:1024-----
+-----Time:5.92829, Command:WS, Address:8192, Size:1024-----
+-----Time:5.93111, Command:WS, Address:10240, Size:1024-----
+-----Time:5.93323, Command:WS, Address:12288, Size:1024-----
+Reset Zone[2]
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.93681, Command:WS, Address:14336, Size:1024-----
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:5.93975, Command:WS, Address:16384, Size:1024-----
+-----Time:5.93979, Command:WS, Address:18432, Size:76-----
+-----Time:5.93984, Command:WS, Address:2200, Size:4-----
+-----Time:5.93984, Command:WS, Address:2208, Size:4-----
+-----Time:5.93984, Command:WS, Address:2216, Size:4-----
+-----Time:5.93984, Command:WS, Address:2224, Size:4-----
+-----Time:5.93984, Command:WS, Address:2232, Size:4-----
+-----Time:5.93984, Command:WS, Address:2240, Size:4-----
+-----Time:5.93985, Command:WS, Address:2248, Size:4-----
+-----Time:5.93985, Command:WS, Address:2256, Size:4-----
+-----Time:5.93985, Command:WS, Address:2264, Size:4-----
+-----Time:5.93985, Command:WS, Address:2272, Size:4-----
+-----Time:5.93985, Command:WS, Address:2280, Size:4-----
+-----Time:6.14014, Command:WS, Address:8192, Size:336-----
+-----Time:6.1402, Command:WS, Address:2296, Size:4-----
+-----Time:6.1402, Command:WS, Address:2304, Size:4-----
+-----Time:6.1402, Command:WS, Address:2312, Size:4-----
+-----Time:6.1402, Command:WS, Address:2320, Size:4-----
+-----Time:6.1402, Command:WS, Address:2328, Size:4-----
+-----Time:6.1402, Command:WS, Address:2336, Size:4-----
+-----Time:6.1402, Command:WS, Address:2344, Size:4-----
+-----Time:6.1402, Command:WS, Address:2352, Size:4-----
+-----Time:6.14455, Command:WS, Address:12288, Size:4-----
+-----Time:6.14457, Command:WS, Address:2368, Size:4-----
+-----Time:6.14457, Command:WS, Address:2376, Size:4-----
+-----Time:6.14457, Command:WS, Address:2384, Size:4-----
+-----Time:6.14457, Command:WS, Address:2392, Size:4-----
+-----Time:6.14458, Command:WS, Address:2400, Size:4-----
+-----Time:6.14458, Command:WS, Address:2408, Size:4-----
+-----Time:6.14458, Command:WS, Address:2416, Size:4-----
+-----Time:6.29867, Command:WS, Address:8192, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.29899, Command:WS, Address:10240, Size:1024-----
+-----Time:6.2993, Command:WS, Address:12288, Size:1024-----
+-----Time:6.29962, Command:WS, Address:14336, Size:1024-----
+-----Time:6.29993, Command:WS, Address:16384, Size:1024-----
+-----Time:6.30025, Command:WS, Address:18432, Size:1024-----
+-----Time:6.30067, Command:WS, Address:0, Size:1024-----
+Reset Zone[8]
+Reset Zone[11]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.30294, Command:WS, Address:2048, Size:1024-----
+-----Time:6.30529, Command:WS, Address:4096, Size:1024-----
+-----Time:6.30795, Command:WS, Address:6144, Size:1024-----
+-----Time:6.31024, Command:WS, Address:8192, Size:1024-----
+-----Time:6.31268, Command:WS, Address:10240, Size:1024-----
+-----Time:6.31603, Command:WS, Address:12288, Size:1024-----
+-----Time:6.31815, Command:WS, Address:14336, Size:1024-----
+-----Time:6.32033, Command:WS, Address:16384, Size:1024-----
+-----Time:6.32333, Command:WS, Address:18432, Size:1024-----
+-----Time:6.32615, Command:WS, Address:0, Size:1024-----
+Reset Zone[9]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.32849, Command:WS, Address:2048, Size:1024-----
+-----Time:6.33097, Command:WS, Address:4096, Size:1024-----
+-----Time:6.33417, Command:WS, Address:6144, Size:1024-----
+-----Time:6.33554, Command:WS, Address:8192, Size:1024-----
+Reset Zone[2]
+Reset Zone[10]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.33855, Command:WS, Address:10240, Size:1024-----
+-----Time:6.34077, Command:WS, Address:12288, Size:1024-----
+-----Time:6.34356, Command:WS, Address:14336, Size:1024-----
+-----Time:6.34586, Command:WS, Address:16384, Size:1024-----
+Reset Zone[3]
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.34895, Command:WS, Address:18432, Size:1024-----
+-----Time:6.35086, Command:WS, Address:0, Size:1024-----
+-----Time:6.35421, Command:WS, Address:2048, Size:1024-----
+-----Time:6.35576, Command:WS, Address:4096, Size:1024-----
+Reset Zone[6]
+Reset Zone[8]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.35884, Command:WS, Address:6144, Size:1024-----
+-----Time:6.36133, Command:WS, Address:8192, Size:1024-----
+-----Time:6.36362, Command:WS, Address:10240, Size:1024-----
+-----Time:6.36596, Command:WS, Address:12288, Size:1024-----
+-----Time:6.36773, Command:WS, Address:14336, Size:1024-----
+-----Time:6.37097, Command:WS, Address:16384, Size:1024-----
+-----Time:6.37429, Command:WS, Address:18432, Size:1024-----
+-----Time:6.37542, Command:WS, Address:0, Size:1024-----
+-----Time:6.37893, Command:WS, Address:2048, Size:1024-----
+-----Time:6.38103, Command:WS, Address:4096, Size:1024-----
+-----Time:6.3837, Command:WS, Address:6144, Size:1024-----
+-----Time:6.38575, Command:WS, Address:12288, Size:1024-----
+-----Time:6.38817, Command:WS, Address:14336, Size:1024-----
+-----Time:6.3915, Command:WS, Address:16384, Size:1024-----
+-----Time:6.39327, Command:WS, Address:18432, Size:1024-----
+-----Time:6.39622, Command:WS, Address:0, Size:1024-----
+-----Time:6.39852, Command:WS, Address:2048, Size:1024-----
+-----Time:6.40086, Command:WS, Address:4096, Size:1024-----
+-----Time:6.40348, Command:WS, Address:6144, Size:1024-----
+-----Time:6.40541, Command:WS, Address:8192, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.40868, Command:WS, Address:10240, Size:1024-----
+Reset Zone[6]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.41198, Command:WS, Address:12288, Size:1024-----
+-----Time:6.41346, Command:WS, Address:14336, Size:1024-----
+-----Time:6.4168, Command:WS, Address:16384, Size:1024-----
+Reset Zone[2]
+Reset Zone[7]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.41922, Command:WS, Address:18432, Size:1024-----
+-----Time:6.42118, Command:WS, Address:0, Size:1024-----
+-----Time:6.42363, Command:WS, Address:2048, Size:1024-----
+-----Time:6.42749, Command:WS, Address:4096, Size:1024-----
+Reset Zone[8]
+Reset Zone[9]
+Reset Zone[10]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.4291, Command:WS, Address:6144, Size:1024-----
+-----Time:6.43211, Command:WS, Address:8192, Size:1024-----
+-----Time:6.4347, Command:WS, Address:10240, Size:1024-----
+-----Time:6.43707, Command:WS, Address:12288, Size:1024-----
+-----Time:6.43911, Command:WS, Address:14336, Size:1024-----
+-----Time:6.44329, Command:WS, Address:16384, Size:1024-----
+-----Time:6.44608, Command:WS, Address:18432, Size:1024-----
+-----Time:6.44974, Command:WS, Address:0, Size:1024-----
+-----Time:6.45186, Command:WS, Address:2048, Size:1024-----
+-----Time:6.45479, Command:WS, Address:4096, Size:1024-----
+-----Time:6.45709, Command:WS, Address:6144, Size:1024-----
+-----Time:6.4608, Command:WS, Address:8192, Size:1024-----
+Reset Zone[2]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.46087, Command:WS, Address:10240, Size:132-----
+-----Time:6.46092, Command:WS, Address:2432, Size:4-----
+-----Time:6.46092, Command:WS, Address:2440, Size:4-----
+-----Time:6.46092, Command:WS, Address:2448, Size:4-----
+-----Time:6.46092, Command:WS, Address:2456, Size:4-----
+-----Time:6.46092, Command:WS, Address:2464, Size:4-----
+-----Time:6.46092, Command:WS, Address:2472, Size:4-----
+-----Time:6.46092, Command:WS, Address:2480, Size:4-----
+-----Time:6.46092, Command:WS, Address:2488, Size:4-----
+-----Time:6.46093, Command:WS, Address:2496, Size:4-----
+-----Time:6.46093, Command:WS, Address:2504, Size:4-----
+-----Time:6.46093, Command:WS, Address:2512, Size:4-----
+-----Time:6.46093, Command:WS, Address:2520, Size:4-----
+-----Time:6.46093, Command:WS, Address:2528, Size:4-----
+-----Time:6.46095, Command:WS, Address:2536, Size:4-----
+-----Time:6.50186, Command:WS, Address:8856, Size:4-----
+-----Time:6.50188, Command:WS, Address:2552, Size:4-----
+-----Time:6.50188, Command:WS, Address:2560, Size:4-----
+-----Time:6.50188, Command:WS, Address:2568, Size:4-----
+-----Time:6.50188, Command:WS, Address:2576, Size:4-----
+-----Time:6.60291, Command:WS, Address:2592, Size:4-----
+-----Time:6.60291, Command:WS, Address:2600, Size:4-----
+-----Time:6.60291, Command:WS, Address:2608, Size:4-----
+-----Time:6.60291, Command:WS, Address:2616, Size:4-----
+-----Time:6.60291, Command:WS, Address:2624, Size:4-----
+-----Time:6.60292, Command:WS, Address:2632, Size:4-----
+-----Time:6.60292, Command:WS, Address:2640, Size:4-----
+-----Time:6.60292, Command:WS, Address:2648, Size:4-----
+-----Time:6.60292, Command:WS, Address:2656, Size:4-----
+-----Time:6.60292, Command:WS, Address:2664, Size:4-----
+-----Time:6.60292, Command:WS, Address:2672, Size:4-----
+-----Time:6.60292, Command:WS, Address:2680, Size:4-----
+-----Time:6.60292, Command:WS, Address:2688, Size:4-----
+-----Time:6.60293, Command:WS, Address:2696, Size:4-----
+-----Time:6.60293, Command:WS, Address:2704, Size:4-----
+-----Time:6.60293, Command:WS, Address:2712, Size:4-----
+-----Time:6.60293, Command:WS, Address:2720, Size:4-----
+-----Time:6.60293, Command:WS, Address:2728, Size:4-----
+-----Time:6.60293, Command:WS, Address:2736, Size:4-----
+-----Time:6.60294, Command:WS, Address:2744, Size:4-----
+-----Time:6.60294, Command:WS, Address:2752, Size:4-----
+-----Time:6.60294, Command:WS, Address:2760, Size:4-----
+-----Time:6.60294, Command:WS, Address:2768, Size:4-----
+-----Time:6.60294, Command:WS, Address:2776, Size:4-----
+-----Time:6.60294, Command:WS, Address:2784, Size:4-----
+-----Time:6.60294, Command:WS, Address:2792, Size:4-----
+-----Time:6.60295, Command:WS, Address:2800, Size:4-----
+-----Time:6.60295, Command:WS, Address:2808, Size:4-----
+-----Time:6.60295, Command:WS, Address:2816, Size:4-----
+-----Time:6.60295, Command:WS, Address:2824, Size:4-----
+-----Time:6.60295, Command:WS, Address:2832, Size:4-----
+-----Time:6.60295, Command:WS, Address:2840, Size:4-----
+-----Time:6.60296, Command:WS, Address:2848, Size:4-----
+-----Time:6.60296, Command:WS, Address:2856, Size:4-----
+-----Time:6.60296, Command:WS, Address:2864, Size:4-----
+-----Time:6.60296, Command:WS, Address:2872, Size:4-----
+-----Time:6.60296, Command:WS, Address:2880, Size:4-----
+-----Time:6.60296, Command:WS, Address:2888, Size:4-----
+-----Time:6.60296, Command:WS, Address:2896, Size:4-----
+-----Time:6.60297, Command:WS, Address:2904, Size:4-----
+-----Time:6.60297, Command:WS, Address:2912, Size:4-----
+-----Time:6.60297, Command:WS, Address:2920, Size:4-----
+-----Time:6.60906, Command:WS, Address:12296, Size:8-----
+-----Time:6.60909, Command:WS, Address:2936, Size:4-----
+-----Time:6.60909, Command:WS, Address:2944, Size:4-----
+-----Time:6.60909, Command:WS, Address:2952, Size:4-----
+-----Time:6.60909, Command:WS, Address:2960, Size:4-----
+-----Time:6.6091, Command:WS, Address:2968, Size:4-----
+-----Time:6.6091, Command:WS, Address:2976, Size:4-----
+-----Time:6.6091, Command:WS, Address:2984, Size:4-----
+-----Time:6.94117, Command:WS, Address:14880, Size:1024-----
+-----Time:6.94148, Command:WS, Address:16928, Size:1024-----
+Reset Zone[3]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.9418, Command:WS, Address:18976, Size:1024-----
+-----Time:6.94211, Command:WS, Address:544, Size:1024-----
+-----Time:6.94243, Command:WS, Address:2592, Size:1024-----
+-----Time:6.94274, Command:WS, Address:4640, Size:1024-----
+Reset Zone[11]
+-----------------------------------------------------ResetBeforeWP
+-----Time:6.94331, Command:WS, Address:6688, Size:1024-----
+-----Time:6.94635, Command:WS, Address:8736, Size:1024-----
+-----Time:6.94984, Command:WS, Address:10784, Size:1024-----
+-----Time:6.95157, Command:WS, Address:12832, Size:1024-----
+-----Time:6.95427, Command:WS, Address:14880, Size:1024-----
+-----Time:6.95697, Command:WS, Address:16928, Size:1024-----
+-----Time:6.9588, Command:WS, Address:18976, Size:1024-----
+-----Time:6.96235, Command:WS, Address:544, Size:1024-----
+-----Time:6.96496, Command:WS, Address:2592, Size:1024-----
+-----Time:6.96754, Command:WS, Address:4640, Size:1024-----
+-----Time:6.97102, Command:WS, Address:6688, Size:1024-----
+-----Time:6.97218, Command:WS, Address:8736, Size:1024-----
+-----Time:6.97582, Command:WS, Address:10784, Size:1024-----
+-----Time:6.97934, Command:WS, Address:12832, Size:1024-----
+-----Time:6.98134, Command:WS, Address:14880, Size:1024-----
+-----Time:6.98596, Command:WS, Address:16928, Size:1024-----
+-----Time:6.98728, Command:WS, Address:18976, Size:1024-----
+-----Time:6.9904, Command:WS, Address:544, Size:1024-----
+-----Time:6.99307, Command:WS, Address:2592, Size:1024-----
+-----Time:6.99505, Command:WS, Address:4640, Size:1024-----
+-----Time:6.99891, Command:WS, Address:6688, Size:1024-----
+-----Time:7.00188, Command:WS, Address:8736, Size:1024-----
+-----Time:7.00383, Command:WS, Address:10784, Size:1024-----
+-----Time:7.00634, Command:WS, Address:12832, Size:1024-----
+-----------------------------------------------------GarbageCollection
+Reset Zone[0]
+Reset Zone[1]
+Reset Zone[3]
+Reset Zone[4]
+----------------------------------------------------END-GarbageCollection
+-----Time:7.00882, Command:WS, Address:14880, Size:1024-----
+-----Time:7.01243, Command:WS, Address:16928, Size:1024-----
+-----Time:7.01508, Command:WS, Address:18976, Size:1024-----
+-----Time:7.01716, Command:WS, Address:544, Size:1024-----
+-----Time:7.01985, Command:WS, Address:2592, Size:1024-----
+-----Time:7.02215, Command:WS, Address:4640, Size:1024-----
+-----Time:7.02435, Command:WS, Address:6688, Size:1024-----
+-----Time:7.02702, Command:WS, Address:8736, Size:1024-----
+-----Time:7.03074, Command:WS, Address:10784, Size:1024-----
+-----Time:7.03225, Command:WS, Address:12832, Size:1024-----
+-----------------------------------------------------GarbageCollection
+Garbage Collection Failed
+----------------------------------------------------END-GarbageCollection
+-----Time:7.03525, Command:WS, Address:14880, Size:1024-----
+-----Time:7.03767, Command:WS, Address:16928, Size:1024-----
+-----Time:7.03993, Command:WS, Address:18976, Size:1024-----
+-----Time:7.04272, Command:WS, Address:544, Size:1024-----
+-----Time:7.04618, Command:WS, Address:2592, Size:1024-----
+-----Time:7.0483, Command:WS, Address:4640, Size:1024-----
+-----Time:7.0509, Command:WS, Address:6688, Size:1024-----
+-----Time:7.05325, Command:WS, Address:8736, Size:1024-----
+-----Time:7.05635, Command:WS, Address:10784, Size:1024-----
+-----Time:7.05878, Command:WS, Address:12832, Size:1024-----
+-----------------------------------------------------GarbageCollection
+Reset Zone[1]
+----------------------------------------------------END-GarbageCollection
+-----Time:7.06192, Command:WS, Address:14880, Size:1024-----
+-----Time:7.06433, Command:WS, Address:16928, Size:1024-----
+-----Time:7.06779, Command:WS, Address:18976, Size:1024-----
+-----Time:7.07032, Command:WS, Address:544, Size:1024-----
+-----Time:7.07214, Command:WS, Address:2592, Size:1024-----
+No Space
+----------------------Show Zone Information
+Mapping Table:
+123 122 121 120 119 118 117 116 
+113 3 107 4 75 6 3 2 
+50 6 16 48 100 27 104 23 
+76 83 85 5 94 77 102 19 
+11 13 101 72 65 53 71 29 
+62 86 59 89 6 125 10 9 
+15 58 67 55 37 35 32 90 
+12 18 111 45 46 38 41 36 
+79 92 14 20 21 52 64 63 
+42 40 2 22 95 60 61 105 
+31 88 51 47 33 68 108 69 
+13 99 80 103 4 5 28 26 
+91 43 57 126 34 44 98 30 
+17 109 25 3 96 78 93 8 
+70 66 97 124 114 81 84 73 
+0 49 56 12 110 8 11 14 
+
+Reset Hint Table:
+2
+3
+13
+5
+13
+6
+13
+13
+13
+13
+13
+13
+13
+13
+2
+13
+
+Block Erase Count Record:
+14 4 14 14 13 13 13 14 
+14 7 7 14 14 13 13 13 
+13 13 13 13 13 13 13 13 
+2 13 13 13 13 14 13 13 
+13 13 13 13 13 13 13 7 
+13 13 13 13 13 13 13 13 
+13 14 13 13 13 14 8 13 
+14 13 13 6 13 13 6 13 
+13 14 13 13 13 13 13 14 
+14 14 6 6 5 13 13 13 
+13 5 3 5 5 5 6 5 
+13 6 13 13 13 13 13 13 
+13 13 13 13 13 14 13 13 
+13 13 4 4 13 13 14 13 
+2 3 2 3 2 2 2 2 
+2 2 2 2 2 6 13 1 
+
+Zone Garbage\Valid Data\Capacity:
+2176\1920\0
+0\4096\0
+1768\2328\0
+2656\1440\0
+608\3488\0
+4072\24\0
+1588\2508\0
+1448\2648\0
+1300\2796\0
+2176\1920\0
+2176\1920\0
+2176\1920\0
+2176\1920\0
+2176\1920\0
+64\4032\0
+0\4096\0
+-----------------------End Zone Information
