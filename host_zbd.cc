@@ -20,6 +20,14 @@ int Zone::Read(){return -1;}
 
 int Zone::Write(int data_size){
 	int s;
+	if(data_size % SZBLK != 0){
+		data_size = (data_size / SZBLK + 1) * SZBLK;
+	}
+	if(data_size % SZBLK != 0 && SHOW_ERR){
+		std::cout << "Zone Write Failed, Padding size is fault\n";
+		return -1;
+	}
+
 	s = blkmgr_->Append(id_, wp_, data_size);
 	if(s == -1){
 		if(SHOW_ERR)
@@ -46,6 +54,8 @@ int Zone::Reset(){
 int Zone::Delete(int data_size){
 	if(data_size > used_capacity_)
 		return -1;
+	if(SHOW_ZONE)
+		std::cout << "Delete data whose length is " << data_size << " from Zone[" << id_ << "]\n";
 	used_capacity_ -= data_size;
 	return 0;
 }

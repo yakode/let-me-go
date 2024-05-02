@@ -19,11 +19,17 @@ int main(int argc, char *argv[]){
 	int gc_counter = 1;
 
 	while(ifs >> time >> cmd >> addr >> data_size){
-		std::cout << "-----Time:" << time << ", Command:" << cmd << ", Address:" << addr%SZFS << ", Size:" << data_size/2 << "-----\n";
-		if(GC_ENABLE && gc_counter == 0)
-			test.GarbageCollection();
+		int addr_ = addr % SZFS;
+		int data_size_ = data_size;
+		if(addr_ + data_size_ > SZFS)
+			data_size_ = SZFS - addr_;
 
-		int  ret = test.Write(addr%SZFS, data_size/2);
+		std::cout << "-----Time:" << time << ", Command:" << cmd << ", Address:" << addr_ << ", Size:" << data_size_ << "-----\n";
+		if(GC_ENABLE && gc_counter == 0){
+			test.GarbageCollection();
+		}
+
+		int  ret = test.Write(addr_, data_size_);
 		if(ret == -1)
 			break;
 

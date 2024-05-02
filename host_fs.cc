@@ -1,7 +1,8 @@
 #include "host_fs.h"
 
 ZoneExtent::~ZoneExtent(){
-	zone_->Delete(length_);
+	if(zone_ != nullptr)
+		zone_->Delete(length_);
 }
 
 ZoneExtent* ZoneExtent::GetNext(){
@@ -16,13 +17,25 @@ int ZoneExtent::GetLength(){
 	return length_;
 }
 
-int ZoneExtent::GetZone(){
-	return zone_->GetId();
+Zone* ZoneExtent::GetZone(){
+	return zone_;
+}
+
+void ZoneExtent::SetLength(int length){
+	length_ = length;
+}
+
+void ZoneExtent::SetZone(Zone *zone){
+	zone_ = zone;
 }
 
 int ZoneExtentList::Push(Zone *zone, int addr, int length){
-	if(SHOW_ZONEFILE)
-		std::cout << "Push New Extent to Zone[" << zone->GetId() << "]\n";
+	if(SHOW_ZONEFILE){
+		if(zone)
+			std::cout << "Push New Extent("<< addr << ", " << length << ") to Zone[" << zone->GetId() << "]\n";
+		else
+			std::cout << "Push New Extent(" << addr << ", " << length << ")  to Buffer\n";
+	}
 
 	int flag = 0;
 	// 0: ok; -1: failed; 1: deletion
@@ -45,7 +58,7 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 		// A------B
 		//    C++++++D
 		// [A, B) [C, D)
-		if(C >= B)
+		if(A >= D)
 			break;
 		if(A < C and B > C){
 			// -------
@@ -54,21 +67,24 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 			//     +++
 			// -------
 			//      ++++++
-			flag = 1;
+			if(ptr->zone_ != nullptr)
+				flag = 1;
 			if(B > D){
 				// -------
 				//   +++
 				int len2 = B - D;
 				ptr->length_ = C - A;
 				this->Push(ptr->zone_, D, len2);
-				ptr->zone_->Delete(length);
+				if(ptr->zone_ != nullptr)
+					ptr->zone_->Delete(length);
 			}else{
 				// ------
 				//    ++++++
 				// -------
 				//     +++
 				ptr->length_ -= (B - C);
-				ptr->zone_->Delete(B - C);
+				if(ptr->zone_ != nullptr)
+					ptr->zone_->Delete(B - C);
 			}
 		}else if(A > C and D > A){
 			//    ---
@@ -77,7 +93,8 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 			// +++++
 			//    ----
 			// +++++++
-			flag = 1;
+			if(ptr->zone_ != nullptr)
+				flag = 1;
 			if(D > B || D == B){
 				//   ----
 				// ++++++++++
@@ -98,7 +115,8 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 				// ++++
 				ptr->sector_ = D;
 				ptr->length_ -= (D - A);
-				ptr->zone_->Delete(D - A);
+				if(ptr->zone_ != nullptr)
+					ptr->zone_->Delete(D - A);
 			}
 		}else if(A == C){
 			// -----
@@ -107,7 +125,8 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 			// ++++++++
 			// -----
 			// ++
-			flag = 1;
+			if(ptr->zone_ != nullptr)
+				flag = 1;
 			if(B <= D){
 				ZoneExtent* del = ptr;
 				if(pre == nullptr){
@@ -122,7 +141,8 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 			}else{
 				ptr->sector_ = D;
 				ptr->length_ = B - D;
-				ptr->zone_->Delete(length);
+				if(ptr->zone_ != nullptr)
+					ptr->zone_->Delete(length);
 			}
 		}
 
@@ -160,6 +180,7 @@ ZoneFile::ZoneFile(ZoneBackend *zbd){
 	zbd_ = zbd;
 	active_zone_ = nullptr;
 	extents = new ZoneExtentList();
+	buffered = 0;
 }
 
 int ZoneFile::AllocateNewZone(){
@@ -172,10 +193,47 @@ int ZoneFile::Write(int addr, int data_size){
 	int left = data_size;
 	int offset = 0;
 	int wr_size;
-	int s, ret = 0;
+	int s, deleted = 0;
 	// -1: failed; 0: ok; 1: deletion
-
+	
 	while(left){
+		if(buffered ==  SZBUF){
+			s = FlushBuffer();
+		}else{
+			wr_size = std::min(left, SZBUF - buffered);
+			s = extents->Push(nullptr, addr + offset, wr_size);
+			buffered += wr_size;
+			left -= wr_size;
+			offset += wr_size;
+		}
+
+		if(s == 1){
+			deleted = 1;
+		}else if(s == -1){
+			if(SHOW_ERR)
+				std::cout << "ZoneFile::Write Push Failed\n";
+			return -1;
+		}
+	}
+
+	return deleted;
+}
+
+int ZoneFile::FlushBuffer(){
+	if(SHOW_ZONEFILE)
+		std::cout << "Flush Buffer\n";
+	ZoneExtent *extent = extents->GetHead();
+	std::vector<ZoneExtent*> flush;
+	int s = 0, deleted = 0;
+
+	while(extent){
+		if(extent->GetZone() == nullptr){
+			flush.push_back(extent);
+		}
+		extent = extent->GetNext();	
+	}
+
+	while(!flush.empty()){
 		if(active_zone_ == nullptr || active_zone_->IsFull()){
 			AllocateNewZone();
 			if(active_zone_ == nullptr){
@@ -184,24 +242,43 @@ int ZoneFile::Write(int addr, int data_size){
 				return -1;
 			}
 		}
+		
+		int wr_size = 0;
+		int capacity = active_zone_->GetCapacity();
+		for(int i = flush.size() - 1; i >= 0; --i){
+			if(wr_size == capacity)
+				break;
 
-		wr_size = std::min(left, active_zone_->GetCapacity());
-		s = extents->Push(active_zone_, addr + offset, wr_size);
+			if(wr_size + flush[i]->GetLength() <= capacity){
+				wr_size += flush[i]->GetLength();
+				flush[i]->SetZone(active_zone_);
+				if(SHOW_ZONEFILE)
+					std::cout << "Push New Extent("<< flush[i]->GetSector() << ", " << flush[i]->GetLength() << ") to Zone[" << active_zone_->GetId() << "]\n";
+				flush.pop_back();
+			}else{
+				// |--------|++++++++|
+				// len1     len2
+				int len1 = flush[i]->GetLength() - (capacity - wr_size);
+				int len2 = capacity - wr_size;
+				flush[i]->SetLength(len1);
+				s = extents->Push(active_zone_, flush[i]->GetSector() + len1, len2);
+				wr_size = active_zone_->GetCapacity();
+				break;
+			}
+
+			if(s == 1){
+				deleted = 1;
+			}else if(s == -1){
+				if(SHOW_ERR)
+					std::cout << "ZoneFile::Write Failed\n";
+				return -1;
+			}
+		}
 		active_zone_->Write(wr_size);
-		if(s == 1){
-			ret = 1;
-		}
-		if(s == -1){
-			if(SHOW_ERR)
-				std::cout << "ZoneFile::Write Failed\n";
-			return -1;
-		}
-
-		left -= wr_size;
-		offset += wr_size;
+		buffered -= wr_size;
 	}
 
-	return ret;
+	return deleted;
 }
 
 int ZoneFile::Read(){return -1;}
@@ -225,6 +302,10 @@ int SimpleFS::Write(int addr, int data_size){
 	while(left){
 		int wr_size = left;
 		idx = (addr + offset) / SZFILE;
+		if(idx > idx_last && SHOW_ERR){
+			std::cout << "ZoneFile[" << idx << "] is wrong\n";
+		}
+
 		if(idx_last != idx){
 			wr_size = (idx + 1) * SZFILE - (addr + offset);
 		}
@@ -255,11 +336,16 @@ void SimpleFS::GarbageCollection(){
 	int non_free = zbd->GetUsedSpace() + zbd->GetReclaimableSpace();
 	int free_percent = (100 * free) / (free + non_free);
 	
+	
 	if(free_percent > GC_START_LEVEL)
 		return;
 
 	if(SHOW_SIMPLEFS){
 		std::cout << "-----------------------------------------------------GarbageCollection\n";
+		std::cout << "free:" << free << "\n";
+		std::cout << "non_free:" << non_free << "\n";
+		std::cout << "free + non_free:" << free + non_free << "\n";
+		std::cout << "free_percent:" << free_percent << "\n";
 		// show();
 	}
 
@@ -285,7 +371,7 @@ void SimpleFS::GarbageCollection(){
 			continue;
 		ZoneExtent *extent = files[i]->GetZoneExtentList()->GetHead();
 		while(extent){
-			if(victim_zones.count(extent->GetZone()) != 0){
+			if(extent->GetZone() && victim_zones.count(extent->GetZone()->GetId()) != 0){
 				files[i]->Write(extent->GetSector(), extent->GetLength());
 			}
 			extent = extent->GetNext();	
@@ -310,13 +396,15 @@ void SimpleFS::ResetBeforeWP(){
 	bool flag = false;
 	for(int i = 0; i < NRZONE; ++i){
 		if(zbd->GetZone(i)->GetWP() != 0 && zbd->GetZone(i)->GetUsedCapacity() == 0){
+			if(!flag)
+				std::cout << "-----------------------------------------------------ResetBeforeWP\n";
 			zbd->GetZone(i)->Reset();
 			flag = true;
 		}
 	}
 
 	if(flag && SHOW_SIMPLEFS){
-		std::cout << "-----------------------------------------------------ResetBeforeWP\n";
+		std::cout << "-----------------------------------------------------END-ResetBeforeWP\n";
 		// show();
 	}
 }

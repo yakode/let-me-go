@@ -25,7 +25,9 @@ public:
 	ZoneExtent *GetNext();
 	int GetSector();
 	int GetLength();
-	int GetZone();
+	Zone* GetZone();
+	void SetLength(int length);
+	void SetZone(Zone* zone);
 };
 
 class ZoneExtentList{
@@ -38,7 +40,9 @@ public:
 	void show(){
 		ZoneExtent *ptr = head_;
 		while(ptr != nullptr){
-			std::cout << ptr->sector_ << " " << ptr->length_ << "\n";
+			if(ptr->zone_ != nullptr)
+				std::cout << "zone: " << ptr->zone_->GetId() << ", ";
+			std::cout << "addr: " << ptr->sector_ << ", length: " << ptr->length_ << "\n";
 			ptr = ptr->next_;
 		}
 	}
@@ -48,13 +52,14 @@ class ZoneFile{
 private:
 	ZoneExtentList *extents;
 	Zone *active_zone_;
-	int AllocateNewZone();
-
 	ZoneBackend *zbd_;
+	int buffered;
 
+	int AllocateNewZone();
 public:
 	ZoneFile(ZoneBackend *zbd);
 	int Write(int addr, int data_size);
+	int FlushBuffer();
 	int Read();
 	ZoneExtentList* GetZoneExtentList();
 	void show(){extents->show();}

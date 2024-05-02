@@ -115,7 +115,8 @@ public:
 
 	void show(){
 		mtable->show();
-		rhtable->show();
+		if(YAK)
+			rhtable->show();
 		blkec->show();
 	}
 };
