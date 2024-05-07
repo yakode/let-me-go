@@ -20,12 +20,12 @@ private:
 	ZoneExtent *next_;
 public:
 	ZoneExtent(Zone *z, int s, int l, ZoneExtent *n): zone_(z), sector_(s), length_(l), next_(n){}
-	ZoneExtent(Zone *z, int s, int l): zone_(z), sector_(s), length_(l){}
+	ZoneExtent(Zone *z, int s, int l): zone_(z), sector_(s), length_(l), next_(nullptr){}
 	~ZoneExtent();
-	ZoneExtent *GetNext();
+	Zone* GetZone();
 	int GetSector();
 	int GetLength();
-	Zone* GetZone();
+	ZoneExtent *GetNext();
 	void SetLength(int length);
 	void SetZone(Zone* zone);
 };
@@ -37,7 +37,7 @@ public:
 	ZoneExtentList(): head_(nullptr){}
 	int Push(Zone *zone, int addr, int length);
 	ZoneExtent* GetHead();
-	void show(){
+	/*void show(){
 		ZoneExtent *ptr = head_;
 		while(ptr != nullptr){
 			if(ptr->zone_ != nullptr)
@@ -45,7 +45,7 @@ public:
 			std::cout << "addr: " << ptr->sector_ << ", length: " << ptr->length_ << "\n";
 			ptr = ptr->next_;
 		}
-	}
+	}*/
 };
 
 class ZoneFile{
@@ -62,7 +62,7 @@ public:
 	int FlushBuffer();
 	int Read();
 	ZoneExtentList* GetZoneExtentList();
-	void show(){extents->show();}
+	// void show(){extents->show();}
 };
 
 class SimpleFS{
@@ -71,11 +71,11 @@ private:
 	ZoneBackend *zbd;
 public:
 	SimpleFS();
-	void GarbageCollection();
+	int GarbageCollection();
 	void FBLRefreshment();
 	void ResetBeforeWP();
-	// 找到要寫的 ZoneFile call ZoneFile::Write
 	int Write(int addr, int data_size);
+	void check();
 	void show(){
 		std::cout << "----------------------Show Zone Information\n";
 		zbd->show();

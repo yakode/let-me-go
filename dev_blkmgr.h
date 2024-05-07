@@ -1,5 +1,6 @@
 #include "parameter.h"
 #include <iostream>
+#include <iomanip>
 
 class LLNode;
 class FBLNode;
@@ -18,6 +19,7 @@ public:
 	LLNode(int blkid_): blkid(blkid_), next(nullptr){}
 	LLNode(int blkid_, LLNode *next_): blkid(blkid_), next(next_){}
 	~LLNode(){}
+	int GetBlkid();
 };
 
 class FBLNode{
@@ -55,7 +57,8 @@ public:
 	int Pop();
 	void Insert(int blkid, int ec);
 	int GetMinEC();
-	void Show();
+	void show(FBLNode*root);
+	void show(){show(root_);}
 };
 
 class BlockEraseCountRecord{
@@ -66,6 +69,7 @@ public:
 	~BlockEraseCountRecord();
 	void AddEC(int blkid);
 	int GetEC(int blkid);
+	int GetECMin();
 	void show();
 };
 
@@ -112,10 +116,18 @@ public:
 	int Append(int zoneid, int offset, int data_size);
 	int Read(int zoneid, int offset, int data_size);
 	int Reset(int zoneid);
+	int GetECMin();
+	int GetECMax();
+	int GetECMinFree();
+	int GetResetHint(int zoneid);
 
 	void show(){
+		if(DYNAMIC_MAPPING){
+			fblist->show();
+			std::cout << "\n\n";
+		}
 		mtable->show();
-		if(YAK)
+		if(true ||  DYNAMIC_MAPPING)
 			rhtable->show();
 		blkec->show();
 	}

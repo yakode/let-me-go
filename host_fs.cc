@@ -5,8 +5,8 @@ ZoneExtent::~ZoneExtent(){
 		zone_->Delete(length_);
 }
 
-ZoneExtent* ZoneExtent::GetNext(){
-	return next_;
+Zone* ZoneExtent::GetZone(){
+	return zone_;
 }
 
 int ZoneExtent::GetSector(){
@@ -17,8 +17,8 @@ int ZoneExtent::GetLength(){
 	return length_;
 }
 
-Zone* ZoneExtent::GetZone(){
-	return zone_;
+ZoneExtent* ZoneExtent::GetNext(){
+	return next_;
 }
 
 void ZoneExtent::SetLength(int length){
@@ -32,9 +32,9 @@ void ZoneExtent::SetZone(Zone *zone){
 int ZoneExtentList::Push(Zone *zone, int addr, int length){
 	if(SHOW_ZONEFILE){
 		if(zone)
-			std::cout << "Push New Extent("<< addr << ", " << length << ") to Zone[" << zone->GetId() << "]\n";
+			std::cout << "Push New Extent(addr: "<< addr << ", size: " << length << ") to Zone[" << zone->GetId() << "]\n";
 		else
-			std::cout << "Push New Extent(" << addr << ", " << length << ")  to Buffer\n";
+			std::cout << "Push New Extent(addr: " << addr << ", size: " << length << ") to Buffer\n";
 	}
 
 	int flag = 0;
@@ -48,9 +48,7 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 	ZoneExtent *ptr = head_;
 	// delete overlapping
 	while(ptr != nullptr){
-		// 這裡的寫法有問題，要修
 		// 把重疊的舊資料刪除
-		// 如果寫好 Push Buffer 就不用改這裡
 		int A = ptr->sector_;
 		int B = ptr->sector_ + ptr->length_;
 		int C = addr;
@@ -192,7 +190,7 @@ int ZoneFile::AllocateNewZone(){
 int ZoneFile::Write(int addr, int data_size){
 	int left = data_size;
 	int offset = 0;
-	int wr_size;
+	int wr_size = 0;
 	int s, deleted = 0;
 	// -1: failed; 0: ok; 1: deletion
 	
@@ -253,7 +251,8 @@ int ZoneFile::FlushBuffer(){
 				wr_size += flush[i]->GetLength();
 				flush[i]->SetZone(active_zone_);
 				if(SHOW_ZONEFILE)
-					std::cout << "Push New Extent("<< flush[i]->GetSector() << ", " << flush[i]->GetLength() << ") to Zone[" << active_zone_->GetId() << "]\n";
+					std::cout << "Push New Extent(addr: " << flush[i]->GetSector() << ", size: "
+						<< flush[i]->GetLength() << ") to Zone[" << active_zone_->GetId() << "]\n";
 				flush.pop_back();
 			}else{
 				// |--------|++++++++|
@@ -292,6 +291,7 @@ SimpleFS::SimpleFS(){
 	files.resize(NRFILE, nullptr);
 }
 
+// 找到要寫的 ZoneFile call ZoneFile::Write
 int SimpleFS::Write(int addr, int data_size){
 	int idx = addr / SZFILE;
 	int idx_last = (addr + data_size - 1) / SZFILE;
@@ -302,8 +302,10 @@ int SimpleFS::Write(int addr, int data_size){
 	while(left){
 		int wr_size = left;
 		idx = (addr + offset) / SZFILE;
-		if(idx > idx_last && SHOW_ERR){
-			std::cout << "ZoneFile[" << idx << "] is wrong\n";
+		if(idx > idx_last){
+			if(SHOW_ERR)
+				std::cout << "ZoneFile[" << idx << "] is wrong\n";
+			return -1;
 		}
 
 		if(idx_last != idx){
@@ -331,48 +333,85 @@ int SimpleFS::Write(int addr, int data_size){
 	return 0;
 }
 
-void SimpleFS::GarbageCollection(){
+// Reference: ZenFS::GCWorker
+// trigger: every 10 sec
+int SimpleFS::GarbageCollection(){
 	int free = zbd->GetFreeSpace();
 	int non_free = zbd->GetUsedSpace() + zbd->GetReclaimableSpace();
 	int free_percent = (100 * free) / (free + non_free);
 	
 	
 	if(free_percent > GC_START_LEVEL)
-		return;
+		return 0;
+	
+	int ec_min = zbd->GetECMin();
+	int ec_max = zbd->GetECMax();
 
 	if(SHOW_SIMPLEFS){
 		std::cout << "-----------------------------------------------------GarbageCollection\n";
 		std::cout << "free:" << free << "\n";
 		std::cout << "non_free:" << non_free << "\n";
-		std::cout << "free + non_free:" << free + non_free << "\n";
-		std::cout << "free_percent:" << free_percent << "\n";
-		// show();
+		std::cout << "free_percent:" << free_percent << "\n\n";
+		std::cout << "ec_max: " << ec_max << "\n";
+		std::cout << "ec_min: " << ec_min << "\n\n";
 	}
 
 	int threshold = (100 - GC_SLOPE * (GC_START_LEVEL - free_percent));
 	std::set<int> victim_zones;
 	int migrate = 0;
 
-	for(int i = 0; i < NRZONE; ++i){
-		Zone *zone =  zbd->GetZone(i);
-		if(zone->IsFull()){
-			int garbage_percent_approx = 100 - 100 * zone->GetUsedCapacity() / zone->GetMaxCapacity();
-        	if (garbage_percent_approx > threshold && garbage_percent_approx < 100) {
-				if(migrate + zone->GetUsedCapacity() <= free){
-          			victim_zones.insert(i);
-					migrate += zone->GetUsedCapacity();
-				}
-        	}
+	if(ENABLE_GC_WL && (ec_max - ec_min) > 0.1 * (EC_LIMIT - ec_max)){
+		// WL
+		for(int i = 0; i < NRZONE; ++i){
+			Zone *zone =  zbd->GetZone(i);
+			if(zone->IsFull()){
+				int reset_hint = zbd->GetResetHint(i);
+	        	if (reset_hint < ec_max - 0.1 * (EC_LIMIT - ec_max)){
+					if(migrate + zone->GetUsedCapacity() + SZBLK <= free){
+	          			victim_zones.insert(i);
+						migrate += zone->GetUsedCapacity();
+					}
+    	   	 	}
+			}
+		}
+		if(SHOW_SIMPLEFS){
+			if(victim_zones.empty())
+				std::cout << "Wear Leveling Failed\n";
+			else
+				std::cout << "Garbage Collection with Wear Leveling\n";
 		}
 	}
 
+	if(victim_zones.empty()){
+		// Normal GC
+		for(int i = 0; i < NRZONE; ++i){
+			Zone *zone =  zbd->GetZone(i);
+			if(zone->IsFull()){
+				int garbage_percent_approx = 100 - 100 * zone->GetUsedCapacity() / zone->GetMaxCapacity();
+	        	if (garbage_percent_approx > threshold && garbage_percent_approx < 100){
+					// redundant SZBLK bytes for padding
+					if(migrate + zone->GetUsedCapacity() + SZBLK <= free){
+	          			victim_zones.insert(i);
+						migrate += zone->GetUsedCapacity();
+					}
+    	   	 	}
+			}
+		}
+	}
+
+	int s = 0;
 	for(int i = 0; i < NRFILE; ++i){
 		if(files[i] == nullptr)
 			continue;
 		ZoneExtent *extent = files[i]->GetZoneExtentList()->GetHead();
 		while(extent){
 			if(extent->GetZone() && victim_zones.count(extent->GetZone()->GetId()) != 0){
-				files[i]->Write(extent->GetSector(), extent->GetLength());
+				s = files[i]->Write(extent->GetSector(), extent->GetLength());
+				if(s == -1){
+					if(SHOW_ERR)
+						std::cout << "No Space to Migrate:(\n";
+					return -1;
+				}
 			}
 			extent = extent->GetNext();	
 		}
@@ -386,12 +425,19 @@ void SimpleFS::GarbageCollection(){
 		// show();
 		if(victim_zones.empty())
 			std::cout << "Garbage Collection Failed\n";
+		else
+			std::cout << "Migrate " << migrate << "bytes\n";
 		std::cout << "----------------------------------------------------END-GarbageCollection\n";
 	}
+
+	return 0;
 }
 
 void FBLRefreshment(){}
 
+// Reference:ZonedBlockDevice::ResetUnusedIOZones
+// wp 前沒資料就 reset
+// trigger: deletion
 void SimpleFS::ResetBeforeWP(){
 	bool flag = false;
 	for(int i = 0; i < NRZONE; ++i){
@@ -407,4 +453,9 @@ void SimpleFS::ResetBeforeWP(){
 		std::cout << "-----------------------------------------------------END-ResetBeforeWP\n";
 		// show();
 	}
+}
+
+void SimpleFS::check(){
+	int used_capacity = zbd->GetUsedSpace();
+	std::cout << used_capacity << " <= " << SZFS << "?\n";
 }

@@ -18,8 +18,12 @@ Zone::Zone(int id, BlockManager *blkmgr){
 
 int Zone::Read(){return -1;}
 
+// Manage the metadata of the Zone
+// and transport append command to Device side
 int Zone::Write(int data_size){
 	int s;
+
+	// padding
 	if(data_size % SZBLK != 0){
 		data_size = (data_size / SZBLK + 1) * SZBLK;
 	}
@@ -28,6 +32,8 @@ int Zone::Write(int data_size){
 		return -1;
 	}
 
+	// Append data to physical block
+	// (what I really do is to allocate dynamically physical block to virtual zone)
 	s = blkmgr_->Append(id_, wp_, data_size);
 	if(s == -1){
 		if(SHOW_ERR)
@@ -40,9 +46,14 @@ int Zone::Write(int data_size){
 	return 0;
 }
 
+// Manage the metadata of the Zone
+// and transport RESET command to Device side
 int Zone::Reset(){
 	if(SHOW_RESET)
-		std::cout << "Reset Zone[" << id_ << "]\n";
+		std::cout << "Reset Zone[" << id_ 
+		<< "] whose reset hint is " << blkmgr_->GetResetHint(id_)
+		<< " and migrate " << used_capacity_ 
+		<< "bytes(" << used_capacity_ * 100 / (SZZONE * SZBLK) << "\%)\n";
 		
 	capacity_ = SZZONE * SZBLK;	
 	wp_ = 0;
@@ -51,11 +62,18 @@ int Zone::Reset(){
 	return 0;
 }
 
+// Manage the metadata of the Zone
 int Zone::Delete(int data_size){
-	if(data_size > used_capacity_)
+	if(data_size > used_capacity_){
+		if(SHOW_ERR){
+			std::cout << "Zone deletion failed, try to delete " << data_size 
+			<< "bytes from zone whose used capacity is " << used_capacity_ << "\n";
+		}
 		return -1;
+	}
+
 	if(SHOW_ZONE)
-		std::cout << "Delete data whose length is " << data_size << " from Zone[" << id_ << "]\n";
+		std::cout << "Delete data whose length is " << data_size << " bytes from Zone[" << id_ << "]\n";
 	used_capacity_ -= data_size;
 	return 0;
 }
@@ -64,8 +82,16 @@ bool Zone::IsFull(){
 	return capacity_ == 0;
 }
 
+int Zone::GetId(){
+	return id_;
+}
+
 int Zone::GetCapacity(){
 	return capacity_;
+}
+
+int Zone::GetWP(){
+	return wp_;
 }
 
 int Zone::GetUsedCapacity(){
@@ -76,10 +102,6 @@ int Zone::GetMaxCapacity(){
 	return max_capacity_;
 }
 
-int Zone::GetWP(){
-	return wp_;
-}
-
 ZoneBackend::ZoneBackend(){
 	blkmgr = new BlockManager();
 	zones.resize(NRZONE, nullptr);
@@ -87,6 +109,7 @@ ZoneBackend::ZoneBackend(){
 		zones[i] = new Zone(i, blkmgr);
 }
 
+// TODO: allocate io zone depend on lifetime hint
 int ZoneBackend::AllocateIOZone(int lifetime, Zone **zone){
 	for(int i = 0; i < NRZONE; ++i){
 		if(zones[i]->GetCapacity() != 0){
@@ -112,10 +135,27 @@ int ZoneBackend::GetUsedSpace(){
 	return used;
 }
 
+// the size of garbage of full zones
 int ZoneBackend::GetReclaimableSpace(){
 	int reclaimable = 0;
 	for(int i = 0; i < NRZONE; ++i)
 		if(zones[i]->IsFull())
 			reclaimable += (zones[i]->GetMaxCapacity() - zones[i]->GetUsedCapacity());
 	return reclaimable;
+}
+
+int ZoneBackend::GetECMin(){
+	return blkmgr->GetECMin(); 
+}
+
+int ZoneBackend::GetECMax(){
+	return blkmgr->GetECMax(); 
+}
+
+int ZoneBackend::GetECMinFree(){
+	return blkmgr->GetECMinFree(); 
+}
+
+int ZoneBackend::GetResetHint(int zoneid){
+	return blkmgr->GetResetHint(zoneid);
 }

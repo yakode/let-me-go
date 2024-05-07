@@ -1,5 +1,9 @@
 #include "dev_blkmgr.h"
 
+int LLNode::GetBlkid(){
+	return blkid;
+}
+
 FBLNode::~FBLNode(){
 	LLNode *tmp;
 	while(head != nullptr){
@@ -148,7 +152,7 @@ FBLNode* FreeBlockList::TreeMinimum(FBLNode *x){
 int FreeBlockList::Pop(){
 	FBLNode *x, *y, *z;
 	int ret;
-	z = this->min_;
+	z =	 this->min_;
 	if(z == this->nil_)
 		return -1;
 	if(z->nr > 1)
@@ -159,7 +163,7 @@ int FreeBlockList::Pop(){
 		else
 			this->min_ = z->right;
 	}
-	ret = z->key;
+	ret = z->head->GetBlkid();
 	
 	y = z;
 	bool y_original_color = y->color;
@@ -268,7 +272,9 @@ void FreeBlockList::Insert(int blkid, int ec){
 }
 
 int FreeBlockList::GetMinEC(){
-	return this->min_->key;
+	if(min_ != nil_)
+		return this->min_->key;
+	return EC_LIMIT;
 }
 
 BlockEraseCountRecord::BlockEraseCountRecord(){
@@ -289,13 +295,22 @@ int BlockEraseCountRecord::GetEC(int blkid){
 	return record[blkid];
 }
 
+int BlockEraseCountRecord::GetECMin(){
+	int ret = EC_LIMIT;
+	for(int i = 0; i < NRBLK; ++i)
+		if(record[i] < ret)
+			ret = record[i];
+
+	return ret;
+}
+
 MappingTable::MappingTable(){
 	mt = new int*[NRZONE];
 	for(int i = 0; i < NRZONE; ++i)
 		mt[i] = new int[SZZONE];
 	allocated = new int[NRZONE];
 
-	if(YAK){
+	if(DYNAMIC_MAPPING){
 		for(int i = 0; i < NRZONE; ++i)
 			allocated[i] = 0;
 		for(int i = 0; i < NRZONE; ++i)
@@ -345,7 +360,10 @@ void MappingTable::ResetMT(int zoneid){
 ResetHintTable::ResetHintTable(){
 	rht = new int[NRZONE];
 	for(int i = 0; i < NRZONE; ++i)
-		rht[i] = -1;
+		if(DYNAMIC_MAPPING)
+			rht[i] = -1;
+		else
+			rht[i] = 0;
 }
 
 void ResetHintTable::SetResetHint(int zoneid, int rh){
@@ -367,10 +385,10 @@ int ResetHintTable::GetResetHint(int zoneid){
 }
 
 int ResetHintTable::GetMinRH(){
-	int ret = -1;
+	int ret = EC_LIMIT;
 	for(int i; i < NRZONE; ++i)
 		if(rht[i] != -1)
-			if(ret == -1 || ret > rht[i])
+			if(ret > rht[i])
 				ret = rht[i];
 	return ret;
 }
@@ -381,12 +399,13 @@ BlockManager::BlockManager(){
 	mtable = new MappingTable();
 	rhtable = new ResetHintTable();
 
-	if(YAK){
+	if(DYNAMIC_MAPPING){
 		for(int i = 0; i < NRBLK; ++i)
 			fblist->Insert(i, 0);
 	}
 
 	EC_max = 0;
+	EC_min = 0;
 	EC_min_free = 0;
 }
 
@@ -415,8 +434,9 @@ int BlockManager::Allocate(int zoneid){
 int BlockManager::Reset(int zoneid){
 	// Reset Reset Hint of zone[zoneid]
 	// Add Block erase count
+	// Update ec_min, ec_max
 	int sz = this->mtable->GetSize(zoneid);
-	if(YAK){
+	if(DYNAMIC_MAPPING){
 		int rh = this->rhtable->GetResetHint(zoneid);
 		this->rhtable->SetResetHint(zoneid, -1);
 
@@ -441,13 +461,19 @@ int BlockManager::Reset(int zoneid){
 		}
 		this->mtable->ResetMT(zoneid);
 	}else{
+		int blkid = this->mtable->GetBlk(zoneid, 0);
+		int ec = this->blkec->GetEC(blkid);
 		for(int i = 0; i < sz; ++i){
-			int blkid = this->mtable->GetBlk(zoneid, i);
+			blkid = this->mtable->GetBlk(zoneid, i);
 			this->Erase(blkid);
 			this->blkec->AddEC(blkid);
 		}
+		if(ec == this->EC_max)
+			this->EC_max += 1;
+		if(ec == this->EC_min)
+			this->EC_min = blkec->GetECMin();
+		rhtable->SetResetHint(zoneid, ec + 1);
 	}
-
 	return 0;
 }
 
@@ -456,7 +482,7 @@ int BlockManager::Erase(int blkid){
 }
 
 int BlockManager::Append(int zoneid, int offset, int data_size){
-	if(!YAK)
+	if(!DYNAMIC_MAPPING)
 		return 0;
 
 	int idx = offset / SZBLK;
@@ -477,11 +503,27 @@ int BlockManager::Read(int zoneid, int offset, int data_size){
 	return -1;
 }
 
+int BlockManager::GetECMin(){
+	return EC_min;
+}
+
+int BlockManager::GetECMax(){
+	return EC_max;
+}
+
+int BlockManager::GetECMinFree(){
+	return EC_min_free;
+}
+
+int BlockManager::GetResetHint(int zoneid){
+	return rhtable->GetResetHint(zoneid);	
+}
+
 void MappingTable::show(){
 	std::cout << "Mapping Table:\n";
 	for(int i = 0; i < NRZONE; ++i){
 		for(int j = 0; j < SZZONE; ++j)
-			std::cout << mt[i][j] << " ";
+			std::cout << std::setw(4) << mt[i][j] << " ";
 		std::cout << "\n";
 	}
 	std::cout << "\n";
@@ -502,4 +544,14 @@ void BlockEraseCountRecord::show(){
 			std::cout << "\n";
 	}	
 	std::cout << "\n";
+}
+
+void FreeBlockList::show(FBLNode *root){
+	std::cout << "Free Block List: ";
+	if(root == nil_){
+		return;
+	}
+	show(root->left);
+	std::cout << root->head->GetBlkid() << " ";
+	show(root->right);
 }

@@ -17,6 +17,7 @@ int main(int argc, char *argv[]){
 	std::string cmd;
 	int addr, data_size;
 	int gc_counter = 1;
+	int s = 0;
 
 	while(ifs >> time >> cmd >> addr >> data_size){
 		int addr_ = addr % SZFS;
@@ -26,15 +27,18 @@ int main(int argc, char *argv[]){
 
 		std::cout << "-----Time:" << time << ", Command:" << cmd << ", Address:" << addr_ << ", Size:" << data_size_ << "-----\n";
 		if(GC_ENABLE && gc_counter == 0){
-			test.GarbageCollection();
+			s = test.GarbageCollection();
+			if(s == -1)
+				break;
 		}
 
-		int  ret = test.Write(addr_, data_size_);
-		if(ret == -1)
+		s = test.Write(addr_, data_size_);
+		if(s == -1)
 			break;
 
 		gc_counter = (gc_counter + 1) % GC_INTERVAL;
 	}
 	test.show();
+	test.check();
 	return 0;
 }

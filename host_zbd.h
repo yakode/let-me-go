@@ -1,10 +1,5 @@
-// ZonedBlockDevice::ResetUnusedIOZones
-// wp 前沒資料就 reset
-// trigger: deletion
-// ZenFS::GCWorker
-// trigger: every 10 sec
-
 #include <vector>
+#include <iomanip>
 
 #include "dev_blkmgr.h"
 #include "parameter.h"
@@ -24,14 +19,14 @@ public:
 	Zone();
 	Zone(int id, BlockManager *blkmgr);
 	int Write(int data_size);
-	int Read();
+	int Read(); // I have not implenmented it yet
 	int Reset();
 	int Delete(int data_size);
 	bool IsFull();
+	int GetId();
 	int GetCapacity();
-	int GetId(){return id_;}
-	int GetUsedCapacity();
 	int GetMaxCapacity();
+	int GetUsedCapacity();
 	int GetWP();
 };
 
@@ -46,13 +41,19 @@ public:
 	int GetFreeSpace();
 	int GetUsedSpace();
 	int GetReclaimableSpace();
+	int GetECMin();
+	int GetECMax();
+	int GetECMinFree();
+	int GetResetHint(int zoneid);
 	void show(){
 		blkmgr->show();
-		std::cout << "Zone Garbage\\Valid Data\\Capacity:\n";
+		std::cout << "    |Zone Garbage |" << "Valid Data   |" << "Capacity\n";
+		std::cout << "----|-------------|" << "-------------|" << "-------------\n";
 		for(int i = 0; i < NRZONE; ++i){
-			std::cout << zones[i]->GetWP() - zones[i]->GetUsedCapacity() << "\\"
-			<< zones[i]->GetUsedCapacity() << "\\" 
-			<< zones[i]->GetCapacity() << "\n";
+			std::cout << std::setw(4) << i << "|"
+				<< std::setw(13) << zones[i]->GetWP() - zones[i]->GetUsedCapacity() << "|"
+				<< std::setw(13) << zones[i]->GetUsedCapacity() << "|" 
+				<< std::setw(13) << zones[i]->GetCapacity() << "\n";
 		}
 	}
 };
