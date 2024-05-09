@@ -1,6 +1,8 @@
 #include "parameter.h"
 #include <iostream>
 #include <iomanip>
+#include <set>
+#include <algorithm>
 
 class LLNode;
 class FBLNode;
@@ -70,6 +72,7 @@ public:
 	void AddEC(int blkid);
 	int GetEC(int blkid);
 	int GetECMin();
+	void Summary();
 	void show();
 };
 
@@ -130,5 +133,9 @@ public:
 		if(true ||  DYNAMIC_MAPPING)
 			rhtable->show();
 		blkec->show();
+	}
+	void show_sum(){
+		blkec->Summary();
+		std::cout << "EC_max: " << EC_max << ", EC_min: " << EC_min << "\n";
 	}
 };

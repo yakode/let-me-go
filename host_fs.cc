@@ -183,15 +183,16 @@ ZoneFile::ZoneFile(ZoneBackend *zbd){
 
 int ZoneFile::AllocateNewZone(){
 	zbd_->AllocateIOZone(-1, &active_zone_);
-
-	return -1;
+	if(active_zone_ == nullptr)
+		return -1;
+	return 0;
 }
 
 int ZoneFile::Write(int addr, int data_size){
 	int left = data_size;
 	int offset = 0;
 	int wr_size = 0;
-	int s, deleted = 0;
+	int s, sthDeleted = 0;
 	// -1: failed; 0: ok; 1: deletion
 	
 	while(left){
@@ -206,7 +207,7 @@ int ZoneFile::Write(int addr, int data_size){
 		}
 
 		if(s == 1){
-			deleted = 1;
+			sthDeleted = 1;
 		}else if(s == -1){
 			if(SHOW_ERR)
 				std::cout << "ZoneFile::Write Push Failed\n";
@@ -214,7 +215,7 @@ int ZoneFile::Write(int addr, int data_size){
 		}
 	}
 
-	return deleted;
+	return sthDeleted;
 }
 
 int ZoneFile::FlushBuffer(){
@@ -222,7 +223,7 @@ int ZoneFile::FlushBuffer(){
 		std::cout << "Flush Buffer\n";
 	ZoneExtent *extent = extents->GetHead();
 	std::vector<ZoneExtent*> flush;
-	int s = 0, deleted = 0;
+	int s = 0, sthDeleted = 0;
 
 	while(extent){
 		if(extent->GetZone() == nullptr){
@@ -242,7 +243,7 @@ int ZoneFile::FlushBuffer(){
 		}
 		
 		int wr_size = 0;
-		int capacity = active_zone_->GetCapacity();
+		int64_t capacity = active_zone_->GetCapacity();
 		for(int i = flush.size() - 1; i >= 0; --i){
 			if(wr_size == capacity)
 				break;
@@ -266,7 +267,7 @@ int ZoneFile::FlushBuffer(){
 			}
 
 			if(s == 1){
-				deleted = 1;
+				sthDeleted = 1;
 			}else if(s == -1){
 				if(SHOW_ERR)
 					std::cout << "ZoneFile::Write Failed\n";
@@ -277,7 +278,7 @@ int ZoneFile::FlushBuffer(){
 		buffered -= wr_size;
 	}
 
-	return deleted;
+	return sthDeleted;
 }
 
 int ZoneFile::Read(){return -1;}
@@ -336,8 +337,8 @@ int SimpleFS::Write(int addr, int data_size){
 // Reference: ZenFS::GCWorker
 // trigger: every 10 sec
 int SimpleFS::GarbageCollection(){
-	int free = zbd->GetFreeSpace();
-	int non_free = zbd->GetUsedSpace() + zbd->GetReclaimableSpace();
+	int64_t free = zbd->GetFreeSpace();
+	int64_t non_free = zbd->GetUsedSpace() + zbd->GetReclaimableSpace();
 	int free_percent = (100 * free) / (free + non_free);
 	
 	
@@ -358,7 +359,7 @@ int SimpleFS::GarbageCollection(){
 
 	int threshold = (100 - GC_SLOPE * (GC_START_LEVEL - free_percent));
 	std::set<int> victim_zones;
-	int migrate = 0;
+	int64_t migrate = 0;
 
 	if(ENABLE_GC_WL && (ec_max - ec_min) > 0.1 * (EC_LIMIT - ec_max)){
 		// WL
@@ -454,8 +455,8 @@ int SimpleFS::FBLRefreshment(){
 	}
 
 	std::set<int> victim_zones;
-	int free = zbd->GetFreeSpace();
-	int migrate = 0;
+	int64_t free = zbd->GetFreeSpace();
+	int64_t migrate = 0;
 
 	for(int i = 0; i < NRZONE; ++i){
 		Zone *zone =  zbd->GetZone(i);
@@ -510,7 +511,7 @@ void SimpleFS::ResetBeforeWP(){
 	bool flag = false;
 	for(int i = 0; i < NRZONE; ++i){
 		if(zbd->GetZone(i)->GetWP() != 0 && zbd->GetZone(i)->GetUsedCapacity() == 0){
-			if(!flag)
+			if(SHOW_SIMPLEFS && !flag)
 				std::cout << "-----------------------------------------------------ResetBeforeWP\n";
 			zbd->GetZone(i)->Reset();
 			flag = true;
@@ -524,6 +525,6 @@ void SimpleFS::ResetBeforeWP(){
 }
 
 void SimpleFS::check(){
-	int used_capacity = zbd->GetUsedSpace();
+	int64_t used_capacity = zbd->GetUsedSpace();
 	std::cout << used_capacity << " <= " << SZFS << "?\n";
 }

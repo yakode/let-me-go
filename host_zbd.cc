@@ -22,26 +22,27 @@ int Zone::Read(){return -1;}
 // and transport append command to Device side
 int Zone::Write(int data_size){
 	int s;
+	int wr_size = data_size;
 
 	// padding
 	if(data_size % SZBLK != 0){
-		data_size = (data_size / SZBLK + 1) * SZBLK;
+		wr_size = (data_size / SZBLK + 1) * SZBLK;
 	}
-	if(data_size % SZBLK != 0 && SHOW_ERR){
+	if(wr_size % SZBLK != 0 && SHOW_ERR){
 		std::cout << "Zone Write Failed, Padding size is fault\n";
 		return -1;
 	}
 
 	// Append data to physical block
 	// (what I really do is to allocate dynamically physical block to virtual zone)
-	s = blkmgr_->Append(id_, wp_, data_size);
+	s = blkmgr_->Append(id_, wp_, wr_size);
 	if(s == -1){
 		if(SHOW_ERR)
 			std::cout << "Zone Write Failed, zoneid:" << id_ << ", wp:" << wp_ << ", data_size:" << data_size << "\n";
 		return -1;
 	}
-	capacity_ -= data_size;
-	wp_ += data_size;
+	capacity_ -= wr_size;
+	wp_ += wr_size;
 	used_capacity_ += data_size;
 	return 0;
 }
@@ -55,7 +56,7 @@ int Zone::Reset(){
 		<< " and migrate " << used_capacity_ 
 		<< "bytes(" << used_capacity_ * 100 / (SZZONE * SZBLK) << "\%)\n";
 		
-	capacity_ = SZZONE * SZBLK;	
+	capacity_ = (int64_t)SZZONE * (int64_t)SZBLK;	
 	wp_ = 0;
 	used_capacity_ = 0;
 	blkmgr_->Reset(id_);
@@ -63,7 +64,7 @@ int Zone::Reset(){
 }
 
 // Manage the metadata of the Zone
-int Zone::Delete(int data_size){
+int Zone::Delete(int64_t data_size){
 	if(data_size > used_capacity_){
 		if(SHOW_ERR){
 			std::cout << "Zone deletion failed, try to delete " << data_size 
@@ -86,19 +87,19 @@ int Zone::GetId(){
 	return id_;
 }
 
-int Zone::GetCapacity(){
+int64_t Zone::GetCapacity(){
 	return capacity_;
 }
 
-int Zone::GetWP(){
+int64_t Zone::GetWP(){
 	return wp_;
 }
 
-int Zone::GetUsedCapacity(){
+int64_t Zone::GetUsedCapacity(){
 	return used_capacity_;
 }
 
-int Zone::GetMaxCapacity(){
+int64_t Zone::GetMaxCapacity(){
 	return max_capacity_;
 }
 
@@ -121,23 +122,23 @@ int ZoneBackend::AllocateIOZone(int lifetime, Zone **zone){
 	return -1;
 }
 
-int ZoneBackend::GetFreeSpace(){
-	int free = 0;
+int64_t ZoneBackend::GetFreeSpace(){
+	int64_t free = 0;
 	for(int i = 0; i < NRZONE; ++i)
 		free += zones[i]->GetCapacity();
 	return free;
 }
 
-int ZoneBackend::GetUsedSpace(){
-	int used = 0;
+int64_t ZoneBackend::GetUsedSpace(){
+	int64_t used = 0;
 	for(int i = 0; i < NRZONE; ++i)
 		used += zones[i]->GetUsedCapacity();
 	return used;
 }
 
 // the size of garbage of full zones
-int ZoneBackend::GetReclaimableSpace(){
-	int reclaimable = 0;
+int64_t ZoneBackend::GetReclaimableSpace(){
+	int64_t reclaimable = 0;
 	for(int i = 0; i < NRZONE; ++i)
 		if(zones[i]->IsFull())
 			reclaimable += (zones[i]->GetMaxCapacity() - zones[i]->GetUsedCapacity());

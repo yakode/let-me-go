@@ -10,10 +10,10 @@ class ZoneBackend;
 class Zone{
 private:
 	int id_;
-	int capacity_; // remaining capacity
-	int max_capacity_;
-	int wp_;
-	int used_capacity_; // sz of valid data
+	int64_t capacity_; // remaining capacity
+	int64_t max_capacity_;
+	int64_t wp_;
+	int64_t used_capacity_; // sz of valid data
 	BlockManager *blkmgr_;
 public:
 	Zone();
@@ -21,13 +21,13 @@ public:
 	int Write(int data_size);
 	int Read(); // I have not implenmented it yet
 	int Reset();
-	int Delete(int data_size);
+	int Delete(long long data_size);
 	bool IsFull();
 	int GetId();
-	int GetCapacity();
-	int GetMaxCapacity();
-	int GetUsedCapacity();
-	int GetWP();
+	int64_t GetCapacity();
+	int64_t GetMaxCapacity();
+	int64_t GetUsedCapacity();
+	int64_t GetWP();
 };
 
 class ZoneBackend{
@@ -38,9 +38,9 @@ public:
 	ZoneBackend();
 	int AllocateIOZone(int lifetimehint, Zone **zone);
 	Zone* GetZone(int zoneid){return zones[zoneid];}
-	int GetFreeSpace();
-	int GetUsedSpace();
-	int GetReclaimableSpace();
+	int64_t GetFreeSpace();
+	int64_t GetUsedSpace();
+	int64_t GetReclaimableSpace();
 	int GetECMin();
 	int GetECMax();
 	int GetECMinFree();
@@ -55,5 +55,6 @@ public:
 				<< std::setw(13) << zones[i]->GetUsedCapacity() << "|" 
 				<< std::setw(13) << zones[i]->GetCapacity() << "\n";
 		}
+		blkmgr->show_sum();
 	}
 };

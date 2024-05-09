@@ -304,6 +304,16 @@ int BlockEraseCountRecord::GetECMin(){
 	return ret;
 }
 
+void BlockEraseCountRecord::Summary(){
+	std::set<int> summary;
+	for(int i = 0; i < NRBLK; ++i)
+		summary.insert(record[i]);
+	std::cout << "Block Erase Count Summary:\n";
+	for (std::set<int>::iterator it = summary.begin(); it != summary.end(); ++it){
+		std::cout << *it << ": " << std::count(record, record + NRBLK, *it) << "\n";
+	}
+}
+
 MappingTable::MappingTable(){
 	mt = new int*[NRZONE];
 	for(int i = 0; i < NRZONE; ++i)
@@ -449,6 +459,7 @@ int BlockManager::Reset(int zoneid){
 				this->EC_max += 1;
 			this->fblist->Insert(blkid, ec + 1);
 		}
+		this->EC_min_free = fblist->GetMinEC();
 
 		if(rh == this->EC_min){
 			if(this->EC_min_free != this->EC_min){

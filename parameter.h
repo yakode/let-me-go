@@ -5,14 +5,15 @@
 
 #define EC_LIMIT 100
 
-#define NRZONE 16 // 1024 //16
-#define SZZONE 8 //(512/SMALL) // 512 //8
+#define NRZONE 1024 //16
+#define SZZONE 512 //8
 #define NRBLK (NRZONE*SZZONE)
-#define SZBLK 512 //(2*1024*1024) //2MB //512
+#define SZBLK (2*1024*1024) //2MB //512
 #define SZPAGE -1
 
 #define LATENCY_WRITE -1
 #define LATENCY_READ -1
+#define LATENCY_ERASE -1
 
 #define SZBUF 2048
 #define NRFILE 4
@@ -24,13 +25,15 @@
 #define GC_START_LEVEL 20
 #define GC_SLOPE 3
 
-#define DYNAMIC_MAPPING true
+#define DYNAMIC_MAPPING false
 #define ENABLE_GC_WL false
-#define ENABLE_FBL_REFRESH true
+#define ENABLE_FBL_REFRESH false
 
-#define SHOW_ZONE true // Block Allocation
-#define SHOW_RESET true // Zone Reset
+#define SHOW_ZONE false // Block Allocation
+#define SHOW_RESET false // Zone Reset
 #define SHOW_ZONEFILE false // Write data to ZoneFile and Push Extent
-#define SHOW_SIMPLEFS true // Garbage Collection and Reset Before WP
+#define SHOW_SIMPLEFS false // Garbage Collection and Reset Before WP
 #define SHOW_ERR true
-#define SHOW_CMD true
+#define SHOW_CMD false
+
+typedef long long int64_t; 
