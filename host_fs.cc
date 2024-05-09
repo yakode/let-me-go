@@ -342,7 +342,7 @@ int SimpleFS::GarbageCollection(){
 	
 	
 	if(free_percent > GC_START_LEVEL)
-		return 0;
+		return 1;
 	
 	int ec_min = zbd->GetECMin();
 	int ec_max = zbd->GetECMax();
@@ -433,7 +433,75 @@ int SimpleFS::GarbageCollection(){
 	return 0;
 }
 
-void FBLRefreshment(){}
+// 當 EC_max 跟 EC_min 差距過大且 Free Block List 內的 block 的 EC 偏高時，執行 WL
+// trigger: ?
+int SimpleFS::FBLRefreshment(){
+	if(!ENABLE_FBL_REFRESH)
+		return 0;
+	int ec_min = zbd->GetECMin();
+	int ec_max = zbd->GetECMax();
+	if(!((ec_max - ec_min) > 0.1 * (EC_LIMIT - ec_max)))
+		return 0;
+	int ec_min_free = zbd->GetECMinFree();
+	if(ec_min_free == -1 || !(ec_min_free > (ec_min + 0.9 * (ec_max - ec_min))))
+		return 0;
+
+	if(SHOW_SIMPLEFS){
+		std::cout << "-----------------------------------------------------FreeBlockListRefreshment\n";
+		std::cout << "ec_max: " << ec_max << "\n";
+		std::cout << "ec_min: " << ec_min << "\n";
+		std::cout << "ec_min_free: " << ec_min_free << "\n\n";
+	}
+
+	std::set<int> victim_zones;
+	int free = zbd->GetFreeSpace();
+	int migrate = 0;
+
+	for(int i = 0; i < NRZONE; ++i){
+		Zone *zone =  zbd->GetZone(i);
+		if(zone->IsFull()){
+			int reset_hint = zbd->GetResetHint(i);
+        	if (reset_hint < ec_max - 0.1 * (EC_LIMIT - ec_max)){
+				if(migrate + zone->GetUsedCapacity() + SZBLK <= free){
+          			victim_zones.insert(i);
+					migrate += zone->GetUsedCapacity();
+				}
+	   	 	}
+		}
+	}
+
+	int s = 0;
+	for(int i = 0; i < NRFILE; ++i){
+		if(files[i] == nullptr)
+			continue;
+		ZoneExtent *extent = files[i]->GetZoneExtentList()->GetHead();
+		while(extent){
+			if(extent->GetZone() && victim_zones.count(extent->GetZone()->GetId()) != 0){
+				s = files[i]->Write(extent->GetSector(), extent->GetLength());
+				if(s == -1){
+					if(SHOW_ERR)
+						std::cout << "No Space to Migrate:(\n";
+					return -1;
+				}
+			}
+			extent = extent->GetNext();	
+		}
+	}
+
+	for (std::set<int>::iterator it = victim_zones.begin(); it != victim_zones.end(); ++it){
+		zbd->GetZone(*it)->Reset();
+	}
+
+	if(SHOW_SIMPLEFS){
+		if(victim_zones.empty())
+			std::cout << "Free Block List Refreshment Failed\n";
+		else
+			std::cout << "Migrate " << migrate << "bytes\n";
+		std::cout << "----------------------------------------------------END-FreeBlockListRefreshment\n";
+	}
+
+	return 0;
+}
 
 // Reference:ZonedBlockDevice::ResetUnusedIOZones
 // wp 前沒資料就 reset

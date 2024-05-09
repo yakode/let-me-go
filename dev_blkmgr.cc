@@ -152,7 +152,7 @@ FBLNode* FreeBlockList::TreeMinimum(FBLNode *x){
 int FreeBlockList::Pop(){
 	FBLNode *x, *y, *z;
 	int ret;
-	z =	 this->min_;
+	z =	this->min_;
 	if(z == this->nil_)
 		return -1;
 	if(z->nr > 1)
@@ -274,7 +274,7 @@ void FreeBlockList::Insert(int blkid, int ec){
 int FreeBlockList::GetMinEC(){
 	if(min_ != nil_)
 		return this->min_->key;
-	return EC_LIMIT;
+	return -1;
 }
 
 BlockEraseCountRecord::BlockEraseCountRecord(){
@@ -386,7 +386,7 @@ int ResetHintTable::GetResetHint(int zoneid){
 
 int ResetHintTable::GetMinRH(){
 	int ret = EC_LIMIT;
-	for(int i; i < NRZONE; ++i)
+	for(int i = 0; i < NRZONE; ++i)
 		if(rht[i] != -1)
 			if(ret > rht[i])
 				ret = rht[i];
@@ -453,7 +453,7 @@ int BlockManager::Reset(int zoneid){
 		if(rh == this->EC_min){
 			if(this->EC_min_free != this->EC_min){
 				int rh_min = this->rhtable->GetMinRH();
-				if(rh_min < this->EC_min_free)
+				if(rh_min < this->EC_min_free || this->EC_min_free == -1)
 					this->EC_min = rh_min;
 				else
 					this->EC_min = this->EC_min_free;

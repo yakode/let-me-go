@@ -26,10 +26,11 @@
 
 #define DYNAMIC_MAPPING true
 #define ENABLE_GC_WL false
-#define ENABLE_FBL_REFRESH false
+#define ENABLE_FBL_REFRESH true
 
 #define SHOW_ZONE true // Block Allocation
 #define SHOW_RESET true // Zone Reset
-#define SHOW_ZONEFILE true // Write data to ZoneFile and Push Extent
+#define SHOW_ZONEFILE false // Write data to ZoneFile and Push Extent
 #define SHOW_SIMPLEFS true // Garbage Collection and Reset Before WP
 #define SHOW_ERR true
+#define SHOW_CMD true

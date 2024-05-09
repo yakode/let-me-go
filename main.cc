@@ -25,11 +25,25 @@ int main(int argc, char *argv[]){
 		if(addr_ + data_size_ > SZFS)
 			data_size_ = SZFS - addr_;
 
-		std::cout << "-----Time:" << time << ", Command:" << cmd << ", Address:" << addr_ << ", Size:" << data_size_ << "-----\n";
-		if(GC_ENABLE && gc_counter == 0){
-			s = test.GarbageCollection();
-			if(s == -1)
-				break;
+		if(SHOW_CMD){
+			std::cout << "-----Time:" << time 
+				<< ", Command:" << cmd 
+				<< ", Address:" << addr_ 
+				<< ", Size:" << data_size_ << "-----\n";
+		}
+
+		if(gc_counter == 0){
+			s = 1;
+			if(GC_ENABLE){
+				s = test.GarbageCollection();
+				if(s == -1)
+					break;
+			}
+			if(s == 1 && ENABLE_FBL_REFRESH){
+				s = test.FBLRefreshment();
+				if(s == -1)
+					break;
+			}
 		}
 
 		s = test.Write(addr_, data_size_);
@@ -38,6 +52,7 @@ int main(int argc, char *argv[]){
 
 		gc_counter = (gc_counter + 1) % GC_INTERVAL;
 	}
+
 	test.show();
 	test.check();
 	return 0;

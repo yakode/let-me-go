@@ -72,7 +72,7 @@ private:
 public:
 	SimpleFS();
 	int GarbageCollection();
-	void FBLRefreshment();
+	int FBLRefreshment();
 	void ResetBeforeWP();
 	int Write(int addr, int data_size);
 	void check();
