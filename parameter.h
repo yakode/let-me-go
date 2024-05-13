@@ -21,19 +21,19 @@
 #define SZFS (NRFILE*SZFILE)
 
 #define GC_ENABLE true
-#define GC_INTERVAL 10
+#define GC_INTERVAL 1000
 #define GC_START_LEVEL 20
 #define GC_SLOPE 3
 
-#define DYNAMIC_MAPPING false
+#define DYNAMIC_MAPPING true
 #define ENABLE_GC_WL false
 #define ENABLE_FBL_REFRESH false
 
 #define SHOW_ZONE false // Block Allocation
-#define SHOW_RESET false // Zone Reset
+#define SHOW_RESET true // Zone Reset
 #define SHOW_ZONEFILE false // Write data to ZoneFile and Push Extent
-#define SHOW_SIMPLEFS false // Garbage Collection and Reset Before WP
+#define SHOW_SIMPLEFS true // Garbage Collection and Reset Before WP
 #define SHOW_ERR true
-#define SHOW_CMD false
+#define SHOW_CMD true
 
 typedef long long int64_t; 

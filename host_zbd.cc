@@ -67,7 +67,7 @@ int Zone::Reset(){
 int Zone::Delete(int64_t data_size){
 	if(data_size > used_capacity_){
 		if(SHOW_ERR){
-			std::cout << "Zone deletion failed, try to delete " << data_size 
+			std::cout << "Zone Deletion Failed, try to delete " << data_size 
 			<< "bytes from zone whose used capacity is " << used_capacity_ << "\n";
 		}
 		return -1;

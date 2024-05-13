@@ -129,10 +129,10 @@ public:
 			fblist->show();
 			std::cout << "\n\n";
 		}
-		mtable->show();
+		// mtable->show();
 		if(true ||  DYNAMIC_MAPPING)
 			rhtable->show();
-		blkec->show();
+		// blkec->show();
 	}
 	void show_sum(){
 		blkec->Summary();

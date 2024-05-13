@@ -395,7 +395,7 @@ int ResetHintTable::GetResetHint(int zoneid){
 }
 
 int ResetHintTable::GetMinRH(){
-	int ret = EC_LIMIT;
+	int ret = EC_LIMIT + 1;
 	for(int i = 0; i < NRZONE; ++i)
 		if(rht[i] != -1)
 			if(ret > rht[i])
@@ -454,11 +454,12 @@ int BlockManager::Reset(int zoneid){
 			int blkid = this->mtable->GetBlk(zoneid, i);
 			int ec = this->blkec->GetEC(blkid);
 			this->Erase(blkid);
-			this->blkec->AddEC(blkid);
 			if(ec == this->EC_max)
 				this->EC_max += 1;
-			this->fblist->Insert(blkid, ec + 1);
+			if(ec + 1 < EC_LIMIT)
+				this->fblist->Insert(blkid, ec + 1);
 		}
+		this->mtable->ResetMT(zoneid);
 		this->EC_min_free = fblist->GetMinEC();
 
 		if(rh == this->EC_min){
@@ -470,14 +471,12 @@ int BlockManager::Reset(int zoneid){
 					this->EC_min = this->EC_min_free;
 			}
 		}
-		this->mtable->ResetMT(zoneid);
 	}else{
 		int blkid = this->mtable->GetBlk(zoneid, 0);
 		int ec = this->blkec->GetEC(blkid);
 		for(int i = 0; i < sz; ++i){
 			blkid = this->mtable->GetBlk(zoneid, i);
 			this->Erase(blkid);
-			this->blkec->AddEC(blkid);
 		}
 		if(ec == this->EC_max)
 			this->EC_max += 1;
@@ -489,6 +488,8 @@ int BlockManager::Reset(int zoneid){
 }
 
 int BlockManager::Erase(int blkid){
+	this->blkec->AddEC(blkid);
+	
 	return -1;
 }
 
@@ -542,8 +543,11 @@ void MappingTable::show(){
 
 void ResetHintTable::show(){
 	std::cout << "Reset Hint Table:\n";
-	for(int i = 0; i < NRZONE; ++i)
-		std::cout << rht[i] << "\n";
+	for(int i = 0; i < NRZONE; ++i){
+		std::cout << std::setw(6) << rht[i] << " ";
+		if((i + 1) % 16 == 0)
+			std::cout << "\n";
+	}
 	std::cout << "\n";
 }
 
@@ -558,7 +562,6 @@ void BlockEraseCountRecord::show(){
 }
 
 void FreeBlockList::show(FBLNode *root){
-	std::cout << "Free Block List: ";
 	if(root == nil_){
 		return;
 	}

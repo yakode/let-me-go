@@ -37,7 +37,7 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 			std::cout << "Push New Extent(addr: " << addr << ", size: " << length << ") to Buffer\n";
 	}
 
-	int flag = 0;
+	int flag = 0, s = 0;
 	// 0: ok; -1: failed; 1: deletion
 	if(head_ == nullptr){
 		head_ = new ZoneExtent(zone, addr, length, nullptr);
@@ -74,7 +74,7 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 				ptr->length_ = C - A;
 				this->Push(ptr->zone_, D, len2);
 				if(ptr->zone_ != nullptr)
-					ptr->zone_->Delete(length);
+					s = ptr->zone_->Delete(length);
 			}else{
 				// ------
 				//    ++++++
@@ -82,7 +82,7 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 				//     +++
 				ptr->length_ -= (B - C);
 				if(ptr->zone_ != nullptr)
-					ptr->zone_->Delete(B - C);
+					s = ptr->zone_->Delete(B - C);
 			}
 		}else if(A > C and D > A){
 			//    ---
@@ -114,7 +114,7 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 				ptr->sector_ = D;
 				ptr->length_ -= (D - A);
 				if(ptr->zone_ != nullptr)
-					ptr->zone_->Delete(D - A);
+					s = ptr->zone_->Delete(D - A);
 			}
 		}else if(A == C){
 			// -----
@@ -140,12 +140,14 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 				ptr->sector_ = D;
 				ptr->length_ = B - D;
 				if(ptr->zone_ != nullptr)
-					ptr->zone_->Delete(length);
+					s = ptr->zone_->Delete(length);
 			}
 		}
 
 		pre = ptr;
 		ptr = ptr->next_;
+		if(s == -1)
+			return -1;
 	}
 
 	// insert
@@ -274,7 +276,10 @@ int ZoneFile::FlushBuffer(){
 				return -1;
 			}
 		}
-		active_zone_->Write(wr_size);
+		s = active_zone_->Write(wr_size);
+		if(s == -1){
+			return -1;
+		}
 		buffered -= wr_size;
 	}
 
