@@ -366,7 +366,7 @@ int SimpleFS::GarbageCollection(){
 	std::set<int> victim_zones;
 	int64_t migrate = 0;
 
-	if(ENABLE_GC_WL && (ec_max - ec_min) > 0.1 * (EC_LIMIT - ec_max)){
+	if(ENABLE_GC_WL && ENABLE_DYNAMIC_MAPPING && (ec_max - ec_min) > 0.1 * (EC_LIMIT - ec_max)){
 		// WL
 		for(int i = 0; i < NRZONE; ++i){
 			Zone *zone =  zbd->GetZone(i);
@@ -440,9 +440,9 @@ int SimpleFS::GarbageCollection(){
 }
 
 // 當 EC_max 跟 EC_min 差距過大且 Free Block List 內的 block 的 EC 偏高時，執行 WL
-// trigger: ?
+// trigger: every 10 sec if GC is not be triggerd
 int SimpleFS::FBLRefreshment(){
-	if(!ENABLE_FBL_REFRESH)
+	if(!ENABLE_FBL_REFRESH || !ENABLE_DYNAMIC_MAPPING)
 		return 0;
 	int ec_min = zbd->GetECMin();
 	int ec_max = zbd->GetECMax();
@@ -525,7 +525,6 @@ void SimpleFS::ResetBeforeWP(){
 
 	if(flag && SHOW_SIMPLEFS){
 		std::cout << "-----------------------------------------------------END-ResetBeforeWP\n";
-		// show();
 	}
 }
 

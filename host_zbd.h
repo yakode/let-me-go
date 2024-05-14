@@ -55,6 +55,5 @@ public:
 				<< std::setw(13) << zones[i]->GetUsedCapacity() << "|" 
 				<< std::setw(13) << zones[i]->GetCapacity() << "\n";
 		}
-		blkmgr->show_sum();
 	}
 };

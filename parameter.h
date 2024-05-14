@@ -1,9 +1,9 @@
 // STORAGE
-// 64K
+// 1TB
 // FILESYSTEM
-// 32K
+// 32KB
 
-#define EC_LIMIT 100
+#define EC_LIMIT 500
 
 #define NRZONE 1024 //16
 #define SZZONE 512 //8
@@ -25,7 +25,7 @@
 #define GC_START_LEVEL 20
 #define GC_SLOPE 3
 
-#define DYNAMIC_MAPPING true
+#define ENABLE_DYNAMIC_MAPPING true
 #define ENABLE_GC_WL false
 #define ENABLE_FBL_REFRESH false
 

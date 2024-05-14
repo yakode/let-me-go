@@ -104,7 +104,10 @@ int64_t Zone::GetMaxCapacity(){
 }
 
 ZoneBackend::ZoneBackend(){
-	blkmgr = new BlockManager();
+	if(ENABLE_DYNAMIC_MAPPING)
+		blkmgr = new BlockManagerDynamic();
+	else
+		blkmgr = new BlockManagerStatic();
 	zones.resize(NRZONE, nullptr);
 	for(int i = 0; i < NRZONE; ++i)
 		zones[i] = new Zone(i, blkmgr);

@@ -320,19 +320,11 @@ MappingTable::MappingTable(){
 		mt[i] = new int[SZZONE];
 	allocated = new int[NRZONE];
 
-	if(DYNAMIC_MAPPING){
-		for(int i = 0; i < NRZONE; ++i)
-			allocated[i] = 0;
-		for(int i = 0; i < NRZONE; ++i)
-			for(int j = 0; j < SZZONE; ++j)
-				mt[i][j] = -1;
-	}else{
-		for(int i = 0; i < NRZONE; ++i)
-			allocated[i] = SZZONE;
-		for(int i = 0; i < NRZONE; ++i)
-			for(int j = 0; j < SZZONE; ++j)
-				mt[i][j] = SZZONE * i + j;
-	}
+	for(int i = 0; i < NRZONE; ++i)
+		allocated[i] = 0;
+	for(int i = 0; i < NRZONE; ++i)
+		for(int j = 0; j < SZZONE; ++j)
+			mt[i][j] = -1;
 }
 
 MappingTable::~MappingTable(){
@@ -370,10 +362,7 @@ void MappingTable::ResetMT(int zoneid){
 ResetHintTable::ResetHintTable(){
 	rht = new int[NRZONE];
 	for(int i = 0; i < NRZONE; ++i)
-		if(DYNAMIC_MAPPING)
-			rht[i] = -1;
-		else
-			rht[i] = 0;
+		rht[i] = -1;
 }
 
 void ResetHintTable::SetResetHint(int zoneid, int rh){
@@ -403,30 +392,28 @@ int ResetHintTable::GetMinRH(){
 	return ret;
 }
 
-BlockManager::BlockManager(){
+BlockManagerDynamic::BlockManagerDynamic(){
 	fblist = new FreeBlockList();
 	blkec = new BlockEraseCountRecord();
 	mtable = new MappingTable();
 	rhtable = new ResetHintTable();
 
-	if(DYNAMIC_MAPPING){
-		for(int i = 0; i < NRBLK; ++i)
-			fblist->Insert(i, 0);
-	}
+	for(int i = 0; i < NRBLK; ++i)
+		fblist->Insert(i, 0);
 
 	EC_max = 0;
 	EC_min = 0;
 	EC_min_free = 0;
 }
 
-BlockManager::~BlockManager(){
+BlockManagerDynamic::~BlockManagerDynamic(){
 	delete fblist;
 	delete blkec;
 	delete mtable;
 	delete rhtable;
 }
 
-int BlockManager::Allocate(int zoneid){
+int BlockManagerDynamic::Allocate(int zoneid){
 	int blkid = this->fblist->Pop();
 	if(blkid == -1){
 		return -1;
@@ -441,65 +428,48 @@ int BlockManager::Allocate(int zoneid){
 	return 0;
 }
 
-int BlockManager::Reset(int zoneid){
+int BlockManagerDynamic::Reset(int zoneid){
 	// Reset Reset Hint of zone[zoneid]
 	// Add Block erase count
 	// Update ec_min, ec_max
 	int sz = this->mtable->GetSize(zoneid);
-	if(DYNAMIC_MAPPING){
-		int rh = this->rhtable->GetResetHint(zoneid);
-		this->rhtable->SetResetHint(zoneid, -1);
+	int rh = this->rhtable->GetResetHint(zoneid);
+	this->rhtable->SetResetHint(zoneid, -1);
 
-		for(int i = 0; i < sz; ++i){
-			int blkid = this->mtable->GetBlk(zoneid, i);
-			int ec = this->blkec->GetEC(blkid);
-			this->Erase(blkid);
-			if(ec == this->EC_max)
-				this->EC_max += 1;
-			if(ec + 1 < EC_LIMIT)
-				this->fblist->Insert(blkid, ec + 1);
-		}
-		this->mtable->ResetMT(zoneid);
-		this->EC_min_free = fblist->GetMinEC();
-
-		if(rh == this->EC_min){
-			if(this->EC_min_free != this->EC_min){
-				int rh_min = this->rhtable->GetMinRH();
-				if(rh_min < this->EC_min_free || this->EC_min_free == -1)
-					this->EC_min = rh_min;
-				else
-					this->EC_min = this->EC_min_free;
-			}
-		}
-	}else{
-		int blkid = this->mtable->GetBlk(zoneid, 0);
+	for(int i = 0; i < sz; ++i){
+		int blkid = this->mtable->GetBlk(zoneid, i);
 		int ec = this->blkec->GetEC(blkid);
-		for(int i = 0; i < sz; ++i){
-			blkid = this->mtable->GetBlk(zoneid, i);
-			this->Erase(blkid);
-		}
+		this->Erase(blkid);
 		if(ec == this->EC_max)
 			this->EC_max += 1;
-		if(ec == this->EC_min)
-			this->EC_min = blkec->GetECMin();
-		rhtable->SetResetHint(zoneid, ec + 1);
+		if(ec + 1 < EC_LIMIT)
+			this->fblist->Insert(blkid, ec + 1);
+	}
+	this->mtable->ResetMT(zoneid);
+	this->EC_min_free = fblist->GetMinEC();
+
+	if(rh == this->EC_min){
+		if(this->EC_min_free != this->EC_min){
+			int rh_min = this->rhtable->GetMinRH();
+			if(rh_min < this->EC_min_free || this->EC_min_free == -1)
+				this->EC_min = rh_min;
+			else
+				this->EC_min = this->EC_min_free;
+		}
 	}
 	return 0;
 }
 
-int BlockManager::Erase(int blkid){
+int BlockManagerDynamic::Erase(int blkid){
 	this->blkec->AddEC(blkid);
 	
 	return -1;
 }
 
-int BlockManager::Append(int zoneid, int offset, int data_size){
-	if(!DYNAMIC_MAPPING)
-		return 0;
-
+int BlockManagerDynamic::Append(int zoneid, int offset, int data_size){
 	int idx = offset / SZBLK;
 	int last_idx = (offset + data_size - 1) / SZBLK;
-	for(int i = idx; i <= last_idx; ++i)
+	for(int i = idx; i <= last_idx; ++i){
 		if(!mtable->IsAllocated(zoneid, i)){
 			int s = Allocate(zoneid);
 			if(s == -1){
@@ -508,29 +478,72 @@ int BlockManager::Append(int zoneid, int offset, int data_size){
 				return -1;
 			}
 		}
+	}
 	return 0;
 }
 
-int BlockManager::Read(int zoneid, int offset, int data_size){
+int BlockManagerDynamic::Read(int zoneid, int offset, int data_size){
 	return -1;
 }
 
-int BlockManager::GetECMin(){
+int BlockManagerDynamic::GetECMin(){
 	return EC_min;
 }
 
-int BlockManager::GetECMax(){
+int BlockManagerDynamic::GetECMax(){
 	return EC_max;
 }
 
-int BlockManager::GetECMinFree(){
+int BlockManagerDynamic::GetECMinFree(){
 	return EC_min_free;
 }
 
-int BlockManager::GetResetHint(int zoneid){
+int BlockManagerDynamic::GetResetHint(int zoneid){
 	return rhtable->GetResetHint(zoneid);	
 }
 
+BlockManagerStatic::BlockManagerStatic(){
+	blkec = new BlockEraseCountRecord();
+
+	EC_max = 0;
+	EC_min = 0;
+}
+
+BlockManagerStatic::~BlockManagerStatic(){
+	delete blkec;
+}
+
+int BlockManagerStatic::GetECMin(){
+	return EC_min;
+}
+
+int BlockManagerStatic::GetECMax(){
+	return EC_max;
+}
+
+int BlockManagerStatic::Erase(int blkid){
+	this->blkec->AddEC(blkid);
+	
+	return -1;
+}
+
+int BlockManagerStatic::Reset(int zoneid){
+	// Add Block erase count
+	// Update ec_min, ec_max
+	int blkid = zoneid * SZZONE;
+	int ec = this->blkec->GetEC(blkid);
+	for(int i = 0; i < SZZONE; ++i){
+		blkid = zoneid * SZZONE + i;
+		this->Erase(blkid);
+	}
+	if(ec == this->EC_max)
+		this->EC_max += 1;
+	if(ec == this->EC_min)
+		this->EC_min = blkec->GetECMin();
+	return 0;
+}
+
+// Many show() xD
 void MappingTable::show(){
 	std::cout << "Mapping Table:\n";
 	for(int i = 0; i < NRZONE; ++i){

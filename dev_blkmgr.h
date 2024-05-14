@@ -102,7 +102,21 @@ public:
 	void show();
 };
 
+
 class BlockManager{
+public:
+	virtual int Append(int zoneid, int offset, int data_size) = 0;
+	virtual int Read(int zoneid, int offset, int data_size) = 0;
+	virtual int Reset(int zoneid) = 0;
+	virtual int GetECMin() = 0;
+	virtual int GetECMax() = 0;
+	virtual int GetECMinFree() = 0;
+	virtual int GetResetHint(int zoneid) = 0;
+
+	virtual void show() = 0;
+};
+
+class BlockManagerDynamic: public BlockManager{
 private:
 	FreeBlockList *fblist;
 	BlockEraseCountRecord *blkec;
@@ -114,8 +128,8 @@ private:
 	int Allocate(int zoneid);
 	int Erase(int blkid);
 public:
-	BlockManager();
-	~BlockManager();
+	BlockManagerDynamic();
+	~BlockManagerDynamic();
 	int Append(int zoneid, int offset, int data_size);
 	int Read(int zoneid, int offset, int data_size);
 	int Reset(int zoneid);
@@ -125,16 +139,36 @@ public:
 	int GetResetHint(int zoneid);
 
 	void show(){
-		if(DYNAMIC_MAPPING){
-			fblist->show();
-			std::cout << "\n\n";
-		}
+		// fblist->show();
+		// std::cout << "\n\n";
 		// mtable->show();
-		if(true ||  DYNAMIC_MAPPING)
-			rhtable->show();
+		// rhtable->show();
 		// blkec->show();
+		blkec->Summary();
+		std::cout << "EC_max: " << EC_max << ", EC_min: " << EC_min << "\n";
 	}
-	void show_sum(){
+};
+
+class BlockManagerStatic: public BlockManager{
+private:
+	BlockEraseCountRecord *blkec;
+
+	int EC_max, EC_min;
+	
+	int Erase(int blkid);
+public:
+	BlockManagerStatic();
+	~BlockManagerStatic();
+	int Append(int zoneid, int offset, int data_size){return -1;}
+	int Read(int zoneid, int offset, int data_size){return -1;}
+	int Reset(int zoneid);
+	int GetECMin();
+	int GetECMax();
+
+	int GetECMinFree(){return -1;}
+	int GetResetHint(int zoneid){return -1;}
+
+	void show(){
 		blkec->Summary();
 		std::cout << "EC_max: " << EC_max << ", EC_min: " << EC_min << "\n";
 	}
