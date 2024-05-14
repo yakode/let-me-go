@@ -467,6 +467,8 @@ int BlockManagerDynamic::Erase(int blkid){
 }
 
 int BlockManagerDynamic::Append(int zoneid, int offset, int data_size){
+	int latency = (data_size / SZBLK) * LATENCY_WRITE;
+
 	int idx = offset / SZBLK;
 	int last_idx = (offset + data_size - 1) / SZBLK;
 	for(int i = idx; i <= last_idx; ++i){
@@ -479,7 +481,7 @@ int BlockManagerDynamic::Append(int zoneid, int offset, int data_size){
 			}
 		}
 	}
-	return 0;
+	return latency;
 }
 
 int BlockManagerDynamic::Read(int zoneid, int offset, int data_size){

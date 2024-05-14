@@ -58,8 +58,8 @@ private:
 	int AllocateNewZone();
 public:
 	ZoneFile(ZoneBackend *zbd);
-	int Write(int addr, int data_size);
-	int FlushBuffer();
+	int Write(int addr, int data_size, bool *sthDeleted);
+	int FlushBuffer(bool *sthDeleted);
 	int Read();
 	ZoneExtentList* GetZoneExtentList();
 	// void show(){extents->show();}
@@ -75,6 +75,7 @@ public:
 	int FBLRefreshment();
 	void ResetBeforeWP();
 	int Write(int addr, int data_size);
+	int Read(int addr, int data_size){return -1;}
 	void check();
 	void show(){
 		std::cout << "----------------------Show Zone Information\n";

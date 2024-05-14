@@ -41,12 +41,16 @@ public:
 	int64_t GetFreeSpace();
 	int64_t GetUsedSpace();
 	int64_t GetReclaimableSpace();
+	int64_t GetGarbage();
 	int GetECMin();
 	int GetECMax();
 	int GetECMinFree();
 	int GetResetHint(int zoneid);
 	void show(){
 		blkmgr->show();
+		std::cout << "Valid Data: " << GetUsedSpace() << " Bytes\n";
+		std::cout << "Garbage Data: " << GetGarbage() << " Bytes\n";
+	/*	
 		std::cout << "    |Zone Garbage |" << "Valid Data   |" << "Capacity\n";
 		std::cout << "----|-------------|" << "-------------|" << "-------------\n";
 		for(int i = 0; i < NRZONE; ++i){
@@ -55,5 +59,6 @@ public:
 				<< std::setw(13) << zones[i]->GetUsedCapacity() << "|" 
 				<< std::setw(13) << zones[i]->GetCapacity() << "\n";
 		}
+	*/	
 	}
 };

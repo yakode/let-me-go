@@ -190,16 +190,17 @@ int ZoneFile::AllocateNewZone(){
 	return 0;
 }
 
-int ZoneFile::Write(int addr, int data_size){
+int ZoneFile::Write(int addr, int data_size, bool *sthDeleted){
 	int left = data_size;
 	int offset = 0;
 	int wr_size = 0;
-	int s, sthDeleted = 0;
-	// -1: failed; 0: ok; 1: deletion
+	int s;
+	int latency = 0;
 	
 	while(left){
 		if(buffered ==  SZBUF){
-			s = FlushBuffer();
+			s = FlushBuffer(sthDeleted);
+			latency += s;
 		}else{
 			wr_size = std::min(left, SZBUF - buffered);
 			s = extents->Push(nullptr, addr + offset, wr_size);
@@ -209,7 +210,7 @@ int ZoneFile::Write(int addr, int data_size){
 		}
 
 		if(s == 1){
-			sthDeleted = 1;
+			*sthDeleted = true;
 		}else if(s == -1){
 			if(SHOW_ERR)
 				std::cout << "ZoneFile::Write Push Failed\n";
@@ -217,15 +218,17 @@ int ZoneFile::Write(int addr, int data_size){
 		}
 	}
 
-	return sthDeleted;
+	return latency;
 }
 
-int ZoneFile::FlushBuffer(){
+int ZoneFile::FlushBuffer(bool *sthDeleted){
 	if(SHOW_ZONEFILE)
-		std::cout << "Flush Buffer\n";
+		std::cout << "-" << std::setw(69) << "Flush Buffer\n";
+
+	int latency = 0;
 	ZoneExtent *extent = extents->GetHead();
 	std::vector<ZoneExtent*> flush;
-	int s = 0, sthDeleted = 0;
+	int s = 0;
 
 	while(extent){
 		if(extent->GetZone() == nullptr){
@@ -269,7 +272,7 @@ int ZoneFile::FlushBuffer(){
 			}
 
 			if(s == 1){
-				sthDeleted = 1;
+				*sthDeleted = true;
 			}else if(s == -1){
 				if(SHOW_ERR)
 					std::cout << "ZoneFile::Write Failed\n";
@@ -280,10 +283,13 @@ int ZoneFile::FlushBuffer(){
 		if(s == -1){
 			return -1;
 		}
+		latency += s;
 		buffered -= wr_size;
 	}
 
-	return sthDeleted;
+	if(SHOW_ZONEFILE)
+		std::cout << std::setw(70) << "END Flush Buffer\n";
+	return latency;
 }
 
 int ZoneFile::Read(){return -1;}
@@ -303,7 +309,8 @@ int SimpleFS::Write(int addr, int data_size){
 	int idx_last = (addr + data_size - 1) / SZFILE;
 	int left = data_size;
 	int offset = 0;
-	int flag = 0;
+	bool sthDeleted = false;
+	int latency = 0;
 
 	while(left){
 		int wr_size = left;
@@ -323,20 +330,21 @@ int SimpleFS::Write(int addr, int data_size){
 
 		if(SHOW_ZONEFILE)
 			std::cout << "Write [" << addr+offset << "](" << wr_size << ") to ZoneFile[" << idx << "]\n"; 
-		int s = files[idx]->Write(addr + offset, wr_size);
+		int s = files[idx]->Write(addr + offset, wr_size, &sthDeleted);
 		if(s == -1)
 			return -1;
-		else if(s == 1)
-			flag = 1;
+		latency += s;
 
 		offset += wr_size;
 		left -= wr_size;
 	}
 
-	if(flag)
+	if(sthDeleted == true){
 		ResetBeforeWP();
+		sthDeleted = false;
+	}
 
-	return 0;
+	return latency;
 }
 
 // Reference: ZenFS::GCWorker
@@ -345,6 +353,7 @@ int SimpleFS::GarbageCollection(){
 	int64_t free = zbd->GetFreeSpace();
 	int64_t non_free = zbd->GetUsedSpace() + zbd->GetReclaimableSpace();
 	int free_percent = (100 * free) / (free + non_free);
+	bool sthDeleted = false;
 	
 	
 	if(free_percent > GC_START_LEVEL)
@@ -394,7 +403,7 @@ int SimpleFS::GarbageCollection(){
 			Zone *zone =  zbd->GetZone(i);
 			if(zone->IsFull()){
 				int garbage_percent_approx = 100 - 100 * zone->GetUsedCapacity() / zone->GetMaxCapacity();
-	        	if (garbage_percent_approx > threshold && garbage_percent_approx < 100){
+	        	if (garbage_percent_approx > threshold && garbage_percent_approx <= 100){
 					// redundant SZBLK bytes for padding
 					if(migrate + zone->GetUsedCapacity() + SZBLK <= free){
 	          			victim_zones.insert(i);
@@ -412,7 +421,7 @@ int SimpleFS::GarbageCollection(){
 		ZoneExtent *extent = files[i]->GetZoneExtentList()->GetHead();
 		while(extent){
 			if(extent->GetZone() && victim_zones.count(extent->GetZone()->GetId()) != 0){
-				s = files[i]->Write(extent->GetSector(), extent->GetLength());
+				s = files[i]->Write(extent->GetSector(), extent->GetLength(), &sthDeleted);
 				if(s == -1){
 					if(SHOW_ERR)
 						std::cout << "No Space to Migrate:(\n";
@@ -451,6 +460,8 @@ int SimpleFS::FBLRefreshment(){
 	int ec_min_free = zbd->GetECMinFree();
 	if(ec_min_free == -1 || !(ec_min_free > (ec_min + 0.9 * (ec_max - ec_min))))
 		return 0;
+	
+	bool sthDeleted = false;
 
 	if(SHOW_SIMPLEFS){
 		std::cout << "-----------------------------------------------------FreeBlockListRefreshment\n";
@@ -483,7 +494,7 @@ int SimpleFS::FBLRefreshment(){
 		ZoneExtent *extent = files[i]->GetZoneExtentList()->GetHead();
 		while(extent){
 			if(extent->GetZone() && victim_zones.count(extent->GetZone()->GetId()) != 0){
-				s = files[i]->Write(extent->GetSector(), extent->GetLength());
+				s = files[i]->Write(extent->GetSector(), extent->GetLength(), &sthDeleted);
 				if(s == -1){
 					if(SHOW_ERR)
 						std::cout << "No Space to Migrate:(\n";

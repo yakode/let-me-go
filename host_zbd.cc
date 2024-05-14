@@ -44,7 +44,7 @@ int Zone::Write(int data_size){
 	capacity_ -= wr_size;
 	wp_ += wr_size;
 	used_capacity_ += data_size;
-	return 0;
+	return s;
 }
 
 // Manage the metadata of the Zone
@@ -146,6 +146,13 @@ int64_t ZoneBackend::GetReclaimableSpace(){
 		if(zones[i]->IsFull())
 			reclaimable += (zones[i]->GetMaxCapacity() - zones[i]->GetUsedCapacity());
 	return reclaimable;
+}
+
+int64_t ZoneBackend::GetGarbage(){
+	int64_t garbage = 0;
+	for(int i = 0; i < NRZONE; ++i)
+		garbage += (zones[i]->GetWP() - zones[i]->GetUsedCapacity());
+	return garbage;
 }
 
 int ZoneBackend::GetECMin(){

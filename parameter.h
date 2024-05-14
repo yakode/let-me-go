@@ -11,9 +11,9 @@
 #define SZBLK (2*1024*1024) //2MB //512
 #define SZPAGE -1
 
-#define LATENCY_WRITE -1
-#define LATENCY_READ -1
-#define LATENCY_ERASE -1
+#define LATENCY_WRITE 1
+#define LATENCY_READ 1
+#define LATENCY_ERASE 1
 
 #define SZBUF 2048
 #define NRFILE 4
