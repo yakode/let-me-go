@@ -15,6 +15,8 @@ int main(int argc, char *argv[]){
 	int s = 0;
 	int64_t latency_w_us = 0, latency_r_us = 0; // micro second
 	int64_t latency_w_s = 0, latency_r_s = 0; // second
+	int64_t latency_gc_us = 0;
+	double counter_gc = 10;
 
 	int64_t nr_w = 0, nr_r = 0; // amount of commands
 
@@ -42,9 +44,8 @@ int main(int argc, char *argv[]){
 			}
 	
 			// Garbage Collection
-			/*
-			if(current - time_last_gc >= 10){
-				time_last_gc = current;
+			if(counter_gc <= 0){
+				counter_gc = 10;
 				s = 0;
 				if(GC_ENABLE){
 					s = test.GarbageCollection();
@@ -56,15 +57,14 @@ int main(int argc, char *argv[]){
 					if(s == -1)
 						break;
 				}
-				current += (double)((double)s / (double)US);
-				if(SHOW_CMD) std::cout << "GC " << (double)((double)s / (double)US) << " sec\n";
+				latency_gc_us = s;
+				if(SHOW_CMD) std::cout << "GC " << (double)((double)s / (double)1000000) << " sec\n";
 			}
-			*/
 	
 			if(cmd == "WS"){
 				s = test.Write(addr_, data_size_);
 
-				wt.PutWaitTime(s, time);
+				wt.PutWaitTime(s + latency_gc_us, time);
 				latency_w_us += wt.GetWaitTime();
 				latency_w_s += latency_w_us / 1000000;
 				latency_w_us %= 1000000;
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
 					continue;
 				}
 
-				wt.PutWaitTime(s, time);
+				wt.PutWaitTime(s + latency_gc_us, time);
 				latency_r_us += wt.GetWaitTime();
 				latency_r_s += latency_r_us / 1000000;
 				latency_r_us %= 1000000;
@@ -89,8 +89,10 @@ int main(int argc, char *argv[]){
 
 				if(SHOW_CMD) std::cout << "R: " << (double)((double)s / (double)US) << " sec";
 			}
+			latency_gc_us = 0;
 			if(s == -1)
 				break;
+			counter_gc -= (double)((double)s / (double)1000000);
 		}
 		ifs.close();
 	}
