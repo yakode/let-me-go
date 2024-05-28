@@ -113,6 +113,8 @@ public:
 	virtual int GetECMinFree() = 0;
 	virtual int GetResetHint(int zoneid) = 0;
 
+	virtual void AddReadAmount(int i) = 0;
+
 	virtual void show() = 0;
 };
 
@@ -127,6 +129,9 @@ private:
 	
 	int Allocate(int zoneid);
 	int Erase(int blkid);
+	int64_t amount_write = 0;
+	int64_t amount_read = 0;
+	int64_t amount_erase = 0;
 public:
 	BlockManagerDynamic();
 	~BlockManagerDynamic();
@@ -138,14 +143,24 @@ public:
 	int GetECMinFree();
 	int GetResetHint(int zoneid);
 
+	void AddReadAmount(int i){amount_read += i;}
 	void show(){
 		// fblist->show();
 		// std::cout << "\n\n";
 		// mtable->show();
 		// rhtable->show();
 		// blkec->show();
+		std::cout << "Erase Count of Blocks: \n";
 		blkec->Summary();
-		std::cout << "EC_max: " << EC_max << ", EC_min: " << EC_min << "\n";
+		std::cout << "\tEC_max: " << EC_max << ", EC_min: " << EC_min << "\n";
+		std::cout << "Read/Write/Erase: \n";
+		std::cout <<  "\twrite: " 
+			<< std::setw(12) << amount_write 
+			<< " pages\n\tread:  " 
+			<< std::setw(12) << amount_read 
+			<< " pages\n\terase: " 
+			<< std::setw(12) << amount_erase
+			<< " blocks\n";
 	}
 };
 
@@ -156,10 +171,16 @@ private:
 	int EC_max, EC_min;
 	
 	int Erase(int blkid);
+	int64_t amount_write = 0;
+	int64_t amount_read = 0;
+	int64_t amount_erase = 0;
 public:
 	BlockManagerStatic();
 	~BlockManagerStatic();
-	int Append(int zoneid, int offset, int data_size){return -1;}
+	int Append(int zoneid, int offset, int data_size){
+		amount_write += (data_size / SZPAGE);
+		return (data_size / SZPAGE) * LATENCY_WRITE;
+	}
 	int Read(int zoneid, int offset, int data_size){return -1;}
 	int Reset(int zoneid);
 	int GetECMin();
@@ -168,8 +189,20 @@ public:
 	int GetECMinFree(){return -1;}
 	int GetResetHint(int zoneid){return -1;}
 
+	void AddReadAmount(int i){amount_read += i;}
+
 	void show(){
+		std::cout << "Erase Count: \n";
 		blkec->Summary();
-		std::cout << "EC_max: " << EC_max << ", EC_min: " << EC_min << "\n";
+
+		std::cout << "\tEC_max: " << EC_max << ", EC_min: " << EC_min << "\n";
+		std::cout << "Read/Write/Erase: \n";
+		std::cout <<  "\twrite: " 
+			<< std::setw(12) << amount_write 
+			<< " pages\n\tread:  " 
+			<< std::setw(12) << amount_read 
+			<< " pages\n\terase: " 
+			<< std::setw(12) << amount_erase
+			<< " blocks\n";
 	}
 };

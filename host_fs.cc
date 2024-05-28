@@ -284,15 +284,52 @@ int ZoneFile::FlushBuffer(bool *sthDeleted){
 			return -1;
 		}
 		latency += s;
-		buffered -= wr_size;
 	}
+	buffered = 0;
 
 	if(SHOW_ZONEFILE)
 		std::cout << std::setw(70) << "END Flush Buffer\n";
 	return latency;
 }
 
-int ZoneFile::Read(){return -1;}
+int ZoneFile::Read(int addr, int data_size, std::set<int> *readPages){
+	int offset = 0;
+	int left = data_size;
+	int rd_size = 0;
+	int latency = 0;
+	int s = 0;
+
+	ZoneExtent *extent = extents->GetHead();
+	while(extent && left > 0){
+		int start = extent->GetSector();
+		int len = extent->GetLength();
+		// [,)
+		if(!((start > addr + data_size) || (addr + offset > start + len))){
+			if(addr + offset < start){
+				return -1;
+			}
+			rd_size = std::min(len - (addr + offset - start), left);
+			if(extent->GetZone() != nullptr)
+				s = extent->GetZone()->Read(rd_size);
+			else
+				s = 0;
+			if(s == -1){
+				return -1;
+			}
+			latency += s;
+
+			offset += rd_size;
+			left -= rd_size;
+		}
+		extent = extent->GetNext();	
+	}
+
+	if(left > 0){
+		return -1;
+	}
+
+	return latency;
+}
 
 ZoneExtentList* ZoneFile::GetZoneExtentList(){
 	return extents;
@@ -311,6 +348,7 @@ int SimpleFS::Write(int addr, int data_size){
 	int offset = 0;
 	bool sthDeleted = false;
 	int latency = 0;
+	int s = 0;
 
 	while(left){
 		int wr_size = left;
@@ -330,7 +368,7 @@ int SimpleFS::Write(int addr, int data_size){
 
 		if(SHOW_ZONEFILE)
 			std::cout << "Write [" << addr+offset << "](" << wr_size << ") to ZoneFile[" << idx << "]\n"; 
-		int s = files[idx]->Write(addr + offset, wr_size, &sthDeleted);
+		s = files[idx]->Write(addr + offset, wr_size, &sthDeleted);
 		if(s == -1)
 			return -1;
 		latency += s;
@@ -340,10 +378,54 @@ int SimpleFS::Write(int addr, int data_size){
 	}
 
 	if(sthDeleted == true){
-		ResetBeforeWP();
 		sthDeleted = false;
+		s = ResetBeforeWP();
+		latency += s;
 	}
 
+	return latency;
+}
+
+int SimpleFS::Read(int addr, int data_size){
+	int idx = addr / SZFILE;
+	int idx_last = (addr + data_size - 1) / SZFILE;
+	int left = data_size;
+	int offset = 0;
+	int latency = 0;
+	int s = 0;
+	std::set<int> readPages;
+
+	while(left){
+		int rd_size = left;
+		idx = (addr + offset) / SZFILE;
+		if(idx > idx_last){
+			if(SHOW_ERR)
+				std::cout << "ZoneFile[" << idx << "] is wrong\n";
+			return -1;
+		}
+
+		if(idx_last != idx){
+			rd_size = (idx + 1) * SZFILE - (addr + offset);
+		}
+
+		if(files[idx] == nullptr){
+			if(SHOW_ERR)
+				std::cout << "ZoneFile[" << idx << "] has no data\n";
+			return -1;
+		}
+
+		if(SHOW_ZONEFILE)
+			std::cout << "Read [" << addr+offset << "](" << rd_size << ") from ZoneFile[" << idx << "]\n"; 
+		s = files[idx]->Read(addr + offset, rd_size, &readPages);
+		latency += s;
+		if(s == -1)
+			return -1;
+
+		offset += rd_size;
+		left -= rd_size;
+	}
+
+	// latency = readPages.size() * LATENCY_READ;
 	return latency;
 }
 
@@ -354,10 +436,11 @@ int SimpleFS::GarbageCollection(){
 	int64_t non_free = zbd->GetUsedSpace() + zbd->GetReclaimableSpace();
 	int free_percent = (100 * free) / (free + non_free);
 	bool sthDeleted = false;
+	int latency = 0;
 	
 	
 	if(free_percent > GC_START_LEVEL)
-		return 1;
+		return 0;
 	
 	int ec_min = zbd->GetECMin();
 	int ec_max = zbd->GetECMax();
@@ -414,6 +497,7 @@ int SimpleFS::GarbageCollection(){
 		}
 	}
 
+	// migrate data
 	int s = 0;
 	for(int i = 0; i < NRFILE; ++i){
 		if(files[i] == nullptr)
@@ -427,13 +511,15 @@ int SimpleFS::GarbageCollection(){
 						std::cout << "No Space to Migrate:(\n";
 					return -1;
 				}
+				latency += s;
 			}
 			extent = extent->GetNext();	
 		}
 	}
 
 	for (std::set<int>::iterator it = victim_zones.begin(); it != victim_zones.end(); ++it){
-		zbd->GetZone(*it)->Reset();
+		s = zbd->GetZone(*it)->Reset();
+		latency += s;
 	}
 
 	if(SHOW_SIMPLEFS){
@@ -445,7 +531,7 @@ int SimpleFS::GarbageCollection(){
 		std::cout << "----------------------------------------------------END-GarbageCollection\n";
 	}
 
-	return 0;
+	return latency;
 }
 
 // 當 EC_max 跟 EC_min 差距過大且 Free Block List 內的 block 的 EC 偏高時，執行 WL
@@ -523,13 +609,14 @@ int SimpleFS::FBLRefreshment(){
 // Reference:ZonedBlockDevice::ResetUnusedIOZones
 // wp 前沒資料就 reset
 // trigger: deletion
-void SimpleFS::ResetBeforeWP(){
+int SimpleFS::ResetBeforeWP(){
 	bool flag = false;
+	int latency = 0;
 	for(int i = 0; i < NRZONE; ++i){
 		if(zbd->GetZone(i)->GetWP() != 0 && zbd->GetZone(i)->GetUsedCapacity() == 0){
 			if(SHOW_SIMPLEFS && !flag)
 				std::cout << "-----------------------------------------------------ResetBeforeWP\n";
-			zbd->GetZone(i)->Reset();
+			latency += zbd->GetZone(i)->Reset();
 			flag = true;
 		}
 	}
@@ -537,6 +624,7 @@ void SimpleFS::ResetBeforeWP(){
 	if(flag && SHOW_SIMPLEFS){
 		std::cout << "-----------------------------------------------------END-ResetBeforeWP\n";
 	}
+	 return latency;
 }
 
 void SimpleFS::check(){

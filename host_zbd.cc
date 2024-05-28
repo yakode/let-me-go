@@ -16,7 +16,11 @@ Zone::Zone(int id, BlockManager *blkmgr){
 	blkmgr_ = blkmgr;
 }
 
-int Zone::Read(){return -1;}
+int Zone::Read(int rd_size){
+	int latency = ceil((double)rd_size / (double)SZPAGE) * LATENCY_READ;
+	blkmgr_->AddReadAmount( ceil((double)rd_size / (double)SZPAGE) );
+	return latency;
+}
 
 // Manage the metadata of the Zone
 // and transport append command to Device side
@@ -59,8 +63,8 @@ int Zone::Reset(){
 	capacity_ = (int64_t)SZZONE * (int64_t)SZBLK;	
 	wp_ = 0;
 	used_capacity_ = 0;
-	blkmgr_->Reset(id_);
-	return 0;
+	int latency = blkmgr_->Reset(id_);
+	return latency;
 }
 
 // Manage the metadata of the Zone

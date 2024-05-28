@@ -1,5 +1,6 @@
 #include <vector>
 #include <iomanip>
+#include <cmath>
 
 #include "dev_blkmgr.h"
 #include "parameter.h"
@@ -19,7 +20,7 @@ public:
 	Zone();
 	Zone(int id, BlockManager *blkmgr);
 	int Write(int data_size);
-	int Read(); // I have not implenmented it yet
+	int Read(int data_size); // I have not implenmented it yet
 	int Reset();
 	int Delete(long long data_size);
 	bool IsFull();
@@ -48,8 +49,8 @@ public:
 	int GetResetHint(int zoneid);
 	void show(){
 		blkmgr->show();
-		std::cout << "Valid Data: " << GetUsedSpace() << " Bytes\n";
-		std::cout << "Garbage Data: " << GetGarbage() << " Bytes\n";
+		std::cout << "Valid Data:   " << std::setw(10) << GetUsedSpace() << " Bytes\n";
+		std::cout << "Garbage Data: " << std::setw(10) << GetGarbage() << " Bytes\n";
 	/*	
 		std::cout << "    |Zone Garbage |" << "Valid Data   |" << "Capacity\n";
 		std::cout << "----|-------------|" << "-------------|" << "-------------\n";

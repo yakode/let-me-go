@@ -60,7 +60,7 @@ public:
 	ZoneFile(ZoneBackend *zbd);
 	int Write(int addr, int data_size, bool *sthDeleted);
 	int FlushBuffer(bool *sthDeleted);
-	int Read();
+	int Read(int addr, int data_size, std::set<int>*);
 	ZoneExtentList* GetZoneExtentList();
 	// void show(){extents->show();}
 };
@@ -73,13 +73,24 @@ public:
 	SimpleFS();
 	int GarbageCollection();
 	int FBLRefreshment();
-	void ResetBeforeWP();
+	int ResetBeforeWP();
 	int Write(int addr, int data_size);
-	int Read(int addr, int data_size){return -1;}
+	int Read(int addr, int data_size);
 	void check();
 	void show(){
-		std::cout << "----------------------Show Zone Information\n";
+		std::cout << "----------------------Hey Zone Information----------------------\n";
+		if(ENABLE_DYNAMIC_MAPPING)
+			std::cout << "Mapping Method:                     Dynamic\n";
+		else
+			std::cout << "Mapping Method:                     Static\n";
+		std::cout << "Enable Garbage Collection:          " << GC_ENABLE << "\n";
+		std::cout << "Enable Garbage Collection with WL:  " << ENABLE_GC_WL << "\n";
+		std::cout << "Enable Free Block List Refreshment: " << ENABLE_FBL_REFRESH << "\n";
+		std::cout << "-\n";
+		std::cout << "Storage Size:    " << std::setw(20) << (long long)NRBLK * (long long)SZBLK / 1024 << " KBytes\n";
+		std::cout << "File System Size:" << std::setw(20) << SZFS/1024 << " KBytes\n";
+		std::cout << "-\n";
 		zbd->show();
-		std::cout << "-----------------------End Zone Information\n";
+		std::cout << "-----------------------End Zone Information----------------------\n";
 	}
 };

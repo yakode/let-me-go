@@ -308,9 +308,9 @@ void BlockEraseCountRecord::Summary(){
 	std::set<int> summary;
 	for(int i = 0; i < NRBLK; ++i)
 		summary.insert(record[i]);
-	std::cout << "Block Erase Count Summary:\n";
+	std::cout << "\tBlock Erase Count Summary:\n";
 	for (std::set<int>::iterator it = summary.begin(); it != summary.end(); ++it){
-		std::cout << *it << ": " << std::count(record, record + NRBLK, *it) << "\n";
+		std::cout << "\t\t" << *it << ": " << std::count(record, record + NRBLK, *it) << "\n";
 	}
 }
 
@@ -432,6 +432,7 @@ int BlockManagerDynamic::Reset(int zoneid){
 	// Reset Reset Hint of zone[zoneid]
 	// Add Block erase count
 	// Update ec_min, ec_max
+	int latency = 0;
 	int sz = this->mtable->GetSize(zoneid);
 	int rh = this->rhtable->GetResetHint(zoneid);
 	this->rhtable->SetResetHint(zoneid, -1);
@@ -440,6 +441,8 @@ int BlockManagerDynamic::Reset(int zoneid){
 		int blkid = this->mtable->GetBlk(zoneid, i);
 		int ec = this->blkec->GetEC(blkid);
 		this->Erase(blkid);
+		latency += LATENCY_ERASE;
+		amount_erase++;
 		if(ec == this->EC_max)
 			this->EC_max += 1;
 		if(ec + 1 < EC_LIMIT)
@@ -457,7 +460,7 @@ int BlockManagerDynamic::Reset(int zoneid){
 				this->EC_min = this->EC_min_free;
 		}
 	}
-	return 0;
+	return latency;
 }
 
 int BlockManagerDynamic::Erase(int blkid){
@@ -467,7 +470,8 @@ int BlockManagerDynamic::Erase(int blkid){
 }
 
 int BlockManagerDynamic::Append(int zoneid, int offset, int data_size){
-	int latency = (data_size / SZBLK) * LATENCY_WRITE;
+	int latency = (data_size / SZPAGE) * LATENCY_WRITE;
+	amount_write += (data_size / SZPAGE);
 
 	int idx = offset / SZBLK;
 	int last_idx = (offset + data_size - 1) / SZBLK;
@@ -532,17 +536,20 @@ int BlockManagerStatic::Erase(int blkid){
 int BlockManagerStatic::Reset(int zoneid){
 	// Add Block erase count
 	// Update ec_min, ec_max
+	int latency = 0;
 	int blkid = zoneid * SZZONE;
 	int ec = this->blkec->GetEC(blkid);
 	for(int i = 0; i < SZZONE; ++i){
 		blkid = zoneid * SZZONE + i;
 		this->Erase(blkid);
+		latency += LATENCY_ERASE;
+		amount_erase++;
 	}
 	if(ec == this->EC_max)
 		this->EC_max += 1;
 	if(ec == this->EC_min)
 		this->EC_min = blkec->GetECMin();
-	return 0;
+	return latency;
 }
 
 // Many show() xD
