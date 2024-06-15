@@ -513,7 +513,7 @@ type_latency SimpleFS::GarbageCollection(){
 
 	if(!victim_zones.empty()){
 		++nrGC;
-		std::cout << "G";
+		//std::cout << "G";
 	}
 
 	// migrate data
@@ -644,7 +644,7 @@ type_latency SimpleFS::ResetBeforeWP(){
 			latency += zbd->GetZone(i)->Reset();
 			flag = true;
 			++nrRWP;
-			std::cout << "X";
+			//std::cout << "X";
 		}
 	}
 	

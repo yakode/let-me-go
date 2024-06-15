@@ -24,12 +24,13 @@ int main(int argc, char *argv[]){
 	int64_t nr_w = 0, nr_r = 0; // amount of commands
 
 	std::cout << "Input Files:\n";
-	//int T = 16;
-	//while(T--){
-	//std::cout << T << "\n";
-		for(int i = 1; i < argc; ++i){
-			std::string input = argv[i];
-			std::cout << "\t" << input << "\n";
+	for(int i = 1; i < argc; i += 2){
+		std::string in_id = argv[i];
+		std::cout << "\t" << "ssdtrace-" + in_id << "\n";
+		int N = std::stoi(argv[i + 1]) + 1;
+		std::string prefix = "./ssdtrace-"+ in_id + "/ssdtrace-" + in_id + "-";
+		for(int j = 0; j < N; ++j){
+			std::string input = prefix + std::string(5 - std::to_string(j).length(), '0') + std::to_string(j) + ".in";
 			std::ifstream ifs(input, std::ios::in);
 			if(!ifs.is_open()){
 				std::cout << "failed to open " << input << "\n";
@@ -99,11 +100,9 @@ int main(int argc, char *argv[]){
 				counter_gc -= (double)((double)s / (double)1000000);
 			}
 			ifs.close();
-			//test.Flush();
-			//test.FillUp();
-			std::cout << "\n";
 		}
-	//}
+		test.Flush();
+	}
 
 	test.show();
 	std::cout << "Average Write Latency: " << (double)latency_w_s/nr_w << "s\n"; // and " << latency_w << "us\n";
