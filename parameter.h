@@ -1,40 +1,45 @@
 // STORAGE
-// 1TB
+// 32GB
 // FILESYSTEM
-// 1GB
+// 16GB
 
 #define EC_LIMIT 500
 
-#define NRZONE 1024
-#define SZZONE 512 // blocks
+#define NRZONE 256
+#define SZZONE 256 // blocks
 #define NRBLK (NRZONE*SZZONE)
-#define SZBLK (2*1024*1024) //2MB // 128pages
-#define SZPAGE (16*1024) //16KB
+#define SZBLK 1024 // sector //(512 * 1024) //512KB // 128pages
+#define SZPAGE 8 // Secotr //(4 * 1024) //4KB
 
-#define LATENCY_WRITE 1500 //400 // micro second 10^-6
-#define LATENCY_READ 100 //80 // micro second
-#define LATENCY_ERASE 15000 //50000 // micro second
+#define LATENCY_WRITE 200 // micro second 10^-6
+#define LATENCY_READ  40 // micro second
+#define LATENCY_ERASE 2000//0.015 // 15000 //50000 // micro second
 #define US 1000000
 
-#define SZBUF 2048
-#define NRFILE 4 // 512
-#define SZFILE (8 * 1024) //(2 * 1024 * 1024)
-#define SZFS (NRFILE*SZFILE)
+#define SZBUF 1024 // sector //(1024 * 1024 * 2) // io_zenfs line 814
+#define NRFILE (int64_t) 512 //4 // 512
+#define SZFILE (64 * 1024) //sector //(16 * 2 * 1024 * 1024) //(8 * 1024) //(2 * 1024 * 1024)
+#define SZFS ((int64_t)(NRFILE*SZFILE))
 
 #define GC_ENABLE true
 #define GC_INTERVAL 1000
 #define GC_START_LEVEL 20
 #define GC_SLOPE 3
 
-#define ENABLE_DYNAMIC_MAPPING false	
-#define ENABLE_GC_WL 		   false 
-#define ENABLE_FBL_REFRESH 	   false 
+#define ENABLE_DYNAMIC_MAPPING true	
+#define ENABLE_GC_WL 		   true 
+#define ENABLE_FBL_REFRESH 	   true 
 
-#define SHOW_ZONE 		false // Block Allocation
-#define SHOW_RESET		false // Zone Reset
-#define SHOW_ZONEFILE	false // Write data to ZoneFile and Push Extent
-#define SHOW_SIMPLEFS	false // Garbage Collection and Reset Before WP
-#define SHOW_ERR 		false
+// Block Allocation
+#define SHOW_ZONE 		false
+// Zone Reset
+#define SHOW_RESET		false
+// Write data to ZoneFile and Push Extent
+#define SHOW_ZONEFILE	false
+// Garbage Collection and Reset Before WP
+#define SHOW_SIMPLEFS	false
+#define SHOW_ERR 		true
 #define SHOW_CMD 		false
 
 typedef long long int64_t; 
+typedef long long type_latency; 

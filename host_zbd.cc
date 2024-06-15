@@ -16,17 +16,17 @@ Zone::Zone(int id, BlockManager *blkmgr){
 	blkmgr_ = blkmgr;
 }
 
-int Zone::Read(int rd_size){
-	int latency = ceil((double)rd_size / (double)SZPAGE) * LATENCY_READ;
+type_latency Zone::Read(int rd_size){
+	int64_t latency = ceil((double)rd_size / (double)SZPAGE) * LATENCY_READ;
 	blkmgr_->AddReadAmount( ceil((double)rd_size / (double)SZPAGE) );
 	return latency;
 }
 
 // Manage the metadata of the Zone
 // and transport append command to Device side
-int Zone::Write(int data_size){
-	int s;
-	int wr_size = data_size;
+type_latency Zone::Write(int data_size){
+	int64_t s;
+	int64_t wr_size = data_size;
 
 	// padding
 	if(data_size % SZBLK != 0){
@@ -51,9 +51,20 @@ int Zone::Write(int data_size){
 	return s;
 }
 
+void Zone::Dummy(){
+	int s = blkmgr_->Append(id_, wp_, capacity_);
+	if(s == -1){
+		if(SHOW_ERR)
+			std::cout << "Dummy Failed\n"; 
+		return;
+	}
+	capacity_ = 0;
+	wp_ = max_capacity_;
+}
+
 // Manage the metadata of the Zone
 // and transport RESET command to Device side
-int Zone::Reset(){
+type_latency Zone::Reset(){
 	if(SHOW_RESET)
 		std::cout << "Reset Zone[" << id_ 
 		<< "] whose reset hint is " << blkmgr_->GetResetHint(id_)
@@ -63,7 +74,7 @@ int Zone::Reset(){
 	capacity_ = (int64_t)SZZONE * (int64_t)SZBLK;	
 	wp_ = 0;
 	used_capacity_ = 0;
-	int latency = blkmgr_->Reset(id_);
+	int64_t latency = blkmgr_->Reset(id_);
 	return latency;
 }
 
@@ -72,7 +83,7 @@ int Zone::Delete(int64_t data_size){
 	if(data_size > used_capacity_){
 		if(SHOW_ERR){
 			std::cout << "Zone Deletion Failed, try to delete " << data_size 
-			<< "bytes from zone whose used capacity is " << used_capacity_ << "\n";
+			<< "bytes from zone[" << id_ << "] whose used capacity is " << used_capacity_ << "\n";
 		}
 		return -1;
 	}

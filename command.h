@@ -1,4 +1,5 @@
 #include "parameter.h"
+#include <iostream>
 
 class WaitTime{
 private:
@@ -12,4 +13,6 @@ public:
 	~WaitTime();
 	int64_t GetWaitTime();
 	void PutWaitTime(int64_t, double);
+	void Reset();
+	void show();
 };

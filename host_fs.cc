@@ -9,11 +9,11 @@ Zone* ZoneExtent::GetZone(){
 	return zone_;
 }
 
-int ZoneExtent::GetSector(){
+int64_t ZoneExtent::GetSector(){
 	return sector_;
 }
 
-int ZoneExtent::GetLength(){
+int64_t ZoneExtent::GetLength(){
 	return length_;
 }
 
@@ -21,7 +21,7 @@ ZoneExtent* ZoneExtent::GetNext(){
 	return next_;
 }
 
-void ZoneExtent::SetLength(int length){
+void ZoneExtent::SetLength(int64_t length){
 	length_ = length;
 }
 
@@ -29,7 +29,7 @@ void ZoneExtent::SetZone(Zone *zone){
 	zone_ = zone;
 }
 
-int ZoneExtentList::Push(Zone *zone, int addr, int length){
+int ZoneExtentList::Push(Zone *zone, int64_t addr, int64_t length){
 	if(SHOW_ZONEFILE){
 		if(zone)
 			std::cout << "Push New Extent(addr: "<< addr << ", size: " << length << ") to Zone[" << zone->GetId() << "]\n";
@@ -49,10 +49,10 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 	// delete overlapping
 	while(ptr != nullptr){
 		// 把重疊的舊資料刪除
-		int A = ptr->sector_;
-		int B = ptr->sector_ + ptr->length_;
-		int C = addr;
-		int D = addr + length;
+		int64_t A = ptr->sector_;
+		int64_t B = ptr->sector_ + ptr->length_;
+		int64_t C = addr;
+		int64_t D = addr + length;
 		// A------B
 		//    C++++++D
 		// [A, B) [C, D)
@@ -70,7 +70,7 @@ int ZoneExtentList::Push(Zone *zone, int addr, int length){
 			if(B > D){
 				// -------
 				//   +++
-				int len2 = B - D;
+				int64_t len2 = B - D;
 				ptr->length_ = C - A;
 				this->Push(ptr->zone_, D, len2);
 				if(ptr->zone_ != nullptr)
@@ -190,12 +190,12 @@ int ZoneFile::AllocateNewZone(){
 	return 0;
 }
 
-int ZoneFile::Write(int addr, int data_size, bool *sthDeleted){
-	int left = data_size;
-	int offset = 0;
-	int wr_size = 0;
-	int s;
-	int latency = 0;
+type_latency ZoneFile::Write(int64_t addr, int64_t data_size, bool *sthDeleted){
+	int64_t left = data_size;
+	int64_t offset = 0;
+	int64_t wr_size = 0;
+	type_latency s;
+	type_latency latency = 0;
 	
 	while(left){
 		if(buffered ==  SZBUF){
@@ -217,18 +217,22 @@ int ZoneFile::Write(int addr, int data_size, bool *sthDeleted){
 			return -1;
 		}
 	}
+	if(buffered ==  SZBUF){
+		s = FlushBuffer(sthDeleted);
+		latency += s;
+	}
 
 	return latency;
 }
 
-int ZoneFile::FlushBuffer(bool *sthDeleted){
+type_latency ZoneFile::FlushBuffer(bool *sthDeleted){
 	if(SHOW_ZONEFILE)
 		std::cout << "-" << std::setw(69) << "Flush Buffer\n";
 
-	int latency = 0;
+	type_latency latency = 0;
 	ZoneExtent *extent = extents->GetHead();
 	std::vector<ZoneExtent*> flush;
-	int s = 0;
+	type_latency s = 0;
 
 	while(extent){
 		if(extent->GetZone() == nullptr){
@@ -247,7 +251,7 @@ int ZoneFile::FlushBuffer(bool *sthDeleted){
 			}
 		}
 		
-		int wr_size = 0;
+		int64_t wr_size = 0;
 		int64_t capacity = active_zone_->GetCapacity();
 		for(int i = flush.size() - 1; i >= 0; --i){
 			if(wr_size == capacity)
@@ -263,8 +267,8 @@ int ZoneFile::FlushBuffer(bool *sthDeleted){
 			}else{
 				// |--------|++++++++|
 				// len1     len2
-				int len1 = flush[i]->GetLength() - (capacity - wr_size);
-				int len2 = capacity - wr_size;
+				int64_t len1 = flush[i]->GetLength() - (capacity - wr_size);
+				int64_t len2 = capacity - wr_size;
 				flush[i]->SetLength(len1);
 				s = extents->Push(active_zone_, flush[i]->GetSector() + len1, len2);
 				wr_size = active_zone_->GetCapacity();
@@ -292,17 +296,17 @@ int ZoneFile::FlushBuffer(bool *sthDeleted){
 	return latency;
 }
 
-int ZoneFile::Read(int addr, int data_size, std::set<int> *readPages){
-	int offset = 0;
-	int left = data_size;
-	int rd_size = 0;
-	int latency = 0;
-	int s = 0;
+type_latency ZoneFile::Read(int64_t addr, int64_t data_size, std::set<int> *readPages){
+	int64_t offset = 0;
+	int64_t left = data_size;
+	int64_t rd_size = 0;
+	type_latency latency = 0;
+	type_latency s = 0;
 
 	ZoneExtent *extent = extents->GetHead();
 	while(extent && left > 0){
-		int start = extent->GetSector();
-		int len = extent->GetLength();
+		int64_t start = extent->GetSector();
+		int64_t len = extent->GetLength();
 		// [,)
 		if(!((start > addr + data_size) || (addr + offset > start + len))){
 			if(addr + offset < start){
@@ -335,23 +339,32 @@ ZoneExtentList* ZoneFile::GetZoneExtentList(){
 	return extents;
 }
 
+void ZoneFile::DummyActiveZone(){
+	active_zone_->Dummy();
+}
+
 SimpleFS::SimpleFS(){
 	zbd = new ZoneBackend();
 	files.resize(NRFILE, nullptr);
+	nrGC = 0;
+	nrRFBL = 0;
+	nrRWP = 0;
+	nrMigrate = 0;
+	flagGCWL = false;
 }
 
 // 找到要寫的 ZoneFile call ZoneFile::Write
-int SimpleFS::Write(int addr, int data_size){
+type_latency SimpleFS::Write(int64_t addr, int64_t data_size){
 	int idx = addr / SZFILE;
 	int idx_last = (addr + data_size - 1) / SZFILE;
-	int left = data_size;
-	int offset = 0;
+	int64_t left = data_size;
+	int64_t offset = 0;
 	bool sthDeleted = false;
-	int latency = 0;
-	int s = 0;
+	type_latency latency = 0;
+	type_latency s = 0;
 
 	while(left){
-		int wr_size = left;
+		int64_t wr_size = left;
 		idx = (addr + offset) / SZFILE;
 		if(idx > idx_last){
 			if(SHOW_ERR)
@@ -386,17 +399,17 @@ int SimpleFS::Write(int addr, int data_size){
 	return latency;
 }
 
-int SimpleFS::Read(int addr, int data_size){
+type_latency SimpleFS::Read(int64_t addr, int64_t data_size){
 	int idx = addr / SZFILE;
 	int idx_last = (addr + data_size - 1) / SZFILE;
-	int left = data_size;
-	int offset = 0;
-	int latency = 0;
-	int s = 0;
+	int64_t left = data_size;
+	int64_t offset = 0;
+	type_latency latency = 0;
+	type_latency s = 0;
 	std::set<int> readPages;
 
 	while(left){
-		int rd_size = left;
+		int64_t rd_size = left;
 		idx = (addr + offset) / SZFILE;
 		if(idx > idx_last){
 			if(SHOW_ERR)
@@ -409,8 +422,8 @@ int SimpleFS::Read(int addr, int data_size){
 		}
 
 		if(files[idx] == nullptr){
-			if(SHOW_ERR)
-				std::cout << "ZoneFile[" << idx << "] has no data\n";
+			//if(SHOW_ERR)
+				//std::cout << "ZoneFile[" << idx << "] has no data\n";
 			return -1;
 		}
 
@@ -431,12 +444,12 @@ int SimpleFS::Read(int addr, int data_size){
 
 // Reference: ZenFS::GCWorker
 // trigger: every 10 sec
-int SimpleFS::GarbageCollection(){
+type_latency SimpleFS::GarbageCollection(){
 	int64_t free = zbd->GetFreeSpace();
 	int64_t non_free = zbd->GetUsedSpace() + zbd->GetReclaimableSpace();
 	int free_percent = (100 * free) / (free + non_free);
 	bool sthDeleted = false;
-	int latency = 0;
+	type_latency latency = 0;
 	
 	
 	if(free_percent > GC_START_LEVEL)
@@ -468,6 +481,7 @@ int SimpleFS::GarbageCollection(){
 					if(migrate + zone->GetUsedCapacity() + SZBLK <= free){
 	          			victim_zones.insert(i);
 						migrate += zone->GetUsedCapacity();
+						flagGCWL = true;
 					}
     	   	 	}
 			}
@@ -483,12 +497,12 @@ int SimpleFS::GarbageCollection(){
 	if(victim_zones.empty()){
 		// Normal GC
 		for(int i = 0; i < NRZONE; ++i){
-			Zone *zone =  zbd->GetZone(i);
+			Zone *zone = zbd->GetZone(i);
 			if(zone->IsFull()){
 				int garbage_percent_approx = 100 - 100 * zone->GetUsedCapacity() / zone->GetMaxCapacity();
-	        	if (garbage_percent_approx > threshold && garbage_percent_approx <= 100){
+	        	if(garbage_percent_approx > threshold && garbage_percent_approx <= 100){
 					// redundant SZBLK bytes for padding
-					if(migrate + zone->GetUsedCapacity() + SZBLK <= free){
+					if(migrate + zone->GetUsedCapacity() + (SZBLK * 2) <= free){
 	          			victim_zones.insert(i);
 						migrate += zone->GetUsedCapacity();
 					}
@@ -497,8 +511,13 @@ int SimpleFS::GarbageCollection(){
 		}
 	}
 
+	if(!victim_zones.empty()){
+		++nrGC;
+		std::cout << "G";
+	}
+
 	// migrate data
-	int s = 0;
+	type_latency s = 0;
 	for(int i = 0; i < NRFILE; ++i){
 		if(files[i] == nullptr)
 			continue;
@@ -527,16 +546,17 @@ int SimpleFS::GarbageCollection(){
 		if(victim_zones.empty())
 			std::cout << "Garbage Collection Failed\n";
 		else
-			std::cout << "Migrate " << migrate << "bytes\n";
+			std::cout << "Migrate " << migrate << "sectors\n";
 		std::cout << "----------------------------------------------------END-GarbageCollection\n";
 	}
+	nrMigrate += migrate;
 
 	return latency;
 }
 
 // 當 EC_max 跟 EC_min 差距過大且 Free Block List 內的 block 的 EC 偏高時，執行 WL
 // trigger: every 10 sec if GC is not be triggerd
-int SimpleFS::FBLRefreshment(){
+type_latency SimpleFS::FBLRefreshment(){
 	if(!ENABLE_FBL_REFRESH || !ENABLE_DYNAMIC_MAPPING)
 		return 0;
 	int ec_min = zbd->GetECMin();
@@ -591,6 +611,11 @@ int SimpleFS::FBLRefreshment(){
 		}
 	}
 
+	if(!victim_zones.empty()){
+		++nrRFBL;
+		std::cout << "F";
+	}
+
 	for (std::set<int>::iterator it = victim_zones.begin(); it != victim_zones.end(); ++it){
 		zbd->GetZone(*it)->Reset();
 	}
@@ -609,22 +634,58 @@ int SimpleFS::FBLRefreshment(){
 // Reference:ZonedBlockDevice::ResetUnusedIOZones
 // wp 前沒資料就 reset
 // trigger: deletion
-int SimpleFS::ResetBeforeWP(){
+type_latency SimpleFS::ResetBeforeWP(){
 	bool flag = false;
-	int latency = 0;
+	type_latency latency = 0;
 	for(int i = 0; i < NRZONE; ++i){
 		if(zbd->GetZone(i)->GetWP() != 0 && zbd->GetZone(i)->GetUsedCapacity() == 0){
 			if(SHOW_SIMPLEFS && !flag)
 				std::cout << "-----------------------------------------------------ResetBeforeWP\n";
 			latency += zbd->GetZone(i)->Reset();
 			flag = true;
+			++nrRWP;
+			std::cout << "X";
 		}
 	}
-
+	
 	if(flag && SHOW_SIMPLEFS){
 		std::cout << "-----------------------------------------------------END-ResetBeforeWP\n";
 	}
 	 return latency;
+}
+
+void SimpleFS::FillUp(){
+	bool dummy;
+	int s;
+	for(int64_t i = 0; i < NRFILE; ++i){
+		if(files[i] == nullptr)
+			files[i] = new ZoneFile(zbd);
+		files[i]->Write(i * SZFILE, SZFILE, &dummy);
+		/*
+		s = files[i]->Write(i * SZFILE, SZFILE / 2, &dummy);
+		if(s == -1)
+			return;
+		files[i]->FlushBuffer(&dummy);
+		files[i]->DummyActiveZone();
+		s = files[i]->Write((i * SZFILE) + (SZFILE / 2), SZFILE / 2, &dummy);
+		if(s == -1)
+			return;
+		files[i]->FlushBuffer(&dummy);
+		files[i]->DummyActiveZone();
+		*/
+	}	
+	//s = files[NRFILE - 1]->Write((int64_t)(NRFILE - 1) * SZFILE, SZFILE, &dummy);
+	//files[NRFILE - 1]->FlushBuffer(&dummy);
+	//files[NRFILE - 1]->DummyActiveZone();
+	Flush();
+}
+
+void SimpleFS::Flush(){
+	bool dummy;
+	for(int i = 0; i < NRFILE; ++i){
+		if(files[i] != nullptr)
+			files[i]->FlushBuffer(&dummy);
+	}
 }
 
 void SimpleFS::check(){

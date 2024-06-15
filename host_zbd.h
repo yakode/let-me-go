@@ -19,10 +19,11 @@ private:
 public:
 	Zone();
 	Zone(int id, BlockManager *blkmgr);
-	int Write(int data_size);
-	int Read(int data_size); // I have not implenmented it yet
-	int Reset();
+	type_latency Write(int data_size);
+	type_latency Read(int data_size); // I have not implenmented it yet
+	type_latency Reset();
 	int Delete(long long data_size);
+	void Dummy();
 	bool IsFull();
 	int GetId();
 	int64_t GetCapacity();
@@ -49,8 +50,11 @@ public:
 	int GetResetHint(int zoneid);
 	void show(){
 		blkmgr->show();
-		std::cout << "Valid Data:   " << std::setw(10) << GetUsedSpace() << " Bytes\n";
-		std::cout << "Garbage Data: " << std::setw(10) << GetGarbage() << " Bytes\n";
+		std::cout << "Valid Data:   " << std::setw(10) << GetUsedSpace() << " Sectors(" 
+			<< GetUsedSpace() * 100 / ((int64_t)SZBLK*NRBLK) << "%)\n"; 
+		std::cout << "Garbage Data: " << std::setw(10) << GetGarbage() << " Sectors("
+			<< GetGarbage() * 100 / ((int64_t)SZBLK*NRBLK) << "%)\n"; 
+		std::cout << "Free Ratio:   " << GetFreeSpace() * 100 / ((int64_t)SZBLK*NRBLK) << "%\n"; 
 	/*	
 		std::cout << "    |Zone Garbage |" << "Valid Data   |" << "Capacity\n";
 		std::cout << "----|-------------|" << "-------------|" << "-------------\n";
