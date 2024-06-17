@@ -19,17 +19,22 @@ int main(int argc, char *argv[]){
 	type_latency latency_w_s = 0, latency_r_s = 0; // second
 	type_latency latency_gc_s = 0;
 	int64_t latency_gc_us = 0;
-	double counter_gc = 10;
+	double counter_gc = 5;
 
 	int64_t nr_w = 0, nr_r = 0; // amount of commands
 
 	std::cout << "Input Files:\n";
-	//int T = 16;
-	//while(T--){
+	int T = 16;
+	bool err = false;
+	while(T--){
+		if(err)
+			break;
 	//std::cout << T << "\n";
 		for(int i = 1; i < argc; ++i){
+			if(err)
+				break;
 			std::string input = argv[i];
-			std::cout << "\t" << input << "\n";
+			std::cout << "\t" << input << " ";
 			std::ifstream ifs(input, std::ios::in);
 			if(!ifs.is_open()){
 				std::cout << "failed to open " << input << "\n";
@@ -52,17 +57,21 @@ int main(int argc, char *argv[]){
 		
 				// Garbage Collection
 				if(counter_gc <= 0){
-					counter_gc = 10;
+					counter_gc = 5;
 					s = 0;
 					if(GC_ENABLE){
 						s = test.GarbageCollection();
-						if(s == -1)
+						if(s == -1){
+							err = true;
 							break;
+						}
 					}
 					if(s == 0 && ENABLE_FBL_REFRESH){
 						s = test.FBLRefreshment();
-						if(s == -1)
+						if(s == -1){
+							err = true;
 							break;
+						}
 					}
 					latency_gc_us = s;
 					if(SHOW_CMD) std::cout << "GC " << (double)((double)s / (double)1000000) << " sec\n";
@@ -71,8 +80,10 @@ int main(int argc, char *argv[]){
 				// Command Handle
 				if(cmd == "WS"){
 					s = test.Write(addr_, data_size_);
-					if(s <= -1)
+					if(s <= -1){
+						err = true;
 						break;
+					}
 	
 					wt.PutWaitTime(s + latency_gc_us, time);
 					latency_w_us += wt.GetWaitTime();
@@ -99,11 +110,10 @@ int main(int argc, char *argv[]){
 				counter_gc -= (double)((double)s / (double)1000000);
 			}
 			ifs.close();
-			//test.Flush();
-			//test.FillUp();
-			std::cout << "\n";
+			test.Flush();
 		}
-	//}
+		std::cout << "\n";
+	}
 
 	test.show();
 	std::cout << "Average Write Latency: " << (double)latency_w_s/nr_w << "s\n"; // and " << latency_w << "us\n";

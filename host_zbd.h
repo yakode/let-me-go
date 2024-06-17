@@ -22,7 +22,7 @@ public:
 	type_latency Write(int data_size);
 	type_latency Read(int data_size); // I have not implenmented it yet
 	type_latency Reset();
-	int Delete(long long data_size);
+	int Delete(int64_t data_size);
 	void Dummy();
 	bool IsFull();
 	int GetId();

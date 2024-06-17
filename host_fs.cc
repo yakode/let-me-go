@@ -478,7 +478,7 @@ type_latency SimpleFS::GarbageCollection(){
 			if(zone->IsFull()){
 				int reset_hint = zbd->GetResetHint(i);
 	        	if (reset_hint < ec_max - 0.1 * (EC_LIMIT - ec_max)){
-					if(migrate + zone->GetUsedCapacity() + SZBLK <= free){
+					if(migrate + zone->GetUsedCapacity() + SZBLK*2 <= free){
 	          			victim_zones.insert(i);
 						migrate += zone->GetUsedCapacity();
 						flagGCWL = true;
@@ -513,7 +513,6 @@ type_latency SimpleFS::GarbageCollection(){
 
 	if(!victim_zones.empty()){
 		++nrGC;
-		std::cout << "G";
 	}
 
 	// migrate data
@@ -613,7 +612,6 @@ type_latency SimpleFS::FBLRefreshment(){
 
 	if(!victim_zones.empty()){
 		++nrRFBL;
-		std::cout << "F";
 	}
 
 	for (std::set<int>::iterator it = victim_zones.begin(); it != victim_zones.end(); ++it){
@@ -644,7 +642,6 @@ type_latency SimpleFS::ResetBeforeWP(){
 			latency += zbd->GetZone(i)->Reset();
 			flag = true;
 			++nrRWP;
-			std::cout << "X";
 		}
 	}
 	
