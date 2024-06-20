@@ -478,7 +478,7 @@ type_latency SimpleFS::GarbageCollection(){
 			if(zone->IsFull()){
 				int reset_hint = zbd->GetResetHint(i);
 	        	if (reset_hint < ec_max - 0.1 * (EC_LIMIT - ec_max)){
-					if(migrate + zone->GetUsedCapacity() + SZBLK*2 <= free){
+					if(migrate + zone->GetUsedCapacity() + SZBLK * 8 <= free){
 	          			victim_zones.insert(i);
 						migrate += zone->GetUsedCapacity();
 						flagGCWL = true;
@@ -502,7 +502,7 @@ type_latency SimpleFS::GarbageCollection(){
 				int garbage_percent_approx = 100 - 100 * zone->GetUsedCapacity() / zone->GetMaxCapacity();
 	        	if(garbage_percent_approx > threshold && garbage_percent_approx <= 100){
 					// redundant SZBLK bytes for padding
-					if(migrate + zone->GetUsedCapacity() + (SZBLK * 2) <= free){
+					if(migrate + zone->GetUsedCapacity() + (SZBLK * 8) <= free){
 	          			victim_zones.insert(i);
 						migrate += zone->GetUsedCapacity();
 					}
@@ -584,7 +584,7 @@ type_latency SimpleFS::FBLRefreshment(){
 		if(zone->IsFull()){
 			int reset_hint = zbd->GetResetHint(i);
         	if (reset_hint < ec_max - 0.1 * (EC_LIMIT - ec_max)){
-				if(migrate + zone->GetUsedCapacity() + SZBLK <= free){
+				if(migrate + zone->GetUsedCapacity() + SZBLK * 8 <= free){
           			victim_zones.insert(i);
 					migrate += zone->GetUsedCapacity();
 				}
@@ -613,6 +613,8 @@ type_latency SimpleFS::FBLRefreshment(){
 	if(!victim_zones.empty()){
 		++nrRFBL;
 	}
+
+	nrMigrate += migrate;
 
 	for (std::set<int>::iterator it = victim_zones.begin(); it != victim_zones.end(); ++it){
 		zbd->GetZone(*it)->Reset();

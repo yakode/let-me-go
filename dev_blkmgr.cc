@@ -510,13 +510,22 @@ int BlockManagerDynamic::GetResetHint(int zoneid){
 
 BlockManagerStatic::BlockManagerStatic(){
 	blkec = new BlockEraseCountRecord();
+	rhtable = new ResetHintTable();
 
 	EC_max = 0;
 	EC_min = 0;
+
+	for(int i = 0; i < NRZONE; ++i)
+		rhtable->SetResetHint(i, 0);
 }
 
 BlockManagerStatic::~BlockManagerStatic(){
 	delete blkec;
+	delete rhtable;
+}
+
+int BlockManagerStatic::GetResetHint(int zoneid){
+	return rhtable->GetResetHint(zoneid);	
 }
 
 int BlockManagerStatic::GetECMin(){
@@ -549,6 +558,7 @@ int BlockManagerStatic::Reset(int zoneid){
 		this->EC_max += 1;
 	if(ec == this->EC_min)
 		this->EC_min = blkec->GetECMin();
+	rhtable->SetResetHint(zoneid, ec + 1);
 	return latency;
 }
 

@@ -167,6 +167,7 @@ public:
 class BlockManagerStatic: public BlockManager{
 private:
 	BlockEraseCountRecord *blkec;
+	ResetHintTable *rhtable;
 
 	int EC_max, EC_min;
 	
@@ -187,7 +188,7 @@ public:
 	int GetECMax();
 
 	int GetECMinFree(){return -1;}
-	int GetResetHint(int zoneid){return -1;}
+	int GetResetHint(int zoneid);
 
 	void AddReadAmount(int i){amount_read += i;}
 

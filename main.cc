@@ -19,21 +19,21 @@ int main(int argc, char *argv[]){
 	type_latency latency_w_s = 0, latency_r_s = 0; // second
 	type_latency latency_gc_s = 0;
 	int64_t latency_gc_us = 0;
-	double counter_gc = 5;
+	double counter_gc = 10;
 
 	int64_t nr_w = 0, nr_r = 0; // amount of commands
 
+	std::string inputfiles[5] = {"../input/ssdtrace-00.in", "../input/ssdtrace-01.in", "../input/ssdtrace-02.in", "../input/ssdtrace-03.in"};
+	int N = 4;
 	std::cout << "Input Files:\n";
-	int T = 16;
+	int T = 6;
 	bool err = false;
 	while(T--){
-		if(err)
-			break;
+		if(err) break;
 	//std::cout << T << "\n";
-		for(int i = 1; i < argc; ++i){
-			if(err)
-				break;
-			std::string input = argv[i];
+		for(int i = 0; i < N; ++i){
+			if(err) break;
+			std::string input = inputfiles[i];
 			std::cout << "\t" << input << " ";
 			std::ifstream ifs(input, std::ios::in);
 			if(!ifs.is_open()){
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
 		
 				// Garbage Collection
 				if(counter_gc <= 0){
-					counter_gc = 5;
+					counter_gc = 10;
 					s = 0;
 					if(GC_ENABLE){
 						s = test.GarbageCollection();
@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
 							break;
 						}
 					}
-					if(s == 0 && ENABLE_FBL_REFRESH){
+					if(/*s == 0 &&*/ ENABLE_FBL_REFRESH){
 						s = test.FBLRefreshment();
 						if(s == -1){
 							err = true;

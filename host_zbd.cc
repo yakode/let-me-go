@@ -128,10 +128,11 @@ ZoneBackend::ZoneBackend(){
 		zones[i] = new Zone(i, blkmgr);
 }
 
-// TODO: allocate io zone depend on lifetime hint
 int ZoneBackend::AllocateIOZone(int lifetime, Zone **zone){
 	for(int i = 0; i < NRZONE; ++i){
 		if(zones[i]->GetCapacity() != 0){
+			if(!ENABLE_DYNAMIC_MAPPING && blkmgr->GetResetHint(i) >= EC_LIMIT)
+				continue;
 			*zone = zones[i];
 			return 0;
 		}

@@ -3,7 +3,7 @@
 // FILESYSTEM
 // 16GB
 
-#define EC_LIMIT 500
+#define EC_LIMIT 300
 
 #define NRZONE 256
 #define SZZONE 256 // blocks
@@ -26,20 +26,21 @@
 #define GC_START_LEVEL 20
 #define GC_SLOPE 3
 
-#define ENABLE_DYNAMIC_MAPPING true	
-#define ENABLE_GC_WL 		   true 
-#define ENABLE_FBL_REFRESH 	   true 
+#define ENABLE_DYNAMIC_MAPPING		true	
+#define ENABLE_GC_WL 		   	false
+#define ENABLE_FBL_REFRESH 	   	true 
 
 // Block Allocation
 #define SHOW_ZONE 		false
 // Zone Reset
 #define SHOW_RESET		false
 // Write data to ZoneFile and Push Extent
-#define SHOW_ZONEFILE	false
+#define SHOW_ZONEFILE		false
 // Garbage Collection and Reset Before WP
-#define SHOW_SIMPLEFS	false
-#define SHOW_ERR 		true
+#define SHOW_SIMPLEFS		false
+#define SHOW_ERR 		false
 #define SHOW_CMD 		false
 
-typedef long long int64_t; 
-typedef long long type_latency; 
+//typedef long long int int64_t; 
+typedef long long int type_latency; 
+
