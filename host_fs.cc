@@ -242,7 +242,7 @@ type_latency ZoneFile::FlushBuffer(bool *sthDeleted){
 	}
 
 	while(!flush.empty()){
-		if(active_zone_ == nullptr || active_zone_->IsFull()){
+		if(active_zone_ == nullptr || active_zone_->IsFull() || active_zone_->IsBroken()){
 			AllocateNewZone();
 			if(active_zone_ == nullptr){
 				if(SHOW_ERR)

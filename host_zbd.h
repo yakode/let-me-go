@@ -25,6 +25,7 @@ public:
 	int Delete(int64_t data_size);
 	void Dummy();
 	bool IsFull();
+	bool IsBroken();
 	int GetId();
 	int64_t GetCapacity();
 	int64_t GetMaxCapacity();

@@ -98,6 +98,10 @@ bool Zone::IsFull(){
 	return capacity_ == 0;
 }
 
+bool Zone::IsBroken(){
+	return blkmgr_->GetResetHint(id_) >= EC_LIMIT;
+}
+
 int Zone::GetId(){
 	return id_;
 }

@@ -3,6 +3,8 @@
 // FILESYSTEM
 // 16GB
 
+#define TRACE true // 1 ssdtrace 0 systor
+
 #define EC_LIMIT 300
 
 #define NRZONE 256
@@ -26,9 +28,9 @@
 #define GC_START_LEVEL 20
 #define GC_SLOPE 3
 
-#define ENABLE_DYNAMIC_MAPPING		true	
+#define ENABLE_DYNAMIC_MAPPING		false	
 #define ENABLE_GC_WL 		   	false
-#define ENABLE_FBL_REFRESH 	   	true 
+#define ENABLE_FBL_REFRESH 	   	false
 
 // Block Allocation
 #define SHOW_ZONE 		false
@@ -38,7 +40,7 @@
 #define SHOW_ZONEFILE		false
 // Garbage Collection and Reset Before WP
 #define SHOW_SIMPLEFS		false
-#define SHOW_ERR 		false
+#define SHOW_ERR 		true
 #define SHOW_CMD 		false
 
 //typedef long long int int64_t; 
