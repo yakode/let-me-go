@@ -637,13 +637,23 @@ type_latency SimpleFS::FBLRefreshment(){
 type_latency SimpleFS::ResetBeforeWP(){
 	bool flag = false;
 	type_latency latency = 0;
+
+	int64_t free = zbd->GetFreeSpace();
+	int64_t non_free = zbd->GetUsedSpace() + zbd->GetReclaimableSpace();
+	int free_percent = (100 * free) / (free + non_free);
+	int64_t max_capacity = zbd->GetZone(0)->GetMaxCapacity(); 
+
+	int T_WP = max_capacity - (max_capacity * free_percent) / 100;
+
 	for(int i = 0; i < NRZONE; ++i){
 		if(zbd->GetZone(i)->GetWP() != 0 && zbd->GetZone(i)->GetUsedCapacity() == 0){
 			if(SHOW_SIMPLEFS && !flag)
 				std::cout << "-----------------------------------------------------ResetBeforeWP\n";
-			latency += zbd->GetZone(i)->Reset();
-			flag = true;
-			++nrRWP;
+			if(!(FAR && free_percent < 70 && zbd->GetZone(i)->GetCapacity() >= T_WP)){
+				latency += zbd->GetZone(i)->Reset();
+				flag = true;
+				++nrRWP;
+			}
 		}
 	}
 	

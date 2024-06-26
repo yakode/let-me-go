@@ -5,6 +5,8 @@
 
 #define TRACE true // 1 ssdtrace 0 systor
 
+#define FAR true
+
 #define EC_LIMIT 300
 
 #define NRZONE 256

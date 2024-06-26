@@ -5,6 +5,11 @@
 #include <fstream>
 
 int main(int argc, char *argv[]){
+	if(FAR && (ENABLE_DYNAMIC_MAPPING || ENABLE_GC_WL || ENABLE_FBL_REFRESH))
+		return -1;
+	if(!ENABLE_DYNAMIC_MAPPING && (ENABLE_GC_WL || ENABLE_FBL_REFRESH))
+		return -1;
+
 	SimpleFS test;
 	WaitTime wt(16);
 	test.FillUp();
