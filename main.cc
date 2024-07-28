@@ -5,7 +5,9 @@
 #include <fstream>
 
 int main(int argc, char *argv[]){
-	if(FAR && (ENABLE_DYNAMIC_MAPPING || ENABLE_GC_WL || ENABLE_FBL_REFRESH))
+	if(FAR && WAZONE)
+		return -1;
+	if((FAR || WAZONE) && (ENABLE_DYNAMIC_MAPPING || ENABLE_GC_WL || ENABLE_FBL_REFRESH))
 		return -1;
 	if(!ENABLE_DYNAMIC_MAPPING && (ENABLE_GC_WL || ENABLE_FBL_REFRESH))
 		return -1;
@@ -39,10 +41,10 @@ int main(int argc, char *argv[]){
 		"../systor/2016022216-LUN0.in", "../systor/2016022309-LUN0.in", "../systor/2016022316-LUN0.in",
 		"../systor/2016022210-LUN0.in", "../systor/2016022217-LUN0.in", "../systor/2016022310-LUN0.in",
 		"../systor/2016022317-LUN0.in", "../systor/2016022211-LUN0.in", "../systor/2016022218-LUN0.in",
-	};/*	"../systor/2016022311-LUN0.in", "../systor/2016022318-LUN0.in", "../systor/2016022212-LUN0.in",
+		"../systor/2016022311-LUN0.in", "../systor/2016022318-LUN0.in", "../systor/2016022212-LUN0.in",
 		"../systor/2016022219-LUN0.in", "../systor/2016022312-LUN0.in", "../systor/2016022319-LUN0.in",
 		"../systor/2016022213-LUN0.in", "../systor/2016022220-LUN0.in", "../systor/2016022313-LUN0.in"
-	};*/
+	};
 	int N = 4;
 	if(!TRACE) N = 6;
 	int T = 4;
@@ -51,13 +53,13 @@ int main(int argc, char *argv[]){
 	std::cout << "Input Files:\n";
 	while(T--){
 		if(err) break;
-	//std::cout << T << "\n";
+	// std::cout << T << "\n";
 		for(int i = 0; i < N; ++i){
 			if(err) break;
-			//if(T == 0 && i == 1) break;
+			// if(T == 0 && i == 1) break;
 			std::string input = inputfiles[i];
 			if(!TRACE) input = systorfiles[i];
-			//std::cout << "\t" << input << "\n";
+			// std::cout << "\t" << input << "\n";
 			std::ifstream ifs(input, std::ios::in);
 			if(!ifs.is_open()){
 				std::cout << "failed to open " << input << "\n";
@@ -149,5 +151,6 @@ int main(int argc, char *argv[]){
 	std::cout << "Average Write Latency: " << (double)latency_w_s/nr_w << "s\n"; // and " << latency_w << "us\n";
 	std::cout << "Average Read Latency:  " << (double)latency_r_s/nr_r << "s\n"; // and " << latency_r << "us\n";
 	std::cout << nr_w << " write commands, and " << nr_r << " read commands\n";
+	std::cout << "ALPHA" << ALPHA << "\n";
 	return 0;
 }

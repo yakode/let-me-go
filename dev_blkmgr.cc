@@ -361,6 +361,7 @@ void MappingTable::ResetMT(int zoneid){
 
 ResetHintTable::ResetHintTable(){
 	rht = new int[NRZONE];
+	nr_update = 0;
 	for(int i = 0; i < NRZONE; ++i)
 		rht[i] = -1;
 }
@@ -372,6 +373,7 @@ void ResetHintTable::SetResetHint(int zoneid, int rh){
 		return;
 	}
 	rht[zoneid] = rh;
+	++nr_update;
 }
 
 int ResetHintTable::GetResetHint(int zoneid){
@@ -390,6 +392,10 @@ int ResetHintTable::GetMinRH(){
 			if(ret > rht[i])
 				ret = rht[i];
 	return ret;
+}
+
+int ResetHintTable::GetNrUpdate(){
+	return nr_update;
 }
 
 BlockManagerDynamic::BlockManagerDynamic(){
@@ -420,9 +426,13 @@ int BlockManagerDynamic::Allocate(int zoneid){
 	}
 	int ec = blkec->GetEC(blkid);
 	int hint = rhtable->GetResetHint(zoneid);
+	int old_EC_min_free = this->EC_min_free;
+	int new_EC_min_free;
 	if(hint == -1 || ec < hint)
 		rhtable->SetResetHint(zoneid, ec);
-	this->EC_min_free = this->fblist->GetMinEC();
+	new_EC_min_free = this->fblist->GetMinEC();
+	if(old_EC_min_free != new_EC_min_free)
+		UpdateECMinFree(new_EC_min_free);
 	this->mtable->AddBlockToZone(zoneid, blkid);
 	
 	return 0;
@@ -435,6 +445,8 @@ int BlockManagerDynamic::Reset(int zoneid){
 	int latency = 0;
 	int sz = this->mtable->GetSize(zoneid);
 	int rh = this->rhtable->GetResetHint(zoneid);
+	int old_EC_min_free = this->EC_min_free;
+	int new_EC_min_free;
 	this->rhtable->SetResetHint(zoneid, -1);
 
 	for(int i = 0; i < sz; ++i){
@@ -444,20 +456,22 @@ int BlockManagerDynamic::Reset(int zoneid){
 		latency += LATENCY_ERASE;
 		amount_erase++;
 		if(ec == this->EC_max)
-			this->EC_max += 1;
+			UpdateECMax(this->EC_max + 1);
 		if(ec + 1 < EC_LIMIT)
 			this->fblist->Insert(blkid, ec + 1);
 	}
 	this->mtable->ResetMT(zoneid);
-	this->EC_min_free = fblist->GetMinEC();
+	new_EC_min_free = this->fblist->GetMinEC();
+	if(old_EC_min_free != new_EC_min_free)
+		UpdateECMinFree(new_EC_min_free);
 
 	if(rh == this->EC_min){
 		if(this->EC_min_free != this->EC_min){
 			int rh_min = this->rhtable->GetMinRH();
 			if(rh_min < this->EC_min_free || this->EC_min_free == -1)
-				this->EC_min = rh_min;
+				UpdateECMin(rh_min);
 			else
-				this->EC_min = this->EC_min_free;
+				UpdateECMin(this->EC_min_free);
 		}
 	}
 	return latency;
@@ -504,6 +518,21 @@ int BlockManagerDynamic::GetECMinFree(){
 	return EC_min_free;
 }
 
+void BlockManagerDynamic::UpdateECMin(int val){
+	EC_min = val;
+	nr_update++;
+}
+
+void BlockManagerDynamic::UpdateECMax(int val){
+	EC_max = val;
+	nr_update++;
+}
+
+void BlockManagerDynamic::UpdateECMinFree(int val){
+	EC_min_free = val;
+	nr_update++;
+}
+
 int BlockManagerDynamic::GetResetHint(int zoneid){
 	return rhtable->GetResetHint(zoneid);	
 }
@@ -536,6 +565,14 @@ int BlockManagerStatic::GetECMax(){
 	return EC_max;
 }
 
+void BlockManagerStatic::UpdateECMin(int val){
+	EC_min = val;
+}
+
+void BlockManagerStatic::UpdateECMax(int val){
+	EC_max = val;
+}
+
 int BlockManagerStatic::Erase(int blkid){
 	this->blkec->AddEC(blkid);
 	
@@ -555,12 +592,78 @@ int BlockManagerStatic::Reset(int zoneid){
 		amount_erase++;
 	}
 	if(ec == this->EC_max)
-		this->EC_max += 1;
+		UpdateECMax(this->EC_max + 1);
 	if(ec == this->EC_min)
-		this->EC_min = blkec->GetECMin();
+		UpdateECMin(blkec->GetECMin());
 	rhtable->SetResetHint(zoneid, ec + 1);
 	return latency;
 }
+
+// WA-Zone //
+BlockManagerWazone::BlockManagerWazone(){
+	blkec = new BlockEraseCountRecord();
+	rhtable = new ResetHintTable();
+
+	sz = new int[NRZONE];
+	zoffset = new int[NRZONE];
+
+	EC_max = 0;
+	EC_min = 0;
+
+	for(int i = 0; i < NRZONE; ++i){
+		rhtable->SetResetHint(i, 0);
+		sz[i] = 0;
+		zoffset[i] = 0;
+	}
+}
+
+BlockManagerWazone::~BlockManagerWazone(){
+	delete blkec;
+	delete rhtable;
+}
+
+int BlockManagerWazone::GetResetHint(int zoneid){
+	return rhtable->GetResetHint(zoneid);	
+}
+
+int BlockManagerWazone::GetECMin(){
+	return EC_min;
+}
+
+int BlockManagerWazone::GetECMax(){
+	return EC_max;
+}
+
+int BlockManagerWazone::Erase(int blkid){
+	this->blkec->AddEC(blkid);
+	
+	return -1;
+}
+
+int BlockManagerWazone::Reset(int zoneid){
+	// Add Block erase count
+	// Update ec_min, ec_max
+	int latency = 0;
+	int blkid = zoneid * SZZONE;
+	for(int i = 0; i < sz[zoneid] + 1; ++i){
+		blkid = zoneid * SZZONE + ((i + zoffset[zoneid]) % SZZONE);
+		this->Erase(blkid);
+		int ec = this->blkec->GetEC(blkid);
+		if(ec == this->EC_max)
+			UpdateECMax(this->EC_max + 1);
+		if(ec == this->EC_min)
+			UpdateECMin(blkec->GetECMin());
+		if(ec >= 300)
+			rhtable->SetResetHint(zoneid, 300);
+		
+		latency += LATENCY_ERASE;
+		amount_erase++;
+	}
+	zoffset[zoneid] = (zoffset[zoneid] + sz[zoneid] + 1) % SZZONE;
+	// rhtable->SetResetHint(zoneid, ec + 1);
+	return latency;
+}
+
 
 // Many show() xD
 void MappingTable::show(){

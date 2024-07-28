@@ -94,12 +94,14 @@ public:
 class ResetHintTable{
 private:
 	int *rht;
+	int nr_update;
 public:
 	ResetHintTable();
 	void SetResetHint(int zoneid, int rh);
 	int GetResetHint(int zoneid);
 	int GetMinRH();
 	void show();
+	int GetNrUpdate();
 };
 
 
@@ -114,6 +116,9 @@ public:
 	virtual int GetResetHint(int zoneid) = 0;
 
 	virtual void AddReadAmount(int i) = 0;
+	virtual void UpdateECMin(int val) = 0;
+	virtual void UpdateECMax(int val) = 0;
+	virtual void UpdateECMinFree(int val) = 0;
 
 	virtual void show() = 0;
 };
@@ -132,6 +137,7 @@ private:
 	int64_t amount_write = 0;
 	int64_t amount_read = 0;
 	int64_t amount_erase = 0;
+	int nr_update = 0;
 public:
 	BlockManagerDynamic();
 	~BlockManagerDynamic();
@@ -141,6 +147,9 @@ public:
 	int GetECMin();
 	int GetECMax();
 	int GetECMinFree();
+	void UpdateECMin(int val);
+	void UpdateECMax(int val);
+	void UpdateECMinFree(int val);
 	int GetResetHint(int zoneid);
 
 	void AddReadAmount(int i){amount_read += i;}
@@ -150,6 +159,7 @@ public:
 		// mtable->show();
 		// rhtable->show();
 		// blkec->show();
+		std::cout << "# of Updating CXL.cache: " << this->nr_update + rhtable->GetNrUpdate() << "\n";
 		std::cout << "Erase Count of Blocks: \n";
 		blkec->Summary();
 		std::cout << "\tEC_max: " << EC_max << ", EC_min: " << EC_min << "\n";
@@ -175,6 +185,7 @@ private:
 	int64_t amount_write = 0;
 	int64_t amount_read = 0;
 	int64_t amount_erase = 0;
+	int nr_update = 0;
 public:
 	BlockManagerStatic();
 	~BlockManagerStatic();
@@ -188,6 +199,62 @@ public:
 	int GetECMax();
 
 	int GetECMinFree(){return -1;}
+	void UpdateECMin(int val);
+	void UpdateECMax(int val);
+	void UpdateECMinFree(int val){return;}
+	int GetResetHint(int zoneid);
+
+	void AddReadAmount(int i){amount_read += i;}
+
+	void show(){
+		std::cout << "Erase Count: \n";
+		blkec->Summary();
+
+		std::cout << "\tEC_max: " << EC_max << ", EC_min: " << EC_min << "\n";
+		std::cout << "Read/Write/Erase: \n";
+		std::cout <<  "\twrite: " 
+			<< std::setw(12) << amount_write 
+			<< " pages\n\tread:  " 
+			<< std::setw(12) << amount_read 
+			<< " pages\n\terase: " 
+			<< std::setw(12) << amount_erase
+			<< " blocks\n";
+	}
+};
+
+class BlockManagerWazone: public BlockManager{
+private:
+	BlockEraseCountRecord *blkec;
+	ResetHintTable *rhtable;
+
+	int EC_max, EC_min;
+	
+	int Erase(int blkid);
+	int64_t amount_write = 0;
+	int64_t amount_read = 0;
+	int64_t amount_erase = 0;
+	int nr_update = 0;
+
+	int *sz;
+	int *zoffset;
+public:
+	BlockManagerWazone();
+	~BlockManagerWazone();
+	int Append(int zoneid, int offset, int data_size){
+		int idx = (offset + data_size - 1) / SZBLK;
+		sz[zoneid] = idx;
+		amount_write += (data_size / SZPAGE);
+		return (data_size / SZPAGE) * LATENCY_WRITE;
+	}
+	int Read(int zoneid, int offset, int data_size){return -1;}
+	int Reset(int zoneid);
+	int GetECMin();
+	int GetECMax();
+
+	int GetECMinFree(){return -1;}
+	void UpdateECMin(int val){return;}
+	void UpdateECMax(int val){return;}
+	void UpdateECMinFree(int val){return;}
 	int GetResetHint(int zoneid);
 
 	void AddReadAmount(int i){amount_read += i;}

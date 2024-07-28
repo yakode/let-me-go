@@ -125,6 +125,8 @@ int64_t Zone::GetMaxCapacity(){
 ZoneBackend::ZoneBackend(){
 	if(ENABLE_DYNAMIC_MAPPING)
 		blkmgr = new BlockManagerDynamic();
+	else if(WAZONE)
+		blkmgr = new BlockManagerWazone();
 	else
 		blkmgr = new BlockManagerStatic();
 	zones.resize(NRZONE, nullptr);

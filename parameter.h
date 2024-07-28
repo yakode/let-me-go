@@ -5,9 +5,11 @@
 
 #define TRACE true // 1 ssdtrace 0 systor
 
-#define FAR true
+#define FAR false
+#define WAZONE false
 
 #define EC_LIMIT 300
+#define ALPHA 0.1
 
 #define NRZONE 256
 #define SZZONE 256 // blocks
@@ -30,9 +32,9 @@
 #define GC_START_LEVEL 20
 #define GC_SLOPE 3
 
-#define ENABLE_DYNAMIC_MAPPING		false	
-#define ENABLE_GC_WL 		   	false
-#define ENABLE_FBL_REFRESH 	   	false
+#define ENABLE_DYNAMIC_MAPPING		true	
+#define ENABLE_GC_WL 		   	true
+#define ENABLE_FBL_REFRESH 	   	true
 
 // Block Allocation
 #define SHOW_ZONE 		false

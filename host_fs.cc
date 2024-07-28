@@ -200,6 +200,7 @@ type_latency ZoneFile::Write(int64_t addr, int64_t data_size, bool *sthDeleted){
 	while(left){
 		if(buffered ==  SZBUF){
 			s = FlushBuffer(sthDeleted);
+			if(s == -1) std::cout << "Write\n";
 			latency += s;
 		}else{
 			wr_size = std::min(left, SZBUF - buffered);
@@ -220,6 +221,10 @@ type_latency ZoneFile::Write(int64_t addr, int64_t data_size, bool *sthDeleted){
 	if(buffered ==  SZBUF){
 		s = FlushBuffer(sthDeleted);
 		latency += s;
+		if(s == -1)
+			std::cout << "Write 2\n";
+		if(s == -1)
+			return -1;
 	}
 
 	return latency;
@@ -471,13 +476,13 @@ type_latency SimpleFS::GarbageCollection(){
 	std::set<int> victim_zones;
 	int64_t migrate = 0;
 
-	if(ENABLE_GC_WL && ENABLE_DYNAMIC_MAPPING && (ec_max - ec_min) > 0.1 * (EC_LIMIT - ec_max)){
+	if(ENABLE_GC_WL && ENABLE_DYNAMIC_MAPPING && (ec_max - ec_min) > ALPHA * (EC_LIMIT - ec_max)){
 		// WL
 		for(int i = 0; i < NRZONE; ++i){
 			Zone *zone =  zbd->GetZone(i);
 			if(zone->IsFull()){
 				int reset_hint = zbd->GetResetHint(i);
-	        	if (reset_hint < ec_max - 0.1 * (EC_LIMIT - ec_max)){
+	        	if (reset_hint < ec_max - ALPHA * (EC_LIMIT - ec_max)){
 					if(migrate + zone->GetUsedCapacity() + SZBLK * 8 <= free){
 	          			victim_zones.insert(i);
 						migrate += zone->GetUsedCapacity();
@@ -560,10 +565,10 @@ type_latency SimpleFS::FBLRefreshment(){
 		return 0;
 	int ec_min = zbd->GetECMin();
 	int ec_max = zbd->GetECMax();
-	if(!((ec_max - ec_min) > 0.1 * (EC_LIMIT - ec_max)))
+	if(!((ec_max - ec_min) > ALPHA * (EC_LIMIT - ec_max)))
 		return 0;
 	int ec_min_free = zbd->GetECMinFree();
-	if(ec_min_free == -1 || !(ec_min_free > (ec_min + 0.9 * (ec_max - ec_min))))
+	if(ec_min_free == -1 || !(ec_min_free > (ec_min + (double)(1.0 - ALPHA) * (ec_max - ec_min))))
 		return 0;
 	
 	bool sthDeleted = false;
@@ -583,7 +588,7 @@ type_latency SimpleFS::FBLRefreshment(){
 		Zone *zone =  zbd->GetZone(i);
 		if(zone->IsFull()){
 			int reset_hint = zbd->GetResetHint(i);
-        	if (reset_hint < ec_max - 0.1 * (EC_LIMIT - ec_max)){
+        	if (reset_hint < ec_max - ALPHA * (EC_LIMIT - ec_max)){
 				if(migrate + zone->GetUsedCapacity() + SZBLK * 8 <= free){
           			victim_zones.insert(i);
 					migrate += zone->GetUsedCapacity();
@@ -693,7 +698,8 @@ void SimpleFS::Flush(){
 	bool dummy;
 	for(int i = 0; i < NRFILE; ++i){
 		if(files[i] != nullptr)
-			files[i]->FlushBuffer(&dummy);
+		if(files[i]->FlushBuffer(&dummy) == -1)
+			return;
 	}
 }
 
