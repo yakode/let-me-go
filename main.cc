@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
 							break;
 						}
 					}
-					latency_gc_us = s;
+					latency_gc_us += s;
 				}
 		
 				// Command Handle
